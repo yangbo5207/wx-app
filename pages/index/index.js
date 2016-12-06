@@ -1,26 +1,48 @@
-//index.js
-//获取应用实例
-var app = getApp()
+let app = getApp()
+
 Page({
-  data: {
-    motto: 'Hello World',
-    userInfo: {}
-  },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  onLoad: function () {
-    console.log('onLoad')
-    var that = this
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
-      //更新数据
-      that.setData({
-        userInfo:userInfo
-      })
-    })
-  }
+    data: {
+        motto: 'Hello World',
+        userInfo: {},
+        recommendList: []
+    },
+
+    bindViewTap: function () {
+        wx.navigateTo({
+            url: '../logs/logs'
+        })
+    },
+
+    onLoad: function () {
+        console.log('onLoad')
+        let self = this
+        app.getUserInfo( userInfo => {
+            self.setData({
+                userInfo: userInfo
+            })
+        })
+
+        wx.request({
+            url: 'https://test-frontend-community.laohu8.com/v5/tweets/highlighted',
+            data: {
+                pageCount: 1,
+                pageSize: 20,
+                timeout: 3000
+            },
+            header: {
+                'Authorization': 'Bearer 52gIBGxCzUjkJoCk6ZRvZ84K6lhzBQv6HASo19jiM4rpON****'
+            },
+            success: function (res) {
+                self.setData({
+                    recommendList: res.data.data
+                })
+            },
+            fail: function () {
+                console.log(arguments)
+            },
+            complete: function () {
+                console.log('xxx')
+            }
+        })
+    }
 })
