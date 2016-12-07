@@ -1,6 +1,6 @@
 <template name="recommend">
     <block wx:for="{{recommendList}}" wx:key="item">
-        <view class="rec-section" data-src="{{item.link}}">
+        <view class="rec-section" data-src="{{item.link}}" bindtap="navToPost">
             <view class="rec-main">
                 <view class="rec-top">
                     <view class="rec-top-wrap">

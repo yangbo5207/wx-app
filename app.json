@@ -3,6 +3,7 @@
         "pages/index/index",
         "pages/personal/personal",
         "pages/prediction/prediction",
+        "pages/post/post",
         "pages/logs/logs"
     ],
     "window": {

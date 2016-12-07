@@ -29,6 +29,12 @@ Page({
         this.onLoad()
     },
 
+    navToPost: function () {
+        wx.navigateTo({
+            url: '../post/post'
+        })
+    },
+
     upLoad: function () {
         var self = this
 
