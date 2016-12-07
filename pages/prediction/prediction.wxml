@@ -1,0 +1,54 @@
+<view class="header">
+    <view class="rec-top">
+        <view class="rec-top-wrap">
+            <view class="rec-type type-prediction">预测</view>
+            <text class="rec-source">来自一个逗逼的投资者</text>
+        </view>
+    </view>
+    <view class="rec-middle">
+        <view class="rec-middle-wrap">
+            <view class="rec-title">纳指三倍做空ETF，预测明天上涨到113.48 </view>
+        </view>
+    </view>
+    <view class="rec-bottom">
+        <view class="rec-bottom-item">47分钟以前</view>
+    </view>
+</view>
+
+<view class="swiper-tab">
+    <view class="swiper-tab-list {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="switchNav">消息面</view>
+    <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="switchNav">数据面</view>
+    <view class="swiper-tab-list {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="switchNav">基本面</view>
+    <view class="swiper-tab-list {{currentTab==3 ? 'on' : ''}}" data-current="3" bindtap="switchNav">盘面情况</view>
+</view>
+<swiper current="{{currentTab}}" class="swiper-box" duration="300" bindchange="bindChange">
+    <swiper-item>
+        消息面
+    </swiper-item>
+    <swiper-item>
+        数据面
+    </swiper-item>
+    <swiper-item>
+        基本面
+    </swiper-item>
+    <swiper-item>
+        盘面情况
+    </swiper-item>
+</swiper>
+
+
+<view class="bottom-bar">
+    <view class="bottom-bar-item">
+        <image class="bottom-bar-icon likes" src="/image/003.png"></image>
+        <text>赞同(100)</text>
+    </view>
+    <view class="bottom-bar-item">
+        <image class="bottom-bar-icon comments" src="/image/004.png"></image>
+        <text>评论(23k)</text>
+    </view>
+    <view class="bottom-bar-item collect">
+        <image class="bottom-bar-icon collect" src="/image/005.png"></image>
+        <text>收藏</text>
+    </view>
+</view>
+

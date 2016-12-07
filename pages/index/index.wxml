@@ -32,6 +32,14 @@
     </block>
 </template>
 
-<scroll-view class="scroll-wrap" scroll-y="true">
+<scroll-view class="scroll-wrap" scroll-y="true" bindscrolltolower="upLoad" style="width: {{windowWidth}}px;height: {{windowHeight}}px">
     <template is="recommend" data="{{recommendList}}"></template>
+    <view class="bottom-loading" style="display: {{isBottomLoading}}">
+        <image src="/image/loading.gif" class="bottom-loading-image"></image>
+        <text>加载中...</text>
+    </view>
+    <view class="bottom-end" style="display: {{isBottomEnd}}">
+        <view class="bottom-end-line"></view>
+        <view class="bottom-end-text">我是有底线的</view>
+    </view>
 </scroll-view>

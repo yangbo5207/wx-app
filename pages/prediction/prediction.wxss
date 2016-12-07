@@ -1,0 +1,29 @@
+.header {
+    background-color: #fff;
+    padding-left: 30rpx; 
+}
+
+.swiper-tab {
+    border-bottom: 1rpx solid #E5E5E5;
+    height: 100rpx;
+    text-align: center;
+    line-height: 100rpx;
+    color: #999999;
+    margin-top: 20rpx;
+    background-color: #fff;
+}
+.swiper-tab-list {
+    display: inline-block;
+    width: 25%;
+    height: 95rpx;
+}
+
+.on {
+    color: #353535;
+    border-bottom: 6rpx solid #F8CC00;
+}
+
+.swiper-box {
+    background-color: #fff;
+    height: 1000rpx;
+}
