@@ -68,60 +68,62 @@ Page({
 
     showPage: function () {
         let self = this
-        wx.showToast({
-            title: '加载中...',
-            icon: 'loading',
-            duration: 100000
-        })
-        wx.request({
-            url: 'https://test-frontend-community.laohu8.com/v5/tweets/highlighted',
-            data: {
-                pageCount: self.data.pageCount,
-                pageSize: 20
-            },
-            header: {
-                // 'Authorization': 'Bearer 52gIBGxCzUjkJoCk6ZRvZ84K6lhzBQv6HASo19jiM4rpON****'
-                'Authorization': 'Bearer JH3waLHzoCdUoUclDFkyIwU92Oen79U4ivJrKGJYE9TCmT****'
-            },
-            success: function (res) {
-                setTimeout( () => {
-                    wx.hideToast()
-                }, 500)
-                if(res.data.data) {
-                    self.setData({
-                        recommendList: res.data.data
-                    })
-                } else {
+        if(self.data.enable) {
+            wx.showToast({
+                title: '加载中...',
+                icon: 'loading',
+                duration: 100000
+            })
+            wx.request({
+                url: 'https://test-frontend-community.laohu8.com/v5/tweets/highlighted',
+                data: {
+                    pageCount: self.data.pageCount,
+                    pageSize: 20
+                },
+                header: {
+                    // 'Authorization': 'Bearer 52gIBGxCzUjkJoCk6ZRvZ84K6lhzBQv6HASo19jiM4rpON****'
+                    'Authorization': 'Bearer JH3waLHzoCdUoUclDFkyIwU92Oen79U4ivJrKGJYE9TCmT****'
+                },
+                success: function (res) {
                     setTimeout( () => {
-                        wx.showModal({
-                            title: "提示",
-                            content: "错误码:" + res.statusCode,
-                            confirmText: "重新加载",
-                            success: function (res) {
-                                if(res.confirm) {
-                                    self.showPage();
-                                }
-                            }
-                        })
+                        wx.hideToast()
                     }, 500)
-                }
-            },
-            fail: function () {
-                // 未连接到服务器，请检测是否为网络问题
-                setTimeout( () => {
-                    wx.hideToast()
-                }, 500)
-                wx.showModal({
-                    title: "提示",
-                    content: "未连接到服务器，请检测是否为网络问题",
-                    confirmText: "重新加载",
-                    success: function (res) {
-                        if(res.confirm) {
-                            self.showPage();
-                        }
+                    if(res.data.data) {
+                        self.setData({
+                            recommendList: res.data.data
+                        })
+                    } else {
+                        setTimeout( () => {
+                            wx.showModal({
+                                title: "提示",
+                                content: "错误码:" + res.statusCode,
+                                confirmText: "重新加载",
+                                success: function (res) {
+                                    if(res.confirm) {
+                                        self.showPage();
+                                    }
+                                }
+                            })
+                        }, 500)
                     }
-                })
-            }
-        })    
+                },
+                fail: function () {
+                    // 未连接到服务器，请检测是否为网络问题
+                    setTimeout( () => {
+                        wx.hideToast()
+                    }, 500)
+                    wx.showModal({
+                        title: "提示",
+                        content: "未连接到服务器，请检测是否为网络问题",
+                        confirmText: "重新加载",
+                        success: function (res) {
+                            if(res.confirm) {
+                                self.showPage();
+                            }
+                        }
+                    })
+                }
+            })  
+        }  
     }
 })
