@@ -1,15 +1,15 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/post/post",
         "pages/personal/personal",
         "pages/prediction/prediction",
-        "pages/post/post",
         "pages/logs/logs"
     ],
     "window": {
         "backgroundTextStyle":"light",
         "navigationBarBackgroundColor": "#F8CC00",
-        "navigationBarTitleText": "WeChat",
+        "navigationBarTitleText": "首页",
         "navigationBarTextStyle":"black"
     },
     "tabBar": {

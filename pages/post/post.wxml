@@ -1,3 +1,35 @@
-<view>
-    post
+<import src="../../wxParse/wxParse.wxml" />
+
+<view class="post-header">
+    <view class="post-main">
+        <view class="post-title">{{post.title}}</view>
+        <view class="post-info">
+            <view class="post-time">{{post.gmtCreate}}</view>
+            <view class="post-from">来自：{{post.author.name}}</view>
+        </view>
+    </view>
+</view>
+
+<view class="post-body">
+    <view class="post-main">
+        <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+    </view>
+</view>
+
+
+<view class="post-bottom"></view>
+
+<view class="bottom-bar">
+    <view class="bottom-bar-item">
+        <image class="bottom-bar-icon likes" src="/image/003.png"></image>
+        <text>赞同({{post.likeSize}})</text>
+    </view>
+    <view class="bottom-bar-item">
+        <image class="bottom-bar-icon comments" src="/image/004.png"></image>
+        <text>评论({{post.commentSize}})</text>
+    </view>
+    <view class="bottom-bar-item collect">
+        <image class="bottom-bar-icon collect" src="/image/005.png"></image>
+        <text>收藏</text>
+    </view>
 </view>

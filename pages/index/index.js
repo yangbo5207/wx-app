@@ -29,7 +29,9 @@ Page({
         this.onLoad()
     },
 
-    navToPost: function () {
+    navToPost: function (event) {
+        console.log(event.target.dataset.src.match(/tweet\/\d+/)[0].slice(6))
+        app.globalData.postid = event.target.dataset.src.match(/tweet\/\d+/)[0].slice(6)
         wx.navigateTo({
             url: '../post/post'
         })

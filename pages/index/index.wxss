@@ -19,12 +19,6 @@
     text-align: center
 }
 
-.rec-section {
-    background-color: #fff;
-    margin-bottom: 20rpx;
-    padding-bottom: 30rpx;
-}
-
 .rec-section:last-child {
     margin-bottom: 0;
 } 

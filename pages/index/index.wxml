@@ -1,6 +1,6 @@
 <template name="recommend">
     <block wx:for="{{recommendList}}" wx:key="item">
-        <view class="rec-section" data-src="{{item.link}}" bindtap="navToPost">
+        <view class="rec-section">
             <view class="rec-main">
                 <view class="rec-top">
                     <view class="rec-top-wrap">
@@ -28,6 +28,7 @@
                     <view class="rec-bottom-item">{{item.commentSize}}评论</view>
                 </view>
             </view>
+            <view class="rec-mask" data-src="{{item.link}}" bindtap="navToPost"></view>
         </view>
     </block>
 </template>
