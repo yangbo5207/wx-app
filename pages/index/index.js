@@ -15,6 +15,18 @@ Page({
 
     onLoad: function () {
         this.showPage();
+        wx.request({
+            url: 'http://test_oauth.tigerbrokers.com/auth/authorize',
+            method: 'POST',
+            data: {
+                grant_type: 'password',
+                username: '14900000086',
+                password: 'qqqqq1'
+            },
+            success: function (res) {
+                console.log(res)
+            }
+        })
         wx.getSystemInfo({
             success: res => {
                 this.setData({
