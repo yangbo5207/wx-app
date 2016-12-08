@@ -39,6 +39,7 @@ function wxParseImgTap(e) {
  * 图片视觉宽高计算函数区 
  **/
 function wxParseImgLoad(e) {
+  console.log('wximgload')
   var that = this;
   var tagFrom = e.target.dataset.from;
   var idx = e.target.dataset.idx;
@@ -72,7 +73,7 @@ function wxAutoImageCal(originalWidth, originalHeight,that,bindName) {
   wx.getSystemInfo({
     success: function (res) {
       var padding = that.data[bindName].view.imagePadding;
-      windowWidth = res.windowWidth * 0.92;
+      windowWidth = res.windowWidth-2*padding;
       windowHeight = res.windowHeight;
       //判断按照那种方式进行缩放
       if (originalWidth > windowWidth) {//在图片width大于手机屏幕width时候
