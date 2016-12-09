@@ -175,3 +175,34 @@ page {
     background-color: #F6F6F6;
     padding: 0 46rpx;
 }
+
+/* 回复框样式 */
+.comment-input-wrap {
+    height: 90rpx;
+    background-color: #FAFAFA;
+    border:1px solid #C3C3C3;
+    border-left: 0;
+    border-right: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 30rpx;
+    position: fixed;
+    bottom: 0;
+}
+.comment-input-box {
+    box-sizing: border-box;
+    background-color: #fff;
+    width: 625rpx;
+    border: 1px solid #DBDBDB;
+    border-radius: 4px;
+    padding-left: 20rpx;
+    font-size: 26rpx;
+}
+.comment-input {
+    background-color: #fff;
+}
+.comment-image {
+    width: 50rpx;
+    height: 50rpx;
+    margin-left: 20rpx;
+}

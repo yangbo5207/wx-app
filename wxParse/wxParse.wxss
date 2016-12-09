@@ -6,7 +6,7 @@
     line-height: 1.8;
 }
 view{
-    word-break:break-all; overflow:auto;
+    word-break:break-all;
 }
 .wxParse-inline{
     display: inline;

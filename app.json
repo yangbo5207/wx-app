@@ -2,6 +2,7 @@
     "pages": [
         "pages/index/index",
         "pages/post/post",
+        "pages/comment/comment",
         "pages/personal/personal",
         "pages/prediction/prediction",
         "pages/logs/logs"
