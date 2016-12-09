@@ -1,35 +1,37 @@
 <template name="recommend">
     <block wx:for="{{recommendList}}" wx:key="item">
-        <view class="rec-section">
-            <view class="rec-main">
-                <view class="rec-top">
-                    <view class="rec-top-wrap">
-                        <view class="rec-type type-hot">热帖</view>
-                        <text class="rec-source">来自中银绒业的社区</text>
-                    </view>
-                </view>
-                <view class="rec-middle">
-                    <view class="rec-middle-wrap">
-                        <block wx:if="{{item.thumbnail}}">
-                            <view class="rec-image-wrap">
-                                <image class="rec-image" src="{{item.thumbnail}}"></image>
-                            </view>
-                        </block>
-                        <view class="rec-info">
-                            <view class="rec-title">{{item.title}}</view>
-                            <view class="rec-desc">{{item.text}}</view>
+        <block wx:if="{{item.type == 1}}">
+            <view class="rec-section">
+                <view class="rec-main">
+                    <view class="rec-top">
+                        <view class="rec-top-wrap">
+                            <view class="rec-type type-hot">热帖</view>
+                            <text class="rec-source">来自{{item.entity.symbols[0]}}</text>
                         </view>
                     </view>
+                    <view class="rec-middle">
+                        <view class="rec-middle-wrap">
+                            <block wx:if="{{item.entity.thumbnail}}">
+                                <view class="rec-image-wrap">
+                                    <image class="rec-image" src="{{item.entity.thumbnail}}"></image>
+                                </view>
+                            </block>
+                            <view class="rec-info">
+                                <view class="rec-title">{{item.entity.title}}</view>
+                                <view class="rec-desc">{{item.entity.text}}</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="rec-bottom">
+                        <view class="rec-bottom-item">{{item.entity.author.name}}</view>
+                        <view class="rec-bottom-item">{{item.entity.gmtCreate}}</view>
+                        <view class="rec-bottom-item like">{{item.entity.likeSize}}赞同</view>
+                        <view class="rec-bottom-item">{{item.entity.commentSize}}评论</view>
+                    </view>
                 </view>
-                <view class="rec-bottom">
-                    <view class="rec-bottom-item">{{item.author.name}}</view>
-                    <view class="rec-bottom-item">{{item.gmtCreate}}</view>
-                    <view class="rec-bottom-item like">{{item.likeSize}}赞同</view>
-                    <view class="rec-bottom-item">{{item.commentSize}}评论</view>
-                </view>
+                <view class="rec-mask" data-src="{{item.entity.link}}" bindtap="navToPost"></view>
             </view>
-            <view class="rec-mask" data-src="{{item.link}}" bindtap="navToPost"></view>
-        </view>
+        </block>
     </block>
 </template>
 

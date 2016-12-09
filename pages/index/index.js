@@ -56,7 +56,7 @@ Page({
                 pageCount: self.data.pageCount + 1 
             })
             wx.request({
-                url: 'https://test-frontend-community.laohu8.com/v5/tweets/highlighted',
+                url: 'https://test-frontend-community.laohu8.com/v5/streamings',
                 data: {
                     pageCount: self.data.pageCount,
                     pageSize: 20
@@ -67,12 +67,6 @@ Page({
                 },
                 success: function (res) {
                     if(res.data.data) {
-                        res.data.data.map( item => {
-                            if(item.text.length > 60) {
-                                item.text = item.text.slice(0, 60) + '... ...'
-                            }
-                            return item
-                        })
                         self.setData({
                             recommendList: self.data.recommendList.concat(res.data.data),
                             isBottomLoading: 'none'
@@ -99,7 +93,7 @@ Page({
                 duration: 100000
             })
             wx.request({
-                url: 'https://test-frontend-community.laohu8.com/v5/tweets/highlighted',
+                url: 'https://test-frontend-community.laohu8.com/v5/streamings',
                 data: {
                     pageCount: self.data.pageCount,
                     pageSize: 20
@@ -113,12 +107,6 @@ Page({
                         wx.hideToast()
                     }, 500)
                     if(res.data.data) {
-                        res.data.data.map( item => {
-                            if(item.text.length > 60) {
-                                item.text = item.text.slice(0, 60) + '... ...'
-                            }
-                            return item
-                        })
                         self.setData({
                             recommendList: res.data.data
                         })
