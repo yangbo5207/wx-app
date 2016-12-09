@@ -2,8 +2,6 @@ let app = getApp()
 
 Page({
     data: {
-        motto: 'Hello World',
-        userInfo: {},
         recommendList: [],
         isBottomLoading: "none",
         isBottomEnd: "none",
