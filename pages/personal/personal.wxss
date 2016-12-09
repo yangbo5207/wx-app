@@ -1,0 +1,49 @@
+.section {
+    margin-top: 30rpx;
+    font-size: 28rpx;
+    color: #333333;
+}
+.item {
+    height: 90rpx;
+    background-color: #fff;
+    padding: 0 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    margin-top: 2rpx;
+}
+
+.item-l, .item-r {
+    display: flex;
+    align-items: center;
+}
+.img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 30rpx;
+}
+.nickname {
+    color: #999999;
+}
+.icon-arrow {
+    margin-left: 30rpx;
+}
+
+.img-wrap, .icon {
+    width: 30rpx;
+    height: 30rpx;
+}
+.icon-nickname {
+    width: 28rpx;
+}
+.icon-bindphone {
+    width: 21rpx;
+}
+.icon-collect {
+    height: 29rpx;
+}
+.icon-arrow {
+    width: 16rpx;
+    height: 25rpx;
+}
