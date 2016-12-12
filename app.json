@@ -1,6 +1,7 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/topic/topic",
         "pages/post/post",
         "pages/comment/comment",
         "pages/personal/personal",
@@ -30,5 +31,8 @@
                 "text": "我的"
             }],
         "position": "bottom"
+    },
+    "networkTimeout": {
+        "request": 10000
     }
 }

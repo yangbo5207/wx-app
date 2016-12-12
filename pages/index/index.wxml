@@ -29,7 +29,56 @@
                         <view class="rec-bottom-item">{{item.entity.commentSize}}评论</view>
                     </view>
                 </view>
-                <view class="rec-mask" data-src="{{item.entity.link}}" bindtap="navToPost"></view>
+                <view class="rec-mask" data-objectid="{{item.objectId}}" bindtap="navToPost"></view>
+            </view>
+        </block>
+
+        <block wx:if="{{item.type == 4}}">
+            <view class="rec-section">
+                <view class="rec-main">这里是要闻部分，type==4</view>
+            </view>
+        </block>
+
+        <block wx:if="{{item.type == 6}}">
+            <view class="rec-section">
+                <view class="rec-main">
+                    <view class="rec-top">
+                        <view class="rec-top-wrap">
+                            <view class="rec-type type-prediction">预测</view>
+                            <text class="rec-source">来自{{item.entity.symbol}}</text>
+                        </view>
+                    </view>
+                    <view class="rec-middle">
+                        <view class="rec-middle-wrap">
+                            <view class="rec-prediction-res">这里将是预测结果，例如“纳指三倍做空ETF，预测明天将上涨到113.48”</view>
+                        </view>
+                    </view>
+                    <view class="rec-bottom">
+                        <view class="rec-bottom-item">{{item.entity.author.name}}</view>
+                        <view class="rec-bottom-item">{{item.entity.gmtCreate}}</view>
+                        <view class="rec-bottom-item like">{{item.entity.likeSize}}赞同</view>
+                        <view class="rec-bottom-item">{{item.entity.commentSize}}评论</view>
+                    </view>
+                </view>
+                <view class="rec-mask" data-objectid="{{item.objectId}}" bindtap="navToPrediction"></view>
+            </view>
+        </block>
+
+        <block wx:if="{{item.type == 7}}">
+            <view class="rec-section rec-section-topic">
+                <view class="rec-main">
+                    <view class="rec-top rec-topic-top">
+                        <view class="rec-top-wrap">
+                            <view class="rec-topic-wrap">
+                                <view class="rec-type type-topic">话题</view>
+                                <view class="rec-topic"># {{item.entity.name}} #</view>
+                            </view>
+                            <text class="rec-source">帖子 {{item.entity.tweetSize}}</text>
+                        </view>
+                    </view>
+                </view>
+                <image class="rec-topic-image" src="{{item.entity.thumbnail}}"></image>
+                <view class="rec-mask" data-objectid="{{item.objectId}}" bindtap="navToTopic"></view>
             </view>
         </block>
     </block>

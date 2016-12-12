@@ -1,6 +1,10 @@
 /**app.wxss**/
 @import "/wxParse/wxParse.wxss";
 
+view {
+    box-sizing: border-box;
+}
+
 .container {
   height: 100%;
   display: flex;
@@ -33,7 +37,7 @@ page {
 }
 .rec-top {
     padding-top: 20rpx;
-    height: 66rpx;
+    height: 86rpx;
     border-bottom: 1px solid #E5E5E5;
     font-size: 24rpx;
 }
@@ -73,6 +77,11 @@ page {
     padding-top: 22rpx;
     padding-right: 30rpx;
 }
+.rec-prediction-res {
+    font-size: 32rpx;
+    color: #333333;
+    line-height: 1.6
+}
 .rec-image-wrap {
     width: 120rpx;
     height: 120rpx;
@@ -106,6 +115,23 @@ page {
 }
 .rec-bottom-item {
     margin-right: 16rpx;
+}
+.rec-topic-wrap {
+    display: flex;
+}
+.rec-topic-top {
+    border-bottom: 0;
+}
+.rec-topic {
+    margin-left: 10rpx;
+    color: #333333;
+    font-size: 26rpx;
+}
+.rec-topic-image {
+    width: 100%;
+}
+.rec-section-topic {
+    padding: 0;
 }
 
 /* 评论赞同收藏按钮样式 */

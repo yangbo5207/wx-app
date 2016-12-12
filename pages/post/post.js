@@ -25,7 +25,6 @@ Page({
                     self.setData({
                         post: res.data.data
                     })
-                    console.log(self.data)
                 }
             })
     }

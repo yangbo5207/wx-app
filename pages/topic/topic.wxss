@@ -1,0 +1,109 @@
+.banner {
+    height: 250rpx;
+    position: relative;
+    overflow: hidden
+}
+.banner-image {
+    width: 100%;
+}
+.banner-bar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 70rpx;
+    background-color: #000;
+    opacity: 0.8;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30rpx;
+    box-sizing: border-box;
+}
+.topic-title {
+    font-size: 34rpx;
+}
+.count {
+    font-size: 26rpx;
+}
+.quote-title {
+    height: 80rpx;
+    background-color: #fff;
+    line-height: 80rpx;
+    padding: 0 30rpx;
+    font-size: 28rpx;
+    color: #333;
+    border-bottom: 1px solid #E5E5E5;
+}
+.section {
+    background-color: #fff;
+    margin-bottom: 20rpx;
+    padding: 30rpx;
+    position: relative;
+}
+.top {
+    display: flex;
+}
+.image-wrap {
+    width: 120rpx;
+    height: 120rpx;
+    overflow: hidden;
+    margin-right: 20rpx;
+}
+.img {
+    width: 120rpx;
+    height: 120rpx;
+}
+.info {
+    flex: 1;
+}
+.title {
+    font-size: 32rpx;
+    color: #333;
+}
+.desc {
+    font-size: 26rpx;
+    color: #666;
+    line-height: 1.6;
+    margin-top: 10rpx;
+    text-align: justify;
+}
+.bottom {
+    height: 35rpx;
+    margin-top: 38rpx;
+    display: flex;
+    justify-content: space-between;
+}
+.left-wrap {
+    display: flex;
+    align-items: center;
+}
+.bottom-item {
+    font-size: 24rpx;
+    color: #999999;
+    margin-left: 10rpx;
+}
+.avatar {
+    width: 35rpx;
+    height: 35rpx;
+    margin-left: 0;
+}
+.right-wrap {
+    display: flex;
+    align-items: center;
+}
+.like {
+    display: flex;
+    align-items: center;
+    margin-right: 35rpx;
+}
+.like-icon {
+    width: 28rpx;
+    height: 26rpx;
+    margin-right: 6rpx;
+}
+.comment-icon {
+    width: 26rpx;
+    height: 25rpx;
+}

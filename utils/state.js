@@ -61,12 +61,12 @@ let events = [], // 存储事件
                 item.handler(value)
             }
         })
-    }
+    };
 
-    module.exports = {
-        get: get,
-        set: set,
-        bind: bind,
-        remove: remove,
-        dispatch: dispatch
-    }
+module.exports = {
+    get: get,
+    set: set,
+    bind: bind,
+    remove: remove,
+    dispatch: dispatch
+}

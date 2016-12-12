@@ -1,40 +1,21 @@
+import config from './utils/config'
+import state from './utils/state'
+
 App({
     onLaunch: function () {
-        let logs = wx.getStorageSync('logs') || []
-        logs.unshift(Date.now())
-        wx.setStorageSync('logs', logs)
-    },
-    getUserInfo: function (cb) {
-        let self = this
-        if(self.globalData.userInfo) {
-            typeof cb == "function" && cb(this.globalData.userInfo)
-        } else {
-            wx.login({
-                success: function (res) {
-                    wx.request({
-                        url: 'https://api.weixin.qq.com/sns/jscode2session',
-                        data: {
-                            appid: 'wx87ef8d5ebed00eed',
-                            secret: '5746108f85fe52594b1639bbd9d5abe9',
-                            js_code: res.code,
-                            grant_type: 'authorization_code'
-                        },
-                        success: function (res) {
-
-                        }
-                    })
-                }
-            })
-            wx.getUserInfo({
-                success: function (res) {
-                    self.globalData.userInfo = res.userInfo
-                    typeof cb == "function" && cb(self.globalData.userInfo)
-                }
-            })
-        }
-    },
-    globalData: {
-        userInfo: null,
-        postid: '' 
+        // 正确的登录应该是将code传给服务端并获取返回结果，这里暂时使用这种方式模拟
+        wx.request({
+            url: `${config.loginDomainDev}/auth/authorize`,
+            method: 'POST',
+            data: {
+                grant_type: 'password',
+                username: '14900000086',
+                password: 'qqqqq1'
+            },
+            success (result) {
+                const authorization = `${result.data.data.token_type} ${result.data.data.access_token}`
+                state.set('authorization', authorization)
+            }
+        })
     }
 })
