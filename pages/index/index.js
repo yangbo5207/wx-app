@@ -1,5 +1,6 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
+import { promise } from '../../utils/utils'  
 
 Page({
     data: {
@@ -12,14 +13,14 @@ Page({
         enable: 1
     },
     onLoad () {
+        const self = this
         this.getRecommendList(true);
-        wx.getSystemInfo({
-            success: res => {
-                this.setData({
-                    windowWidth: res.windowWidth,
-                    windowHeight: res.windowHeight
-                })
-            }
+        promise(wx.getSystemInfo)()
+        .then( res => {
+            self.setData({
+                windowWidth: res.windowWidth,
+                windowHeight: res.windowHeight
+            })
         })
     },
     onPullDownRefresh () {
@@ -43,7 +44,6 @@ Page({
             url: '../topic/topic'
         })
     },
-
     getRecommendList (boolean) {
         const self = this
         const authorization = state.get('authorization')
@@ -70,7 +70,7 @@ Page({
             })
         }
 
-        wx.request({
+        promise(wx.request)({
             url: `${config.communityDomainDev}/v5/streamings`,
             data: {
                 pageCount: self.data.pageCount,
@@ -78,60 +78,55 @@ Page({
             },
             header: {
                 'Authorization': authorization
-            },
-            success (result) {
-                console.log(self.data.pageCount)
-                if(result.data.data) {
-                    if(boolean === true) {
-                        setTimeout( () => {
-                            wx.hideToast()
-                        }, 500)
-                        self.setData({
-                            recommendList: result.data.data
-                        })
-                    } else {
-                        self.setData({
-                            recommendList: self.data.recommendList.concat(result.data.data),
-                            isBottomLoading: 'none'
-                        })
-                    }
-                } else if (result.data.message) {
+            }
+        })
+        .then(result => {
+            if(result.data.data) {
+                if(boolean === true) {
+                    setTimeout( () => {
+                        wx.hideToast()
+                    }, 500)
                     self.setData({
-                        isBottomLoading: 'none',
-                        isBottomEnd: 'flex',
-                        enable: 0
+                        recommendList: result.data.data
                     })
                 } else {
-                    setTimeout( () => {
-                        wx.showModal({
-                            title: "提示",
-                            content: "错误码:" + result.statusCode,
-                            confirmText: "重新加载",
-                            success: function (res) {
-                                if(result.confirm) {
-                                    self.getRecommendList();
-                                }
-                            }
-                        })
-                    }, 500)
+                    self.setData({
+                        recommendList: self.data.recommendList.concat(result.data.data),
+                        isBottomLoading: 'none'
+                    })
                 }
-            },
-            fail () {
-                // 未连接到服务器，请检测是否为网络问题
-                setTimeout( () => {
-                    wx.hideToast()
-                }, 500)
-                wx.showModal({
-                    title: "提示",
-                    content: "未连接到服务器，请检测是否为网络问题",
-                    confirmText: "重新加载",
-                    success: function (res) {
-                        if(res.confirm) {
-                            self.showPage();
-                        }
-                    }
+            } else if (result.data.message) {
+                self.setData({
+                    isBottomLoading: 'none',
+                    isBottomEnd: 'flex',
+                    enable: 0
                 })
+            } else {
+                setTimeout( () => {
+                    setTimeout( () => {
+                        wx.hideToast()
+                    }, 500)
+                    promise(wx.showModal)({
+                        title: "提示",
+                        content: "错误码:" + result.statusCode,
+                        confirmText: "重新加载"
+                    })
+                    .then(res => {
+                        if(res.confirm) {
+                            self.getRecommendList();
+                        }
+                    })
+                }, 500)
             }
+        }, () => {
+            // 未连接到服务器，请检测是否为网络问题
+            setTimeout( () => {
+                wx.hideToast()
+            }, 500)
+            wx.showModal({
+                title: "提示",
+                content: "未连接到服务器，请检测是否为网络问题"
+            })
         })
     },
     // 下拉加载更多

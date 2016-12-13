@@ -5,8 +5,7 @@
         "pages/post/post",
         "pages/comment/comment",
         "pages/personal/personal",
-        "pages/prediction/prediction",
-        "pages/logs/logs"
+        "pages/prediction/prediction"
     ],
     "window": {
         "backgroundTextStyle":"light",
