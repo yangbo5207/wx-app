@@ -19,53 +19,54 @@ App({
             state.set('authorization', authorization)
         })
 
-        let openid, token;
+        // 后续可能被采用的代码片段
+        // let openid, token;
 
-        promise(wx.login)()
-        .then(result => {
-            return result.code
-        })
-        .then(code => {
-            // 通过code获取openid
-            return promise(wx.request)({
-                url: 'https://api.weixin.qq.com/sns/jscode2session',
-                data: {
-                    appid: 'wx87ef8d5ebed00eed',
-                    secret: '5746108f85fe52594b1639bbd9d5abe9',
-                    js_code: code,
-                    grant_type: 'authorization_code'
-                }
-            })
-        })
-        .then(result => {
-            openid = result.data.openid
-        })
-        .then(() => {
-            // 通过appid与appSecret获取access_token
-            return promise(wx.request)({
-                url: 'https://api.weixin.qq.com/cgi-bin/token',
-                data: {
-                    appid: 'wx87ef8d5ebed00eed', 
-                    secret: '5746108f85fe52594b1639bbd9d5abe9',
-                    grant_type: 'client_credential'
-                },
-            })
-        })
-        .then(result => {
-            token = result.data.access_token
-        })
-        .then(() => {
-            return promise(wx.request)({
-                url: `${config.loginDomainDev}/api/v4/auth/sns/signin/wechat`,
-                method: 'POST',
-                data: {
-                    access_token: token,
-                    openid: openid
-                }
-            })
-        })
-        .then(result => {
-            console.log(result)
-        })
+        // promise(wx.login)()
+        // .then(result => {
+        //     return result.code
+        // })
+        // .then(code => {
+        //     // 通过code获取openid
+        //     return promise(wx.request)({
+        //         url: 'https://api.weixin.qq.com/sns/jscode2session',
+        //         data: {
+        //             appid: 'wx87ef8d5ebed00eed',
+        //             secret: '5746108f85fe52594b1639bbd9d5abe9',
+        //             js_code: code,
+        //             grant_type: 'authorization_code'
+        //         }
+        //     })
+        // })
+        // .then(result => {
+        //     openid = result.data.openid
+        // })
+        // .then(() => {
+        //     // 通过appid与appSecret获取access_token
+        //     return promise(wx.request)({
+        //         url: 'https://api.weixin.qq.com/cgi-bin/token',
+        //         data: {
+        //             appid: 'wx87ef8d5ebed00eed', 
+        //             secret: '5746108f85fe52594b1639bbd9d5abe9',
+        //             grant_type: 'client_credential'
+        //         },
+        //     })
+        // })
+        // .then(result => {
+        //     token = result.data.access_token
+        // })
+        // .then(() => {
+        //     return promise(wx.request)({
+        //         url: `${config.loginDomainDev}/api/v4/auth/sns/signin/wechat`,
+        //         method: 'POST',
+        //         data: {
+        //             access_token: token,
+        //             openid: openid
+        //         }
+        //     })
+        // })
+        // .then(result => {
+        //     console.log(result)
+        // })
     }
 })
