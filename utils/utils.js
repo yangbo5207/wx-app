@@ -32,6 +32,11 @@ function wxPromise (cb) {
     }
 }
 
+function type(elem) {
+    if (elem == null) return elem + '';
+    return toString.call(elem).replace(/[\[\]]/g, '').split(' ')[1].toLowerCase();
+}
+
 function wxPromiseAll (promises) {
     return Promise.all(promises)
 }
@@ -39,5 +44,6 @@ function wxPromiseAll (promises) {
 module.exports = {
     formatTime: formatTime,
     promise: wxPromise,
-    promiseAll: wxPromiseAll
+    promiseAll: wxPromiseAll,
+    type: type
 }

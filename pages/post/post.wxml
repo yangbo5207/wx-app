@@ -20,16 +20,16 @@
 <view class="post-bottom"></view>
 
 <view class="bottom-bar">
-    <view class="bottom-bar-item">
-        <image class="bottom-bar-icon likes" src="/image/003.png"></image>
-        <text>赞同({{post.likeSize}})</text>
+    <view class="bottom-bar-item" bindtap="setLike">
+        <image class="bottom-bar-icon likes" src="/image/{{like == 1 ? '003_HL' : '003'}}.png"></image>
+        <text>{{like == 1 ? '已赞' : '赞同'}}({{post.likeSize}})</text>
     </view>
-    <view class="bottom-bar-item">
+    <view class="bottom-bar-item" bindtap="navToComment">
         <image class="bottom-bar-icon comments" src="/image/004.png"></image>
         <text>评论({{post.commentSize}})</text>
     </view>
-    <view class="bottom-bar-item collect">
-        <image class="bottom-bar-icon collect" src="/image/005.png"></image>
+    <view class="bottom-bar-item collect" bindtap="setFavorite">
+        <image class="bottom-bar-icon collect" src="/image/{{favorite == 1 ? '005_HL' : '005'}}.png"></image>
         <text>收藏</text>
     </view>
 </view>

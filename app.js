@@ -3,6 +3,9 @@ import state from './utils/state'
 import { promise } from './utils/utils'
 
 App({
+    data: {
+        aaa: '123'
+    },
     onLaunch: function () {
         // 正确的登录应该是将code传给服务端并获取返回结果，这里暂时使用这种方式模拟
         promise(wx.request)({
@@ -15,9 +18,21 @@ App({
             }
         })
         .then(result => {
+            console.log('xxxxx')
             const authorization = `${result.data.data.token_type} ${result.data.data.access_token}`
-            state.set('authorization', authorization)
+            state.set({ 'authorization': authorization })
         })
+        .then(() => {
+            return promise(wx.request)({
+                url: `${config.communityDomainDev}/v5/user/actions/key`,
+                header: { 'Authorization': state.get('authorization') }
+            })
+        })
+        .then(result => {
+            console.log('user actions as likes, favorite and report', result)
+            state.set({ 'actions': result.data.data })
+        })
+        
 
         // 后续可能被采用的代码片段
         // let openid, token;

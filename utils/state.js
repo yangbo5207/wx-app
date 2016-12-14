@@ -1,3 +1,5 @@
+import utils from './utils'
+
 let events = [], // 存储事件
     states = {}, // 存储变量
 
@@ -9,20 +11,42 @@ let events = [], // 存储事件
         return '';
     },
 
-    set = function (name, value) {
-        if (!states[name]) {
-            states[name] = value
-            events[name] = []
-        } else {
-            states[name] = value
-        }
+    getStates = function () {
+        return states
+    },
+
+    // set = function (name, value) {
+    //     if (!states[name]) {
+    //         states[name] = value
+    //         events[name] = []
+    //     } else {
+    //         states[name] = value
+    //     }
+    // },
+
+    set = function (options, target) {
+        let keys = Object.keys(options)
+        let o = target ? target : states
+        keys.map(function (item) {
+            if(typeof o[item] == 'undefined') {
+                o[item] = options[item]
+            } 
+            else {
+                if(utils.type(o[item]) == 'object') {
+                    set(options[item], o[item])
+                } else {
+                    o[item] = options[item]
+                }
+            }
+            return item
+        })
     },
 
     // notification : 对应的通知方法，接收到通知之后会执行的动作
     bind = function (name, notification, targetPage) {
         if (name && notification) {
             if (!targetPage) {
-                console.log('bind error: 没有绑定页面对象')
+                console.error('bind error: 没有绑定页面对象')
                 return false
             }
             events.push({
@@ -65,6 +89,7 @@ let events = [], // 存储事件
 
 module.exports = {
     get: get,
+    getStates: getStates,
     set: set,
     bind: bind,
     remove: remove,
