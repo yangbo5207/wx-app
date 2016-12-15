@@ -2,9 +2,6 @@ import config from '../../utils/config'
 import state from '../../utils/state'
 import { promise } from '../../utils/utils'
 
-const postid = 6711
-const type = 1
-
 Page({
     data: {
         comments: [],
@@ -20,6 +17,8 @@ Page({
     onLoad: function () {
         const _this = this
         const authorization = state.get('authorization')
+        const postid = state.get('postid')
+        const type = state.get('type')
 
         promise(wx.getSystemInfo)()
         .then(result => {
@@ -29,7 +28,7 @@ Page({
         })
 
         promise(wx.request)({
-            url: `${config.communityDomainDev}/v5/object/1/${postid}/comments`,
+            url: `${config.communityDomainDev}/v5/object/${type}/${postid}/comments`,
             data: {
                 pageCount: 1,
                 pageSize: 10
@@ -68,6 +67,8 @@ Page({
     commentSend () {
         const _this = this
         const authorization = state.get('authorization')
+        const postid = state.get('postid')
+        const type = state.get('type')
 
         promise(wx.request)({
             url: `${config.communityDomainDev}/v5/comment`,
@@ -85,12 +86,20 @@ Page({
         .then(res => {
             if(res.statusCode == 200) {
                 let comments = _this.data.comments
+                let commentSize = state.get('commentSize') + 1
+
                 res.data.data.author = state.get('author')
                 comments.unshift(res.data.data)
                 _this.setData({
                     comments: comments,
-                    inputValue: ''
+                    inputValue: '',
+                    isNone: 'none'
                 })
+                
+                state.set({
+                    commentSize: commentSize
+                })
+                state.dispatch('changeCommentCount', commentSize)
             } else {
                 _this.setData({
                     tips: 'block',

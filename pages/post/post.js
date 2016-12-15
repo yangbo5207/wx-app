@@ -7,7 +7,8 @@ Page({
     data: {
         post: {},
         like: 0,
-        favorite: 0
+        favorite: 0,
+        commentSize: 0
     },
     onLoad () {
         wx.showToast({
@@ -32,7 +33,8 @@ Page({
                 WxParse.wxParse('article', 'html', article, self, 0.04*systemInfo.windowWidth);
             })
             self.setData({
-                post: res.data.data
+                post: res.data.data,
+                commentSize: res.data.data.commentSize
             })
         })
         .catch(() => {
@@ -41,7 +43,7 @@ Page({
                 content: '与服务器断开连接，请检查是否为网络问题'
             })
         })
-        
+
         let actions = state.get('actions')
         let cur = `1:${postid}`
 
@@ -51,6 +53,13 @@ Page({
         if(actions.favorite.indexOf(cur) > -1) {
             self.setData({ favorite: 1 })
         }
+
+        state.bind('changeCommentCount', self.changeCommentCount, self)
+    },
+    changeCommentCount (newCount) {
+        this.setData({
+            commentSize: newCount
+        })
     },
     setLike () {
         const self = this
@@ -181,6 +190,10 @@ Page({
         }
     },
     navToComment () {
+        const _this = this
+        state.set({
+            commentSize: _this.data.post.commentSize
+        })
         wx.navigateTo({
             url: '../comment/comment'
         })

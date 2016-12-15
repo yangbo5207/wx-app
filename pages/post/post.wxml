@@ -26,7 +26,7 @@
     </view>
     <view class="bottom-bar-item" bindtap="navToComment">
         <image class="bottom-bar-icon comments" src="/image/004.png"></image>
-        <text>评论({{post.commentSize}})</text>
+        <text>评论({{commentSize}})</text>
     </view>
     <view class="bottom-bar-item collect" bindtap="setFavorite">
         <image class="bottom-bar-icon collect" src="/image/{{favorite == 1 ? '005_HL' : '005'}}.png"></image>

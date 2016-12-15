@@ -58,13 +58,3 @@
     </view>
     <view class="comment-send" bindtap="commentSend">发送</view>
 </view>
-
-<!-- height 100% 高度不会变化 -->
-<!-- windowHeight 高度不会变化 -->
-<!-- 清空input 的value值不能使用 value变量，而要改成其他的 -->
-
-
-
-<div class="ai" click="tapDiv">
-    <div class="box"></div>
-</div>

@@ -1,7 +1,7 @@
 {
     "pages": [
-        "pages/comment/comment",
         "pages/index/index",
+        "pages/comment/comment",
         "pages/topic/topic",
         "pages/post/post",
         "pages/personal/personal",

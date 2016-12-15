@@ -27,19 +27,28 @@ Page({
         this.getRecommendList(true)
     },
     navToPost (event) {
-        state.set({ postid: event.target.dataset.objectid })
+        state.set({ 
+            postid: event.currentTarget.dataset.objectid,
+            type: event.currentTarget.dataset.type
+        })
         wx.navigateTo({
             url: '../post/post'
         })
     },
     navToPrediction (event) {
-        state.set({ postid: event.target.dataset.objectid })
+        state.set({ 
+            postid: event.currentTarget.dataset.objectid,
+            type: event.currentTarget.dataset.type
+        })
         wx.navigateTo({
             url: '../prediction/prediction'
         })
     },
     navToTopic (event) {
-        state.set({ postid: event.target.dataset.objectid })
+        state.set({ 
+            postid: event.currentTarget.dataset.objectid,
+            type: event.currentTarget.dataset.type
+        })
         wx.navigateTo({
             url: '../topic/topic'
         })
