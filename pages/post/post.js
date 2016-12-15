@@ -41,8 +41,10 @@ Page({
                 content: '与服务器断开连接，请检查是否为网络问题'
             })
         })
+        
         let actions = state.get('actions')
         let cur = `1:${postid}`
+
         if(actions.like.indexOf(cur) > -1) {
             self.setData({ like: 1 })
         }

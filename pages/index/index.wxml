@@ -35,7 +35,34 @@
 
         <block wx:if="{{item.type == 4}}">
             <view class="rec-section">
-                <view class="rec-main">这里是要闻部分，type==4</view>
+                <view class="rec-main">
+                    <view class="rec-top">
+                        <view class="rec-top-wrap">
+                            <view class="rec-type type-highlight">要闻</view>
+                            <text class="rec-source">来自{{item.entity.symbol}}</text>
+                        </view>
+                    </view>
+                    <view class="rec-middle">
+                        <view class="rec-middle-wrap">
+                            <block wx:if="{{item.entity.thumbnail}}">
+                                <view class="rec-image-wrap">
+                                    <image class="rec-image" src="{{item.entity.thumbnail}}"></image>
+                                </view>
+                            </block>
+                            <view class="rec-info">
+                                <view class="rec-title">{{item.entity.title}}</view>
+                                <view class="rec-desc">{{item.entity.summary}}</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="rec-bottom">
+                        <view class="rec-bottom-item">{{item.entity.media}}</view>
+                        <view class="rec-bottom-item">{{item.entity.pubTime}}</view>
+                        <view class="rec-bottom-item like">{{item.entity.likeSize}}赞同</view>
+                        <view class="rec-bottom-item">{{item.entity.commentSize}}评论</view>
+                    </view>
+                </view>
+                <view class="rec-mask" data-objectid="{{item.objectId}}" bindtap="navToNews"></view>
             </view>
         </block>
 

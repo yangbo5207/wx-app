@@ -13,7 +13,7 @@ view {
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-} 
+}
 page {
   font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-size: 14px;
@@ -204,31 +204,37 @@ page {
 
 /* 回复框样式 */
 .comment-input-wrap {
-    height: 90rpx;
-    background-color: #FAFAFA;
-    border:1px solid #C3C3C3;
+    height: 50px;
+    background-color: #fdfdfd;
+    border:1px solid #e5e5e5;
     border-left: 0;
     border-right: 0;
     display: flex;
     align-items: center;
     padding: 0 30rpx;
-    position: fixed;
+    position: absolute;
     bottom: 0;
+    width: 100%;
 }
 .comment-input-box {
     box-sizing: border-box;
     background-color: #fff;
-    width: 625rpx;
-    border: 1px solid #DBDBDB;
+    width: 605rpx;
+    border: 1px solid #e5e5e5;
     border-radius: 4px;
     padding-left: 20rpx;
     font-size: 26rpx;
 }
 .comment-input {
     background-color: #fff;
+    border-radius: 6px;
 }
-.comment-image {
-    width: 50rpx;
-    height: 50rpx;
+.comment-send {
+    flex: 1;
     margin-left: 20rpx;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2A4B87;
 }

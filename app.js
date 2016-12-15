@@ -18,19 +18,27 @@ App({
             }
         })
         .then(result => {
-            console.log('xxxxx')
+            console.log(result)
             const authorization = `${result.data.data.token_type} ${result.data.data.access_token}`
             state.set({ 'authorization': authorization })
         })
         .then(() => {
-            return promise(wx.request)({
+            promise(wx.request)({
                 url: `${config.communityDomainDev}/v5/user/actions/key`,
                 header: { 'Authorization': state.get('authorization') }
             })
-        })
-        .then(result => {
-            console.log('user actions as likes, favorite and report', result)
-            state.set({ 'actions': result.data.data })
+            .then(result => {
+                state.set({ 'actions': result.data.data })
+            })
+
+            promise(wx.request)({
+                url: `${config.communityDomainDev}/v5/user`,
+                header: { 'Authorization': state.get('authorization') }
+            })
+            .then(request => {
+                state.set({ 'author': request.data.data })
+                console.log(state.getStates())
+            })
         })
         
 

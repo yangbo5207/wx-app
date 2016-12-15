@@ -1,6 +1,6 @@
 .comments-section {
     background-color: #fff;
-    margin-bottom: 20rpx;
+    margin-top: 20rpx;
 }
 .comments-main  {
     box-sizing: border-box;
@@ -82,4 +82,24 @@
 }
 .comment-bottom {
     height: 92rpx;
+}
+page {
+    height: 100%;
+    position: relative;
+    background-color: #fff;
+}
+.comment-wrap {
+    background-color: #F6F6F6;
+}
+.tips {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70rpx;
+    background-color: #E64340;
+    color: #fff;
+    line-height: 72rpx;
+    text-align: center;
+    font-size: 30rpx;
 }
