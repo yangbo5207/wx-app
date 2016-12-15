@@ -3,25 +3,8 @@ import state from './utils/state'
 import { promise } from './utils/utils'
 
 App({
-    data: {
-        aaa: '123'
-    },
-    onLaunch: function () {
-        // 正确的登录应该是将code传给服务端并获取返回结果，这里暂时使用这种方式模拟
-        promise(wx.request)({
-            url: `${config.loginDomainDev}/auth/authorize`,
-            method: 'POST',
-            data: { 
-                grant_type: 'password',
-                username: '14900000086',
-                password: 'qqqqq1'
-            }
-        })
-        .then(result => {
-            console.log(result)
-            const authorization = `${result.data.data.token_type} ${result.data.data.access_token}`
-            state.set({ 'authorization': authorization })
-        })
+    onLaunch () {
+        this.login()
         .then(() => {
             promise(wx.request)({
                 url: `${config.communityDomainDev}/v5/user/actions/key`,
@@ -37,10 +20,25 @@ App({
             })
             .then(request => {
                 state.set({ 'author': request.data.data })
-                console.log(state.getStates())
+                console.log('app 初始化完成')
             })
         })
-        
+    },
+    login () {
+        return promise(wx.request)({
+            url: `${config.loginDomainDev}/auth/authorize`,
+            method: 'POST',
+            data: { 
+                grant_type: 'password',
+                username: '14900000086',
+                password: 'qqqqq1'
+            }
+        })
+        .then(result => {
+            console.log(result)
+            const authorization = `${result.data.data.token_type} ${result.data.data.access_token}`
+            state.set({ 'authorization': authorization })
+        })
 
         // 后续可能被采用的代码片段
         // let openid, token;

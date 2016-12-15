@@ -1,6 +1,8 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
-import { promise } from '../../utils/utils'  
+import { promise } from '../../utils/utils'
+
+const app = getApp()  
 
 Page({
     data: {
@@ -14,7 +16,15 @@ Page({
     },
     onLoad () {
         const self = this
-        this.getRecommendList(true);
+        const authorization = state.get('authorization')
+        if(authorization) {
+            this.getRecommendList(true);
+        } else {
+            app.login()
+            .then(() => {
+                this.getRecommendList(true);
+            })
+        }
         promise(wx.getSystemInfo)()
         .then( res => {
             self.setData({
@@ -127,6 +137,7 @@ Page({
                     }
                 })
             }
+            console.log('index页面加载完成')
         }, () => {
             // 未连接到服务器，请检测是否为网络问题
             setTimeout( () => {

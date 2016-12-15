@@ -173,7 +173,7 @@ Page({
         })
 
         promise(wx.request)({
-            url: `${config.communityDomainDev}/v5/object/3/${`commentid`}/like`,
+            url: `${config.communityDomainDev}/v5/object/3/${commentid}/like`,
             method: 'POST',
             header: {
                 Authorization: authorization
