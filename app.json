@@ -1,5 +1,6 @@
 {
     "pages": [
+        "pages/collect/collect",
         "pages/index/index",
         "pages/nickname/nickname",
         "pages/prediction/prediction",
