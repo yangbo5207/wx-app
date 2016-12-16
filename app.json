@@ -1,12 +1,12 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/prediction/prediction",
         "pages/hightlight/hightlight",
         "pages/comment/comment",
         "pages/topic/topic",
         "pages/post/post",
-        "pages/personal/personal",
-        "pages/prediction/prediction"
+        "pages/personal/personal"
     ],
     "window": {
         "backgroundTextStyle":"light",

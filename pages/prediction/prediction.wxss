@@ -1,6 +1,7 @@
 .header {
     background-color: #fff;
     padding-left: 30rpx; 
+    padding-bottom: 30rpx;
 }
 
 .swiper-tab {
@@ -15,7 +16,7 @@
 .swiper-tab-list {
     display: inline-block;
     width: 25%;
-    height: 95rpx;
+    height: 100rpx;
 }
 
 .on {
