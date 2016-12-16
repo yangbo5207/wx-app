@@ -115,7 +115,9 @@
 </view>
 <swiper current="{{currentTab}}" class="swiper-box" duration="300" bindchange="bindChange">
     <swiper-item>
-        <template is="recommend" data="{{recommendList}}"></template>
+        <scroll-view class="scroll-wrap" scroll-y="true" bindscrolltolower="upLoad" style="width: {{windowWidth}}px;height: {{windowHeight}}px">
+            <template is="recommend" data="{{recommendList}}"></template>
+        </scroll-view>
     </swiper-item>
     <swiper-item>
         <template is="recommend" data="{{recommendList}}"></template>

@@ -14,6 +14,7 @@ Page({
             url: `${config.communityDomainDev}/v5/user/favorites`,
             header: { Authorization: authorization },
             data: {
+                type: -1,
                 pageCount: 1,
                 pageSize: 20
             }
@@ -22,6 +23,14 @@ Page({
             console.log(result)
             _this.setData({
                 recommendList: result.data.data
+            })
+        })
+
+        promise(wx.getSystemInfo)()
+        .then( res => {
+            _this.setData({
+                windowWidth: res.windowWidth,
+                windowHeight: res.windowHeight
             })
         })
     },

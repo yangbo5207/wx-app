@@ -21,6 +21,39 @@ page {
 }
 
 /* 主页列表样式 */
+.userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.userinfo-avatar {
+    width: 128rpx;
+    height: 128rpx;
+    margin: 20rpx;
+    border-radius: 50%;
+}
+
+.userinfo-nickname {
+    color: #aaa;
+}
+
+.usermotto {
+    text-align: center
+}
+
+.rec-section:last-child {
+    margin-bottom: 0;
+} 
+.rec-main {
+    padding-left: 30rpx;
+}
+
+.like {
+    border-left: 1px solid #999999;
+    padding-left: 16rpx;
+    height: 26rpx;
+}
 .rec-section {
     background-color: #fff;
     margin-bottom: 20rpx;

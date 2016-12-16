@@ -1,7 +1,7 @@
 {
     "pages": [
-        "pages/collect/collect",
         "pages/index/index",
+        "pages/collect/collect",
         "pages/nickname/nickname",
         "pages/prediction/prediction",
         "pages/hightlight/hightlight",
