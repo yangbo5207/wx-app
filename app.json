@@ -1,6 +1,7 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/nickname/nickname",
         "pages/prediction/prediction",
         "pages/hightlight/hightlight",
         "pages/comment/comment",

@@ -16,6 +16,7 @@
 .item-l, .item-r {
     display: flex;
     align-items: center;
+    height: 100%
 }
 .img-wrap {
     display: flex;

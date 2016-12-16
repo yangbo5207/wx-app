@@ -4,8 +4,8 @@
             <view class="img-wrap"><image class="icon icon-nickname" src="/image/006.png" /></view>
             <text class="title">我的昵称</text>
         </view>
-        <view class="item-r">
-            <text class="nickname">飞翔的企鹅</text>
+        <view class="item-r" bindtap="navToNickname">
+            <text class="nickname">{{nickname}}</text>
             <image class="icon icon-arrow" src="/image/arrow.png"></image>
         </view>
     </view>

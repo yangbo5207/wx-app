@@ -238,3 +238,12 @@ page {
     justify-content: center;
     color: #2A4B87;
 }
+
+button.primary {
+    background-color: #F8CC00;
+    height: 94rpx;
+    line-height: 94rpx;
+    font-size: 36rpx;
+    border: none;
+    margin: 0 40rpx;
+}
