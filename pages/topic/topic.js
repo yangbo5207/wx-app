@@ -42,7 +42,8 @@ Page({
     },
     navToPost(event) {
         state.set({
-            postid: event.currentTarget.dataset.objectid
+            postid: event.currentTarget.dataset.objectid,
+            type: 1
         })
         wx.navigateTo({
             url: '../post/post'

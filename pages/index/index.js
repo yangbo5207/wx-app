@@ -45,6 +45,16 @@ Page({
             url: '../post/post'
         })
     },
+    navToNews (event) {
+        const dataset = event.currentTarget.dataset
+        state.set({
+            postid: dataset.objectid,
+            type: dataset.type
+        })
+        wx.navigateTo({
+            url: '../hightlight/hightlight'
+        })
+    },
     navToPrediction (event) {
         state.set({ 
             postid: event.currentTarget.dataset.objectid,

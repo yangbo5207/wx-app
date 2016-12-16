@@ -22,7 +22,11 @@ function wxPromise (cb) {
     return function (result = {}) {
         return new Promise ((resolve, reject) => {
             result.success = _res => {
-                resolve(_res)
+                if(_res.statusCode) {
+                    _res.statusCode == 200 ? resolve(_res) : reject(_res)
+                } else {
+                    resolve(_res)
+                }
             }
             result.fail = (...args) => {
                 reject(...args)

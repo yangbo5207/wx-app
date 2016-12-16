@@ -1,0 +1,26 @@
+page {
+    background-color: #fff;
+}
+.post-header {
+    margin: 40rpx 0 40rpx;
+}
+.post-main {
+    padding: 0 4%;
+}
+.post-title {
+    font-size: 34rpx;
+    color: #333333;
+    line-height: 1.4;
+}
+.post-info {
+    display: flex;
+    color: #999999;
+    font-size: 24rpx;
+    margin-top: 16rpx;
+}
+.post-time {
+    margin-right: 30rpx;
+}
+.post-bottom {
+    height: 100rpx;
+}

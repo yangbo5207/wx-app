@@ -4,23 +4,36 @@ import { promise } from './utils/utils'
 
 App({
     onLaunch () {
-        this.login()
-        .then(() => {
-            promise(wx.request)({
+        const _this = this
+        this.login().then(() => {
+            return promise(wx.request)({
                 url: `${config.communityDomainDev}/v5/user/actions/key`,
                 header: { 'Authorization': state.get('authorization') }
             })
             .then(result => {
                 state.set({ 'actions': result.data.data })
             })
-
-            promise(wx.request)({
-                url: `${config.communityDomainDev}/v5/user`,
-                header: { 'Authorization': state.get('authorization') }
+            .then( () => {
+                return promise(wx.request)({
+                    url: `${config.communityDomainDev}/v5/user`,
+                    header: { 'Authorization': state.get('authorization') }
+                })
+                .then(request => {
+                    state.set({ 'author': request.data.data })
+                    console.log('app 初始化完成')
+                })
             })
-            .then(request => {
-                state.set({ 'author': request.data.data })
-                console.log('app 初始化完成')
+        })
+        .catch( () => {
+            promise(wx.showModal)({
+                title: "提示",
+                content: "好像除了点小问题，你可以尝试重新加载",
+                confirmText: "重新加载"
+            })
+            .then(res => {
+                if(res.confirm) {
+                    _this.onLaunch()
+                }
             })
         })
     },

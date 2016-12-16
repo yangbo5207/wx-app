@@ -16,45 +16,59 @@ Page({
             icon: 'loading',
             duration: 10000
         })
-        let self = this,
-            postid = state.get('postid'),
-            authorization = state.get('authorization'),
-            postURL = `${config.communityDomainDev}/v5/tweet/${postid}`;
+        const _this = this
+        const postid = state.get('postid')
+        const authorization = state.get('authorization')
+        const postURL = `${config.news}/highlight`
 
         promise(wx.request)({
             url: postURL,
-            header: { 'Authorization': authorization }
+            data: {
+                id: postid,
+                wx: 1
+            }
         })
-        .then(res => {
+        .then( result => {
             wx.hideToast();
-            const article = res.data.data.content
+            const article = result.data.content
             promise(wx.getSystemInfo)()
             .then(systemInfo => {
-                WxParse.wxParse('article', 'html', article, self, 0.04*systemInfo.windowWidth);
+                WxParse.wxParse('article', 'html', article, _this, 0.04 * systemInfo.windowWidth);
             })
-            self.setData({
-                post: res.data.data,
-                commentSize: res.data.data.commentSize
+            _this.setData({
+                post: result.data
             })
         })
         .catch(() => {
             wx.showModal({
                 title: '提示',
-                content: '与服务器断开连接，请检查是否为网络问题'
+                content: '好像除了点状况'
+            })
+        })
+
+        promise(wx.request)({
+            url: `${config.communityDomainDev}/v5/object/4/${postid}/comments`,
+            header: {
+                Authorization: authorization
+            },
+            data: {
+                pageSize: 1
+            } 
+        }) 
+        .then( result => {
+            _this.setData({
+                commentSize: result.data.totalSize
             })
         })
 
         let actions = state.get('actions')
         let cur = `1:${postid}`
 
-        if(actions.like.indexOf(cur) > -1) {
-            self.setData({ like: 1 })
-        }
         if(actions.favorite.indexOf(cur) > -1) {
-            self.setData({ favorite: 1 })
+            _this.setData({ favorite: 1 })
         }
 
-        state.bind('changeCommentCount', self.changeCommentCount, self)
+        state.bind('changeCommentCount', _this.changeCommentCount, _this)
     },
     changeCommentCount (newCount) {
         this.setData({
@@ -101,23 +115,6 @@ Page({
                     header: { Authorization: authorization }
                 })
             } 
-            // 暂时先不考虑做取消点赞
-            // else {
-            //     method = 'DELETE'
-            //     self.setData({
-            //         like: 0,
-            //         post: {
-            //             likeSize: self.data.post.likeSize - 1
-            //         }
-            //     })
-            //     let likes = state.get('actions').like
-            //     likes.splice(likes.indexOf(`1:${postid}`), 1)
-            //     state.set({
-            //         actions: {
-            //             like: likes
-            //         }
-            //     })
-            // }
         }
     },
     setFavorite () {

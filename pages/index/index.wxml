@@ -58,8 +58,8 @@
                     <view class="rec-bottom">
                         <view class="rec-bottom-item">{{item.entity.media}}</view>
                         <view class="rec-bottom-item">{{item.entity.pubTime}}</view>
-                        <view class="rec-bottom-item like">{{item.entity.likeSize}}赞同</view>
-                        <view class="rec-bottom-item">{{item.entity.commentSize}}评论</view>
+                        <!--<view class="rec-bottom-item like">{{item.entity.likeSize}}赞同</view>
+                        <view class="rec-bottom-item">{{item.entity.commentSize}}评论</view>-->
                     </view>
                 </view>
             </view>

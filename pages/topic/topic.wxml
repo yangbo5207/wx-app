@@ -9,7 +9,7 @@
 <view class="quote-title">抓住实时行情，把握交易机会</view>
 
 <block wx:for="{{topicList}}" wx:key="">
-    <view class="section">
+    <view class="section" data-objectid="{{item.id}}" bindtap="navToPost">
         <view class="top">
             <block wx:if="{{item.thumbnail}}">
                 <view class="image-wrap">
@@ -35,7 +35,6 @@
                 <image class="comment-icon" src="/image/004.png"></image>
             </view>
         </view>
-        <view class="rec-mask" data-objectid="{{item.id}}" bindtap="navToPost"></view>
     </view>
 </block>
 
