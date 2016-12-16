@@ -280,3 +280,38 @@ button.primary {
     border: none;
     margin: 0 40rpx;
 }
+
+
+/* 手机绑定样式 */
+.bind-phone-wrap {
+    margin: 20rpx 0;
+    font-size: 28rpx;
+}
+.bind-phone-item {
+    background-color: #fff;
+    height: 90rpx;
+    display: flex;
+    margin-top: 1px;
+    padding-left: 20rpx
+}
+.bind-item-left {
+    height: 100%;
+    width: 180rpx;
+    display: flex;
+    align-items: center
+}
+.bind-item-middle {
+    flex: 1;
+    height: 100%;
+}
+.bind-item-right {
+    width: 90rpx;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bind-item-right-img {
+    width: 30rpx;
+    height: 30rpx;
+}
