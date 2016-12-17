@@ -8,7 +8,6 @@ Page({
         recommendList: []
     },
     onLoad: function () {
-        const _this = this
         const authorization = state.get('authorization')
         promise(wx.request)({
             url: `${config.communityDomainDev}/v5/user/favorites`,
@@ -21,14 +20,14 @@ Page({
         })
         .then( result => {
             console.log(result)
-            _this.setData({
+            this.setData({
                 recommendList: result.data.data
             })
         })
 
         promise(wx.getSystemInfo)()
         .then( res => {
-            _this.setData({
+            this.setData({
                 windowWidth: res.windowWidth,
                 windowHeight: res.windowHeight
             })

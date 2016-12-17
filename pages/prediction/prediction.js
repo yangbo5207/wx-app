@@ -27,12 +27,10 @@ Page({
         })
     },
     switchNav: function (e) {
-        let self = this
-
         if(this.data.currentTab === e.target.dataset.current) {
             return false;
         } else {
-            self.setData({
+            this.setData({
                 currentTab: e.target.dataset.current
             })
         }

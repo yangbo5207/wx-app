@@ -10,8 +10,6 @@ Page({
         topicList: []
     },
     onLoad () {
-        const _this = this
-        // app.globalData.postid = 42
         // const postid = state.get('postid')
         const postid = 42
         const authorization = state.get('authorization')
@@ -23,7 +21,7 @@ Page({
             }
         }) 
         .then( result => {
-            _this.setData({
+            this.setData({
                 topicInfo: result.data.data
             })
         })
@@ -35,7 +33,7 @@ Page({
             }
         })
         .then( result => {
-            _this.setData({
+            this.setData({
                 topicList: result.data.data
             })
         })

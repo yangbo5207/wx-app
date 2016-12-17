@@ -16,7 +16,6 @@ Page({
             icon: 'loading',
             duration: 10000
         })
-        const _this = this
         const postid = state.get('postid')
         const authorization = state.get('authorization')
         const postURL = `${config.news}/highlight`
@@ -33,9 +32,9 @@ Page({
             const article = result.data.content
             promise(wx.getSystemInfo)()
             .then(systemInfo => {
-                WxParse.wxParse('article', 'html', article, _this, 0.04 * systemInfo.windowWidth);
+                WxParse.wxParse('article', 'html', article, this, 0.04 * systemInfo.windowWidth);
             })
-            _this.setData({
+            this.setData({
                 post: result.data
             })
         })
@@ -56,7 +55,7 @@ Page({
             } 
         }) 
         .then( result => {
-            _this.setData({
+            this.setData({
                 commentSize: result.data.totalSize
             })
         })
@@ -65,10 +64,10 @@ Page({
         let cur = `1:${postid}`
 
         if(actions.favorite.indexOf(cur) > -1) {
-            _this.setData({ favorite: 1 })
+            this.setData({ favorite: 1 })
         }
 
-        state.bind('changeCommentCount', _this.changeCommentCount, _this)
+        state.bind('changeCommentCount', this.changeCommentCount, this)
     },
     changeCommentCount (newCount) {
         this.setData({
@@ -187,9 +186,8 @@ Page({
         }
     },
     navToComment () {
-        const _this = this
         state.set({
-            commentSize: _this.data.commentSize
+            commentSize: this.data.commentSize
         })
         wx.navigateTo({
             url: '../comment/comment'

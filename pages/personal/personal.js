@@ -7,8 +7,7 @@ Page({
         nickname: ''
     },
     onLoad () {
-        const _this = this
-        _this.setData({
+        this.setData({
             nickname: state.get('author').name
         })
     },

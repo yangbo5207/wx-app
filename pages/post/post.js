@@ -163,9 +163,8 @@ Page({
         })
     },
     navToComment () {
-        const _this = this
         state.set({
-            commentSize: _this.data.commentSize
+            commentSize: this.data.commentSize
         })
         wx.navigateTo({
             url: '../comment/comment'

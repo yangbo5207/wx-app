@@ -15,14 +15,13 @@ Page({
         tipsContent: ''
     },
     onLoad: function () {
-        const _this = this
         const authorization = state.get('authorization')
         const postid = state.get('postid')
         const type = state.get('type')
 
         promise(wx.getSystemInfo)()
         .then(result => {
-            _this.setData({
+            this.setData({
                 commentWrapHeight: result.windowHeight - 50
             })
         })
@@ -38,7 +37,7 @@ Page({
         .then( result => {
             const res = result.data
             if (res.totalSize == 0) {
-                _this.setData({
+                this.setData({
                     isNone: 'flex'
                 })
                 return
@@ -54,7 +53,7 @@ Page({
                 return item 
             })
 
-            _this.setData({
+            this.setData({
                 comments: comments
             })
         })
@@ -65,7 +64,6 @@ Page({
         })
     },
     commentSend () {
-        const _this = this
         const authorization = state.get('authorization')
         const postid = state.get('postid')
         const type = state.get('type')
@@ -76,7 +74,7 @@ Page({
             data: {
                 objectId: postid,
                 type: type,
-                content: encodeURIComponent(_this.data.inputValue)
+                content: encodeURIComponent(this.data.inputValue)
             },
             header: { 
                 Authorization: authorization,
@@ -85,12 +83,12 @@ Page({
         })   
         .then(res => {
             if(res.statusCode == 200) {
-                let comments = _this.data.comments
+                let comments = this.data.comments
                 let commentSize = state.get('commentSize') + 1
 
                 res.data.data.author = state.get('author')
                 comments.unshift(res.data.data)
-                _this.setData({
+                this.setData({
                     comments: comments,
                     inputValue: '',
                     isNone: 'none'
@@ -101,13 +99,13 @@ Page({
                 })
                 state.dispatch('changeCommentCount', commentSize)
             } else {
-                _this.setData({
+                this.setData({
                     tips: 'block',
                     tipsContent: res.data.message
                 })
 
                 setTimeout( () => {
-                    _this.setData({
+                    this.setData({
                         tips: 'none',
                         tipsContent: ''
                     })  
@@ -127,7 +125,6 @@ Page({
         })
     },
     likeComment (event) {
-        const _this = this
         const commentid = event.currentTarget.dataset.id
         const authorization = state.get('authorization')
         const cur = `3:${commentid}`
@@ -135,7 +132,7 @@ Page({
         // 判断当前评论是否已经点赞
         function isCurrentLike(cur) {
             let isLike = false
-            _this.data.comments.map(item => {
+            this.data.comments.map(item => {
                 if(cur == `3:${item.id}` && item.like == 1) {
                     isLike = true
                 }
@@ -155,14 +152,14 @@ Page({
         })
 
         // update ui
-        let comments = _this.data.comments.map (item => {
+        let comments = this.data.comments.map (item => {
             if(`3:${item.id}` == cur) {
                 item.like = 1
                 item.likeSize = item.likeSize + 1
             }
             return item
         })
-        _this.setData({
+        this.setData({
             comments: comments
         })
 

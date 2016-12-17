@@ -19,10 +19,9 @@ Page({
         })
     },
     saveNickname () {
-        const _this = this
         const authorization = state.get('authorization')
 
-        if(_this.data.inputContent == '') {
+        if(this.data.inputContent == '') {
             wx.showModal({
                 title: '提示',
                 content: '请输入您要修改的名称'
@@ -39,12 +38,12 @@ Page({
             },
             method: 'PUT',
             data: {
-                name: _this.data.inputContent
+                name: this.data.inputContent
             }
         })
         .then( result => {
             const _name = result.data.data.name
-            _this.setData({
+            this.setData({
                 nickname: _name
             })
             state.set({
