@@ -4,7 +4,6 @@ import { promise } from './utils/utils'
 
 App({
     onLaunch () {
-        const _this = this
         this.login().then(() => {
             return promise(wx.request)({
                 url: `${config.communityDomainDev}/v5/user/actions/key`,
@@ -32,7 +31,7 @@ App({
             })
             .then(res => {
                 if(res.confirm) {
-                    _this.onLaunch()
+                    this.onLaunch()
                 }
             })
         })

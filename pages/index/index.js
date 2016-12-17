@@ -15,7 +15,6 @@ Page({
         enable: 1
     },
     onLoad () {
-        const self = this
         const authorization = state.get('authorization')
         if(authorization) {
             this.getRecommendList(true);
@@ -27,7 +26,7 @@ Page({
         }
         promise(wx.getSystemInfo)()
         .then( res => {
-            self.setData({
+            this.setData({
                 windowWidth: res.windowWidth,
                 windowHeight: res.windowHeight
             })
@@ -74,11 +73,10 @@ Page({
         })
     },
     getRecommendList (boolean) {
-        const self = this
         const authorization = state.get('authorization')
         let pageCount;
 
-        if(!self.data.enable) {
+        if(!this.data.enable) {
             return;
         }
 
@@ -89,20 +87,20 @@ Page({
                 duration: 100000
             })
             pageCount = 1;
-            self.setData({
+            this.setData({
                 pageCount: pageCount
             })
         } else {
-            self.setData({
+            this.setData({
                 isBottomLoading: 'flex',
-                pageCount: self.data.pageCount + 1
+                pageCount: this.data.pageCount + 1
             })
         }
 
         promise(wx.request)({
             url: `${config.communityDomainDev}/v5/streamings`,
             data: {
-                pageCount: self.data.pageCount,
+                pageCount: this.data.pageCount,
                 pageSize: 10
             },
             header: {
@@ -116,17 +114,17 @@ Page({
                         setTimeout( () => {
                             wx.hideToast()
                         }, 500)
-                        self.setData({
+                        this.setData({
                             recommendList: result.data.data
                         })
                     } else {
-                        self.setData({
-                            recommendList: self.data.recommendList.concat(result.data.data),
+                        this.setData({
+                            recommendList: this.data.recommendList.concat(result.data.data),
                             isBottomLoading: 'none'
                         })
                     }
                 } else if (result.data.message) {
-                    self.setData({
+                    this.setData({
                         isBottomLoading: 'none',
                         isBottomEnd: 'flex',
                         enable: 0
@@ -143,7 +141,7 @@ Page({
                 })
                 .then(res => {
                     if(res.confirm) {
-                        self.getRecommendList();
+                        this.getRecommendList();
                     }
                 })
             }

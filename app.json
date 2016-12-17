@@ -1,7 +1,7 @@
 {
     "pages": [
-        "pages/bindphone/step01/step01",
         "pages/index/index",
+        "pages/bindphone/step01/step01",
         "pages/collect/collect",
         "pages/nickname/nickname",
         "pages/prediction/prediction",
