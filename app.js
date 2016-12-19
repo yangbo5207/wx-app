@@ -10,7 +10,8 @@ App({
                 header: { 'Authorization': state.get('authorization') }
             })
             .then(result => {
-                state.set({ 'actions': result.data.data })
+                console.log('get key',result)
+                state.set({ 'actions': result.data })
             })
             .then( () => {
                 return promise(wx.request)({
@@ -18,7 +19,7 @@ App({
                     header: { 'Authorization': state.get('authorization') }
                 })
                 .then(request => {
-                    state.set({ 'author': request.data.data })
+                    state.set({ 'author': request.data })
                     console.log('app 初始化完成')
                 })
             })
@@ -40,23 +41,24 @@ App({
         return promise(wx.request)({
             url: `${config.loginDomainDev}/auth/authorize`,
             method: 'POST',
-            data: { 
+            data: {
                 grant_type: 'password',
                 username: '14900000086',
                 password: 'qqqqq1'
             }
         })
         .then(result => {
-            console.log(result)
-            const authorization = `${result.data.data.token_type} ${result.data.data.access_token}`
+            console.log('login result', result)
+            const authorization = `${result.data.token_type} ${result.data.access_token}`
             state.set({ 'authorization': authorization })
         })
 
         // 后续可能被采用的代码片段
         // let openid, token;
-
-        // promise(wx.login)()
+        //
+        // return promise(wx.login)()
         // .then(result => {
+        //     console.log('app code:', result)
         //     return result.code
         // })
         // .then(code => {
@@ -72,21 +74,31 @@ App({
         //     })
         // })
         // .then(result => {
-        //     openid = result.data.openid
+        //     openid = result.openid
         // })
         // .then(() => {
         //     // 通过appid与appSecret获取access_token
         //     return promise(wx.request)({
         //         url: 'https://api.weixin.qq.com/cgi-bin/token',
         //         data: {
-        //             appid: 'wx87ef8d5ebed00eed', 
+        //             appid: 'wx87ef8d5ebed00eed',
         //             secret: '5746108f85fe52594b1639bbd9d5abe9',
         //             grant_type: 'client_credential'
         //         },
         //     })
         // })
         // .then(result => {
-        //     token = result.data.access_token
+        //     token = result.access_token
+        //     return token
+        // })
+        // .then(token => {
+        //     promise(wx.request)({
+        //         url: 'https://api.weixin.qq.com/sns/auth',
+        //         data: {
+        //             access_token: token,
+        //             openid: openid
+        //         }
+        //     })
         // })
         // .then(() => {
         //     return promise(wx.request)({
@@ -94,12 +106,16 @@ App({
         //         method: 'POST',
         //         data: {
         //             access_token: token,
-        //             openid: openid
+        //             openid: openid,
+        //             appVer: '3.1.0',
+        //             platform: 'Web'
         //         }
         //     })
         // })
         // .then(result => {
-        //     console.log(result)
+        //     console.log('login result', result)
+        // }, result => {
+        //     console.log('login error result', result)
         // })
     }
 })

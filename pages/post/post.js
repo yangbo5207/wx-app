@@ -27,21 +27,34 @@ Page({
         })
         .then(res => {
             wx.hideToast();
-            const article = res.data.data.content
+            const article = res.data.content
             promise(wx.getSystemInfo)()
             .then(systemInfo => {
-                WxParse.wxParse('article', 'html', article, this, 0.04*systemInfo.windowWidth);
+                WxParse.wxParse('article', 'html', article, this, 0.04 * systemInfo.windowWidth);
             })
             this.setData({
-                post: res.data.data,
-                commentSize: res.data.data.commentSize
+                post: res.data,
+                commentSize: res.data.commentSize
             })
         })
-        .catch(() => {
-            wx.showModal({
-                title: '提示',
-                content: '与服务器断开连接，请检查是否为网络问题'
-            })
+        .catch(result => {
+            if (result.status) {
+                promise(wx.showModal)({
+                    title: "提示",
+                    content: "错误码:" + result.status,
+                    confirmText: "重新加载"
+                })
+                .then(res => {
+                    if(res.confirm) {
+                        this.getRecommendList();
+                    }
+                })
+            } else {
+                wx.showModal({
+                    title: '提示',
+                    content: '网络好像出了点问题'
+                })
+            }
         })
 
         let actions = state.get('actions')
@@ -64,7 +77,7 @@ Page({
     setLike () {
         const postid = state.get('postid')
         const authorization = state.get('authorization')
-        
+
         let like = this.data.like
         if(!like) {
             this.setData({
@@ -169,5 +182,5 @@ Page({
         wx.navigateTo({
             url: '../comment/comment'
         })
-    } 
+    }
 })

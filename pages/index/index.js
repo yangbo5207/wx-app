@@ -2,7 +2,7 @@ import config from '../../utils/config'
 import state from '../../utils/state'
 import { promise } from '../../utils/utils'
 
-const app = getApp()  
+const app = getApp()
 
 Page({
     data: {
@@ -12,7 +12,7 @@ Page({
         windowWidth: 0,
         windowHeight: 0,
         pageCount: 1,  // 数据的页码
-        enable: 1
+        enable: 1      // 是否还能下拉刷新
     },
     onLoad () {
         const authorization = state.get('authorization')
@@ -36,7 +36,7 @@ Page({
         this.getRecommendList(true)
     },
     navToPost (event) {
-        state.set({ 
+        state.set({
             postid: event.currentTarget.dataset.objectid,
             type: event.currentTarget.dataset.type
         })
@@ -55,7 +55,7 @@ Page({
         })
     },
     navToPrediction (event) {
-        state.set({ 
+        state.set({
             postid: event.currentTarget.dataset.objectid,
             type: event.currentTarget.dataset.type
         })
@@ -64,7 +64,7 @@ Page({
         })
     },
     navToTopic (event) {
-        state.set({ 
+        state.set({
             postid: event.currentTarget.dataset.objectid,
             type: event.currentTarget.dataset.type
         })
@@ -108,35 +108,34 @@ Page({
             }
         })
         .then(result => {
-            if(result.statusCode == 200) {
-                if(result.data.data) {
-                    if(boolean === true) {
-                        setTimeout( () => {
-                            wx.hideToast()
-                        }, 500)
-                        this.setData({
-                            recommendList: result.data.data
-                        })
-                    } else {
-                        this.setData({
-                            recommendList: this.data.recommendList.concat(result.data.data),
-                            isBottomLoading: 'none'
-                        })
-                    }
-                } else if (result.data.message) {
+            // if(result.statusCode == 200) {
+            if(result.data) {
+                if(boolean === true) {
+                    delayHideToast()
                     this.setData({
-                        isBottomLoading: 'none',
-                        isBottomEnd: 'flex',
-                        enable: 0
+                        recommendList: result.data
+                    })
+                } else {
+                    this.setData({
+                        recommendList: this.data.recommendList.concat(result.data),
+                        isBottomLoading: 'none'
                     })
                 }
-            } else {
-                setTimeout( () => {
-                    wx.hideToast()
-                }, 500)
+            } else if (result.message) {
+                this.setData({
+                    isBottomLoading: 'none',
+                    isBottomEnd: 'flex',
+                    enable: 0
+                })
+            }
+            console.log('index页面加载完成')
+        }, result => {
+            delayHideToast();
+            console.log('index feed error message:', result)
+            if (result.status) {
                 promise(wx.showModal)({
                     title: "提示",
-                    content: "错误码:" + result.statusCode,
+                    content: "错误码:" + result.status,
                     confirmText: "重新加载"
                 })
                 .then(res => {
@@ -144,18 +143,19 @@ Page({
                         this.getRecommendList();
                     }
                 })
+            } else {
+                wx.showModal({
+                    title: "提示",
+                    content: "未连接到服务器，请检测是否为网络问题"
+                })
             }
-            console.log('index页面加载完成')
-        }, () => {
-            // 未连接到服务器，请检测是否为网络问题
+        })
+
+        function delayHideToast() {
             setTimeout( () => {
                 wx.hideToast()
             }, 500)
-            wx.showModal({
-                title: "提示",
-                content: "未连接到服务器，请检测是否为网络问题"
-            })
-        })
+        }
     },
     // 下拉加载更多
     upLoad () {

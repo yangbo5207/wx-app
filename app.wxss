@@ -44,7 +44,7 @@ page {
 
 .rec-section:last-child {
     margin-bottom: 0;
-} 
+}
 .rec-main {
     padding-left: 30rpx;
 }
@@ -274,10 +274,9 @@ page {
 
 button.primary {
     background-color: #F8CC00;
-    height: 94rpx;
+    height: 92rpx;
     line-height: 94rpx;
     font-size: 36rpx;
-    border: none;
     margin: 0 40rpx;
 }
 
@@ -285,7 +284,7 @@ button.primary {
 /* 手机绑定样式 */
 .bind-phone-wrap {
     margin: 20rpx 0;
-    font-size: 28rpx;
+    font-size: 34rpx;
 }
 .bind-phone-item {
     background-color: #fff;
@@ -314,4 +313,17 @@ button.primary {
 .bind-item-right-img {
     width: 30rpx;
     height: 30rpx;
+}
+.encryption {
+    width: 35rpx;
+    height: 25rpx;
+}
+.disclaimer-message {
+    font-size: 26rpx;
+    color: #9B9B9B;
+    text-align: center;
+    margin: 40rpx auto;
+}
+.disclaimer-label {
+    color: #034C8C;
 }

@@ -23,7 +23,7 @@ function wxPromise (cb) {
         return new Promise ((resolve, reject) => {
             result.success = _res => {
                 if(_res.statusCode) {
-                    _res.statusCode == 200 ? resolve(_res) : reject(_res)
+                    _res.statusCode == 200 ? resolve(_res.data) : reject(_res.data)
                 } else {
                     resolve(_res)
                 }
@@ -31,7 +31,7 @@ function wxPromise (cb) {
             result.fail = (...args) => {
                 reject(...args)
             }
-            cb(result) 
+            cb(result)
         })
     }
 }
@@ -48,6 +48,7 @@ function wxPromiseAll (promises) {
 module.exports = {
     formatTime: formatTime,
     promise: wxPromise,
+    http: wxPromise,
     promiseAll: wxPromiseAll,
     type: type
 }
