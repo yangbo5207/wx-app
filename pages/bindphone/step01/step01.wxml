@@ -8,4 +8,4 @@
     </view>
 </view>
 
-<button class="primary distance">下一步</button>
+<button class="primary distance" bindtap="testBack">下一步</button>

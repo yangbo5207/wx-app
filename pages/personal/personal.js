@@ -4,11 +4,13 @@ import { promise } from '../../utils/utils'
 
 Page({
     data: {
-        nickname: ''
+        nickname: '',
+        isBindPhone: 0
     },
     onLoad () {
         this.setData({
-            nickname: state.get('author').name
+            nickname: state.get('author').name,
+            isBindPhone: state.get('isBindPhone')
         })
     },
     onShow () {
@@ -19,4 +21,9 @@ Page({
             url: '../nickname/nickname'
         })
     },
+    navToBindPhone () {
+        wx.navigateTo({
+            url: '../bindphone/step01/step01'
+        })
+    }
 })

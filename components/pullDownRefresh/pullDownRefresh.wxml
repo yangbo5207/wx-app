@@ -1,5 +1,5 @@
 <template name="pullDownRefresh">
-    <block wx:if="{{!isData}}">
+    <block wx:if="{{isData == 0}}">
         <view class="bottom-end">
             <view class="bottom-end-line"></view>
             <view class="bottom-end-text">暂时没有数据</view>

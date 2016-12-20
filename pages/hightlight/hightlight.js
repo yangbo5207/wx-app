@@ -79,6 +79,12 @@ Page({
         const postid = state.get('postid')
         const authorization = state.get('authorization')
 
+        if (!state.get('isBindPhone')) {
+            return wx.navigateTo({
+                url: '../bindphone/step01/step01'
+            })
+        }
+
         triggerFavorite()
 
         function triggerFavorite () {

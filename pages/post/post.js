@@ -79,6 +79,13 @@ Page({
         const authorization = state.get('authorization')
 
         let like = this.data.like
+
+        if (!state.get('isBindPhone')) {
+            return wx.navigateTo({
+                url: '../bindphone/step01/step01'
+            })
+        }
+
         if(!like) {
             this.setData({
                 like: 1,
@@ -117,6 +124,12 @@ Page({
         const authorization = state.get('authorization')
         let favorite = this.data.favorite
         let method;
+
+        if (!state.get('isBindPhone')) {
+            return wx.navigateTo({
+                url: '../bindphone/step01/step01'
+            })
+        }
 
         if(!favorite) {
             method = 'POST'

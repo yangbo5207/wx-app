@@ -101,6 +101,12 @@ Page({
         const postid = state.get('postid')
         const type = state.get('type')
 
+        if (!state.get('isBindPhone')) {
+            return wx.navigateTo({
+                url: '../bindphone/step01/step01'
+            })
+        }
+
         return http(wx.request)({
             url: `${config.communityDomainDev}/v5/comment`,
             method: 'POST',
@@ -152,6 +158,12 @@ Page({
         })
     },
     recomment (event) {
+        if (!state.get('isBindPhone')) {
+            return wx.navigateTo({
+                url: '../bindphone/step01/step01'
+            })
+        }
+
         this.setData({
             placeholder: `回复 ${event.target.dataset.name}`,
             inputFocus: true
@@ -166,6 +178,12 @@ Page({
         const commentid = event.currentTarget.dataset.id
         const authorization = state.get('authorization')
         const cur = `3:${commentid}`
+
+        if (!state.get('isBindPhone')) {
+            return wx.navigateTo({
+                url: '../bindphone/step01/step01'
+            })
+        }
 
         // 判断当前评论是否已经点赞
         const isCurrentLike = cur => {

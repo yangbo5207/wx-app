@@ -1,6 +1,6 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
-import { promise } from '../../utils/utils'
+import { http } from '../../utils/utils'
 import { getData } from '../../components/pullDownRefresh/pullDownRefresh'
 
 const app = getApp()
@@ -11,16 +11,42 @@ Page({
         windowHeight: 0,
     },
     onLoad () {
-        const authorization = state.get('authorization')
-        if(authorization) {
+        app.login().then(() => {
             this.getRecommendList(true);
-        } else {
-            app.login()
-            .then(() => {
-                this.getRecommendList(true);
+        })
+        .then( () => {
+            return http(wx.request)({
+                url: `${config.communityDomainDev}/v5/user/actions/key`,
+                header: { 'Authorization': state.get('authorization') }
             })
-        }
-        promise(wx.getSystemInfo)()
+        })
+        .then(result => {
+            state.set({ 'actions': result.data })
+        })
+        .then(() => {
+            return http(wx.request)({
+                url: `${config.communityDomainDev}/v5/user`,
+                header: { 'Authorization': state.get('authorization') }
+            })
+        })
+        .then(request => {
+            state.set({ 'author': request.data })
+            console.log('app 初始化完成', state.getStates())
+        })
+        .catch( () => {
+            http(wx.showModal)({
+                title: "提示",
+                content: "好像出了点小问题，你可以尝试重新加载",
+                confirmText: "重新加载"
+            })
+            .then(res => {
+                if(res.confirm) {
+                    this.onLoad()
+                }
+            })
+        })
+
+        http(wx.getSystemInfo)()
         .then( res => {
             this.setData({
                 windowWidth: res.windowWidth,

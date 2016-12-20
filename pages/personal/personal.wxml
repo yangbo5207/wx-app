@@ -9,17 +9,19 @@
             <image class="icon icon-arrow" src="/image/arrow.png"></image>
         </view>
     </view>
-
-    <view class="item" bindtap="">
-        <view class="item-l">
-            <view class="img-wrap"><image class="icon icon-bindphone" src="/image/007.png" /></view>
-            <text class="title">绑定手机</text>
+    
+    <block wx:if="{{isBindPhone == 0}}">
+        <view class="item" bindtap="navToBindPhone">
+            <view class="item-l">
+                <view class="img-wrap"><image class="icon icon-bindphone" src="/image/007.png" /></view>
+                <text class="title">绑定手机</text>
+            </view>
+            <view class="item-r">
+                <text class="nickname">未绑定</text>
+                <image class="icon icon-arrow" src="/image/arrow.png"></image>
+            </view>
         </view>
-        <view class="item-r">
-            <text class="nickname">未绑定</text>
-            <image class="icon icon-arrow" src="/image/arrow.png"></image>
-        </view>
-    </view>
+    </block>
 </view>
 <view class="section section-2">
     <view class="item" bindtap="">

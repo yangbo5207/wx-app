@@ -1,17 +1,14 @@
-import { promise } from '../../../utils/utils'
+import { http } from '../../../utils/utils'
+import state from '../../../utils/state'
 
 Page({
     data: {},
     onLoad () {
-        function add ({x=20, y=30} = {}) {
-            return x + y
-        }
 
-        console.log(add({x: 50, y: 40}))
-
-        function add2 ([x=20, y=40]) {
-            return [x, y]
-        }
-        console.log(add2())
+    },
+    testBack () {
+        wx.navigateTo({
+            url: state.get('sourcePage')
+        })
     }
 })
