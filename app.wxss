@@ -1,5 +1,5 @@
-/**app.wxss**/
 @import "/wxParse/wxParse.wxss";
+@import "components/pullDownRefresh/pullDownRefresh.wxss";
 
 view {
     box-sizing: border-box;
@@ -200,39 +200,6 @@ page {
 .comments {
   height: 28rpx;
   top: 2rpx;
-}
-
-/* 下拉出现的loading */
-.bottom-loading {
-    height: 100rpx;
-    align-items: center;
-    justify-content: center;
-    font-size: 26rpx;
-    color: #999999;
-}
-.bottom-loading-image {
-    width: 30rpx;
-    height: 30rpx;
-    margin-right: 10rpx;
-}
-.bottom-end {
-    font-size: 26rpx;
-    color: #999999;
-    height: 100rpx;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-.bottom-end-line {
-    position: absolute;
-    width: 100%;
-    border-top: 1px solid #E5E5E5;
-    top: 50rpx;
-    z-index: -1;
-}
-.bottom-end-text {
-    background-color: #F6F6F6;
-    padding: 0 46rpx;
 }
 
 /* 回复框样式 */

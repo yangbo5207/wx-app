@@ -1,5 +1,7 @@
+<import src="../../components/pullDownRefresh/pullDownRefresh.wxml" />
+
 <template name="recommend">
-    <block wx:for="{{recommendList}}" wx:key="item">
+    <block wx:for="{{dataList}}" wx:key="item">
 
         <block wx:if="{{item.type == 1}}">
             <view class="rec-section" data-type="{{item.type}}" data-objectid="{{item.objectId}}" bindtap="navToPost">
@@ -109,13 +111,6 @@
 </template>
 
 <scroll-view class="scroll-wrap" scroll-y="true" bindscrolltolower="upLoad" style="width: {{windowWidth}}px;height: {{windowHeight}}px">
-    <template is="recommend" data="{{recommendList}}"></template>
-    <view class="bottom-loading" style="display: {{isBottomLoading}}">
-        <image src="/image/loading.gif" class="bottom-loading-image"></image>
-        <text>加载中...</text>
-    </view>
-    <view class="bottom-end" style="display: {{isBottomEnd}}">
-        <view class="bottom-end-line"></view>
-        <view class="bottom-end-text">我是有底线的</view>
-    </view>
+    <template is="recommend" data="{{dataList}}"></template>
+    <template is="pullDownRefresh" data="{{isData, isBottomEnd, isBottomLoading}}"></template>
 </scroll-view>

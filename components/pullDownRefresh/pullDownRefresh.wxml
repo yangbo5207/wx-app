@@ -1,0 +1,22 @@
+<template name="pullDownRefresh">
+    <block wx:if="{{!isData}}">
+        <view class="bottom-end">
+            <view class="bottom-end-line"></view>
+            <view class="bottom-end-text">暂时没有数据</view>
+        </view>
+    </block>
+
+    <block wx:if="{{isBottomEnd}}">
+        <view class="bottom-end">
+            <view class="bottom-end-line"></view>
+            <view class="bottom-end-text">我也是有底线的</view>
+        </view>
+    </block>
+
+    <block wx:if="{{isBottomLoading}}">
+        <view class="bottom-loading">
+            <image class="bottom-loading-image" src="/image/loading.gif" />
+            <text>加载中...</text>
+        </view>
+    </block>
+</template>
