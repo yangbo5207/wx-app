@@ -1,7 +1,7 @@
 <view class="bind-phone-wrap">
     <view class="bind-phone-item">
         <view class="bind-item-left">+ 86</view>
-        <input type="number" class="bind-item-middle" placeholder="请填写手机号" maxlength="11" />
+        <input type="number" class="bind-item-middle" placeholder="请填写手机号" maxlength="11" value="{{inputValue}}" />
         <view class="bind-item-right">
             <image class="bind-item-right-img" src="/image/009.png" />
         </view>
@@ -16,4 +16,4 @@
     </view>
 </view>
 <view class="disclaimer-message">点击“确认注册”，即表示您同意<label class="disclaimer-label">《免责及隐私声明》</label></view>
-<button class="primary distance">下一步</button>
+<button class="primary distance">确认注册</button>
