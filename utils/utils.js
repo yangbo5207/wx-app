@@ -23,7 +23,7 @@ function wxPromise (cb) {
         return new Promise ((resolve, reject) => {
             result.success = _res => {
                 if(_res.statusCode) {
-                    _res.statusCode == 200 ? resolve(_res.data) : reject(_res.data)
+                    /(2|3)\d+/.test(_res.statusCode) ? resolve(_res.data) : reject(_res.data)
                 } else {
                     resolve(_res)
                 }
