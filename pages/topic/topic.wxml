@@ -1,3 +1,5 @@
+<import src="../../components/pullDownRefresh/pullDownRefresh.wxml" />
+
 <view class="banner">
     <image class="banner-image" src="{{topicInfo.thumbnail}}" />
     <view class="banner-bar">
@@ -8,33 +10,36 @@
 
 <view class="quote-title">抓住实时行情，把握交易机会</view>
 
-<block wx:for="{{topicList}}" wx:key="">
-    <view class="section" data-objectid="{{item.id}}" bindtap="navToPost">
-        <view class="top">
-            <block wx:if="{{item.thumbnail}}">
-                <view class="image-wrap">
-                    <image class="img" mode="aspectFill" src="{{item.thumbnail}}"></image>
+<scroll-view class="scroll-wrap" scroll-y="true" bindscrolltolower="upLoad" style="width: {{windowWidth}}px;height: {{windowHeight}}px">
+    <block wx:for="{{dataList}}" wx:key="">
+        <view class="section" data-objectid="{{item.id}}" bindtap="navToPost">
+            <view class="top">
+                <block wx:if="{{item.thumbnail}}">
+                    <view class="image-wrap">
+                        <image class="img" mode="aspectFill" src="{{item.thumbnail}}"></image>
+                    </view>
+                </block>
+                <view class="info">
+                    <view class="title">{{item.title}}</view>
+                    <view class="desc">{{item.text}}</view>
                 </view>
-            </block>
-            <view class="info">
-                <view class="title">{{item.title}}</view>
-                <view class="desc">{{item.text}}</view>
+            </view>
+            <view class="bottom">
+                <view class="left-wrap">
+                    <image class="bottom-item avatar" mode="aspectFill" src="{{item.author.avatar}}"></image>
+                    <view class="bottom-item">{{item.author.name}}</view>
+                    <view class="bottom-item">{{item.gmtCreate}}</view>
+                </view>
+                <view class="right-wrap">
+                    <view class="bottom-item like">
+                        <image class="like-icon" src="/image/003.png"></image>
+                        <view class="like-size">{{item.likeSize}}</view>
+                    </view>
+                    <image class="comment-icon" src="/image/004.png"></image>
+                </view>
             </view>
         </view>
-        <view class="bottom">
-            <view class="left-wrap">
-                <image class="bottom-item avatar" mode="aspectFill" src="{{item.author.avatar}}"></image>
-                <view class="bottom-item">{{item.author.name}}</view>
-                <view class="bottom-item">{{item.gmtCreate}}</view>
-            </view>
-            <view class="right-wrap">
-                <view class="bottom-item like">
-                    <image class="like-icon" src="/image/003.png"></image>
-                    <view class="like-size">{{item.likeSize}}</view>
-                </view>
-                <image class="comment-icon" src="/image/004.png"></image>
-            </view>
-        </view>
-    </view>
-</block>
+    </block>
 
+    <template is="pullDownRefresh" data="{{isData, isBottomEnd, isBottomLoading}}"></template>
+</scroll-view>
