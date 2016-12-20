@@ -90,6 +90,7 @@ page {
 }
 .comment-wrap {
     background-color: #F6F6F6;
+    padding-bottom: 50px;
 }
 .tips {
     position: fixed;

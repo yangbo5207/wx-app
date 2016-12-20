@@ -97,6 +97,6 @@ Page({
     },
     // 下拉加载更多
     upLoad () {
-        this.getRecommendList()
+        this.data.enablePullDownRefresh && this.getRecommendList()
     }
 })

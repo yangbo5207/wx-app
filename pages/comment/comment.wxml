@@ -1,5 +1,7 @@
-<scroll-view class="comment-wrap" style="height: {{commentWrapHeight}}px" scroll-y="true">
-    <block wx:for="{{comments}}" wx:key="item">
+<import src="../../components/pullDownRefresh/pullDownRefresh.wxml" />
+
+<scroll-view class="comment-wrap" scroll-y="true" bindscrolltolower="upLoad" style="width: {{windowWidth}}px;height: {{windowHeight}}px">
+    <block wx:for="{{dataList}}" wx:key="item">
         <view class="comments-section">
             <view class="comments-main">
                 <image class="comments-avatar" src="{{item.author.avatar}}"></image>
@@ -32,16 +34,7 @@
         </view>
     </block>
 
-    <view class="bottom-end" style="display: {{isNone}}">
-        <view class="bottom-end-line"></view>
-        <view class="bottom-end-text">暂时没有数据</view>
-    </view>
-
-    <view class="bottom-end" style="display: {{isBottom}}">
-        <view class="bottom-end-line"></view>
-        <view class="bottom-end-text">我也是有底线的</view>
-    </view>
-
+    <template is="pullDownRefresh" data="{{isData, isBottomEnd, isBottomLoading}}"></template>
     <view class="tips" style="display: {{tips}}">{{tipsContent}}</view>
 </scroll-view>
 
@@ -49,11 +42,11 @@
 <view class="comment-input-wrap">
     <view class="comment-input-box">
         <input type="text"
-               class="comment-input"  
-               placeholder="{{placeholder}}" 
-               focus="{{inputFocus}}" 
-               bindinput="input" 
-               bindblur="inputblur" 
+               class="comment-input"
+               placeholder="{{placeholder}}"
+               focus="{{inputFocus}}"
+               bindinput="input"
+               bindblur="inputblur"
                value="{{inputValue}}" />
     </view>
     <view class="comment-send" bindtap="commentSend">发送</view>

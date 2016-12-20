@@ -36,7 +36,7 @@ function get (_this, options, isFirst) {
             pageCount: 1
         })
     } else {
-        if (!_this.data.enablePullDownRefresh) {return }
+        if (!_this.data.enablePullDownRefresh) { return }
         _this.setData({
             isBottomLoading: 1,
             pageCount: _this.data.pageCount + 1
@@ -52,7 +52,7 @@ function get (_this, options, isFirst) {
                     dataList: result.data
                 })
             } else {
-                this.setData({
+                _this.setData({
                     dataList: _this.data.dataList.concat(result.data),
                     isBottomLoading: 0
                 })
@@ -65,6 +65,7 @@ function get (_this, options, isFirst) {
                 enablePullDownRefresh: 0
             })
         }
+        return result
     })
     .catch (result => {
         delayHideToast()

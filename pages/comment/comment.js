@@ -1,144 +1,95 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
-import { promise } from '../../utils/utils'
+import { http } from '../../utils/utils'
+import { getData } from '../../components/pullDownRefresh/pullDownRefresh'
 
 Page({
     data: {
-        comments: [],
-        pageCount: 1,
-        enable: 1,
-        isBottomLoading: 'none',
-        isBottomEnd: 'none',
-        isNone: 'none',
-        isBottom: 'none',
+        windowWidth: 0,
+        windowHeight: 0,
         placeholder: '回复',
-        commentWrapHeight: 0,
         inputValue: '',
         inputFocus: false,
         tips: 'none',
         tipsContent: ''
     },
     onLoad: function () {
+        http(wx.getSystemInfo)()
+        .then(result => {
+            this.setData({
+                windowWidth: result.windowWidth,
+                windowHeight: result.windowHeight - 50
+            })
+        })
+        this.getComments(true)
+    },
+    // if boolean == true, mean it is first loading
+    getComments (boolean) {
         const authorization = state.get('authorization')
         const postid = state.get('postid')
         const type = state.get('type')
+        const _comments = `${config.communityDomainDev}/v5/object/${type}/${postid}/comments`
+        const pageSize = 10
 
-        promise(wx.getSystemInfo)()
-        .then(result => {
-            this.setData({
-                commentWrapHeight: result.windowHeight - 50
-            })
-        })
-
-        promise(wx.request)({
-            url: `${config.communityDomainDev}/v5/object/${type}/${postid}/comments`,
-            data: {
-                pageCount: 1,
-                pageSize: 10
-            },
-            header: { 'Authorization': authorization }
-        })
-        .then( result => {
-            if (result.totalSize == 0) {
-                this.setData({
-                    isNone: 'flex'
+        if (boolean) {
+            return getData(this, {
+                url: _comments,
+                data: {
+                    pageCount: 1,
+                    pageSize: pageSize
+                },
+                header: {
+                    'Authorization': authorization
+                }
+            }, true)
+            .then(result => {
+                let actions = state.get('actions')
+                let dataList = this.data.dataList.map (item => {
+                    const a = `3:${item.id}`
+                    if (actions.like.indexOf(a) > -1) {
+                        item.like = 1
+                    } else {
+                        item.like = 0
+                    }
+                    return item
                 })
-                return
+                this.setData({
+                    dataList: dataList
+                })
+            })
+        }
+        return getData (this, {
+            url: _comments,
+            data: {
+                pageCount: this.data.pageCount + 1,
+                pageSize: pageSize
+            },
+            header: {
+                'Authorization': authorization
             }
+        }).then(result => {
             let actions = state.get('actions')
-            let comments = result.data.map( item => {
+            let dataList = this.data.dataList.map (item => {
                 const a = `3:${item.id}`
-                if(actions.like.indexOf(a) > -1) {
+                if (actions.like.indexOf(a) > -1) {
                     item.like = 1
                 } else {
                     item.like = 0
                 }
                 return item
             })
-
             this.setData({
-                comments: comments
+                dataList: dataList
             })
-        })
-        .catch( () => {
-            this.setData({
-                isNone: 'flex'
-            })
+        }, result => {
+            console.log('error', result)
         })
     },
-    // if boolean == true, mean it is first loading
-    getComments (boolean) {
-        const authorization = state.get('authorization')
-        let pageCount;
-    
-        if (this.data.enable) { return }
-
-        if (boolean === true) {
-            wx.showToast({
-                title: '加载中...',
-                icon: 'loading',
-                duration: 100000
-            })
-            pageCount = 1
-            this.setData({
-                pageCount: pageCount
-            })
-        } else {
-            this.setData({
-                isBottomLoading: 'flex',
-                pageCount: this.data.pageCount + 1
-            })
-        }
-
-        promise(wx.request)({
-            url: `${config.communityDomainDev}/v5/object/${type}/${postid}/comments`,
-            data: {
-                pageCount: 1,
-                pageSize: 10
-            },
-            header: { 'Authorization': authorization }
-        })
-        .then(result => {
-            if (result.data) {
-                if (boolean === true) {
-                    delayHideToast()
-                    this.setData({
-                        comments: result.data
-                    })
-                } else {
-                    this.setData({
-                        comments: this.data.comments.concat(result.data),
-                        isBottomLoading: 'none'
-                    })
-                }
-            } else if (result.message) {
-                this.setData({
-                    isBottomLoading: 'none',
-                    isBottomEnd: 'flex',
-                    enable: 0
-                })
-            }
-        })
-        .catch( result => {
-            delayHideToast()
-            if (result.status) {
-                promise(wx.showModal)({
-                    title: '提示',
-                    content: '错误码：' + result.status
-                })
-            } else {
-                wx.showModal({
-                    title: "提示",
-                    content: "未连接到服务器，请检测是否为网络问题"
-                })
-            }
-        })
-
-        function delayHideToast() {
-            setTimeout( () => {
-                wx.hideToast()
-            }, 500)
-        }
+    onPullDownRefresh () {
+        this.getComments(true)
+    },
+    upLoad () {
+        this.data.enablePullDownRefresh && this.getComments()
     },
     input (event) {
         this.setData({
@@ -150,7 +101,7 @@ Page({
         const postid = state.get('postid')
         const type = state.get('type')
 
-        return promise(wx.request)({
+        return http(wx.request)({
             url: `${config.communityDomainDev}/v5/comment`,
             method: 'POST',
             data: {
@@ -164,13 +115,13 @@ Page({
             }
         })
         .then(result => {
-            let comments = this.data.comments
+            let comments = this.data.dataList
             let commentSize = state.get('commentSize') + 1
 
             result.data.author = state.get('author')
             comments.unshift(result.data)
             this.setData({
-                comments: comments,
+                dataList: comments,
                 inputValue: '',
                 isNone: 'none'
             })
@@ -219,7 +170,7 @@ Page({
         // 判断当前评论是否已经点赞
         const isCurrentLike = cur => {
             let isLike = false
-            this.data.comments.map(item => {
+            this.data.dataList.map(item => {
                 if(cur == `3:${item.id}` && item.like == 1) {
                     isLike = true
                 }
@@ -239,7 +190,7 @@ Page({
         })
 
         // update ui
-        let comments = this.data.comments.map (item => {
+        let dataList = this.data.dataList.map (item => {
             if(`3:${item.id}` == cur) {
                 item.like = 1
                 item.likeSize = item.likeSize + 1
@@ -247,7 +198,7 @@ Page({
             return item
         })
         this.setData({
-            comments: comments
+            dataList: dataList
         })
 
         wx.showToast({
@@ -256,7 +207,7 @@ Page({
             duration: 1000
         })
 
-        return promise(wx.request)({
+        return http(wx.request)({
             url: `${config.communityDomainDev}/v5/object/3/${commentid}/like`,
             method: 'POST',
             header: {
