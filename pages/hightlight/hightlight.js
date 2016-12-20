@@ -29,19 +29,19 @@ Page({
         })
         .then( result => {
             wx.hideToast();
-            const article = result.data.content
+            const article = result.content
             promise(wx.getSystemInfo)()
             .then(systemInfo => {
                 WxParse.wxParse('article', 'html', article, this, 0.04 * systemInfo.windowWidth);
             })
             this.setData({
-                post: result.data
+                post: result
             })
         })
-        .catch(() => {
+        .catch(result => {
             wx.showModal({
                 title: '提示',
-                content: '好像除了点状况'
+                content: '好像网络出了点状况'
             })
         })
 
@@ -56,7 +56,7 @@ Page({
         }) 
         .then( result => {
             this.setData({
-                commentSize: result.data.totalSize
+                commentSize: result.totalSize
             })
         })
 
@@ -73,48 +73,6 @@ Page({
         this.setData({
             commentSize: newCount
         })
-    },
-    setLike () {
-        const self = this
-        const postid = state.get('postid')
-        const authorization = state.get('authorization')
-        triggerLike();
-
-        function triggerLike() {
-            let like = self.data.like
-            if(!like) {
-                self.setData({
-                    like: 1,
-                    post: {
-                        likeSize: self.data.post.likeSize + 1
-                    }
-                })
-
-                let likes = state.get('actions').like
-                likes.push(`1:${postid}`)
-
-                state.set({
-                    actions: {
-                        like: likes
-                    }
-                })
-                promise(wx.showToast)({
-                    title: '已点赞',
-                    icon: 'success'
-                })
-                .then( () => {
-                    setTimeout( () => {
-                        wx.hideToast()
-                    }, 500)
-                })
-
-                promise(wx.request)({
-                    url: `${config.communityDomainDev}/v5/object/1/${postid}/like`,
-                    method: 'POST',
-                    header: { Authorization: authorization }
-                })
-            } 
-        }
     },
     setFavorite () {
         const self = this

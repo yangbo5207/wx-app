@@ -22,7 +22,7 @@ Page({
         }) 
         .then( result => {
             this.setData({
-                topicInfo: result.data.data
+                topicInfo: result.data
             })
         })
 
@@ -34,7 +34,7 @@ Page({
         })
         .then( result => {
             this.setData({
-                topicList: result.data.data
+                topicList: result.data
             })
         })
     },
