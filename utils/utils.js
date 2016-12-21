@@ -1,19 +1,33 @@
 import Promise from 'promise'
 
 function formatTime(date) {
-    var year = date.getFullYear()
-    var month = date.getMonth() + 1
-    var day = date.getDate()
+    const now = new Date().getTime()
+    const cur = new Date(date)
+    const dis = (now - date) / 1000
+    const year = cur.getFullYear()
+    const month = fixZero(cur.getMonth() + 1)
+    const day = fixZero(cur.getDate())
 
-    var hour = date.getHours()
-    var minute = date.getMinutes()
-    var second = date.getSeconds()
+    const disHour = parseInt(dis / (60 * 60))
 
+    if (disHour > 24) {
+        return `${year}-${month}-${day}`
+    }
 
-    return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+    const disMinute = parseInt(dis / 60)
+
+    if (disMinute > 60) {
+        return `${disHour}小时前`
+    }
+
+    if (disMinute < 5) {
+        return `刚刚`
+    }
+
+    return `${disMinute}分钟前`
 }
 
-function formatNumber(n) {
+function fixZero(n) {
     n = n.toString()
     return n[1] ? n : '0' + n
 }

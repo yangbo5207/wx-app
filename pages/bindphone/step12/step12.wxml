@@ -9,7 +9,7 @@
 
     <view class="bind-phone-item">
         <view class="bind-item-left">密码</view>
-        <input type="number" class="bind-item-middle" password="{{isEncryption ? true : false}}" bindinput="inputPassword" placeholder="由6-12位英文和数字组成" maxlength="12" />
+        <input type="text" class="bind-item-middle" password="{{isEncryption ? true : false}}" bindinput="inputPassword" placeholder="由6-12位英文和数字组成" maxlength="12" />
         <view class="bind-item-right" bindtap="switchEncryption">
             <image class="bind-item-right-img encryption" src="/image/{{ isEncryption ? '010_CL' : '010'}}.png" />
         </view>

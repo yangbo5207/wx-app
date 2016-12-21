@@ -1,10 +1,10 @@
-import { http } from '../../utils/utils'
+import { http, formatTime } from '../../utils/utils'
 import state from '../../utils/state'
 
 /**
  * 需要保存在当前页面对象data中的变量如下
  * dataList [] 列表的数据，该组件只负责将数据保存在data中，渲染样式需要在page中重新定义
- * isData 1|0 是否有数据  
+ * isData 1|0 是否有数据
  * isBottomLoading 1|0 是否显示下拉刷新的loading提示
  * isBottomEnd 1|0 是否到底了
  * enablePullDownRefresh 1|0 是否还能下拉刷新
@@ -46,18 +46,22 @@ function get (_this, options, isFirst) {
     return http(wx.request)(options)
     .then( result => {
         if (result.data) {
+            let list = result.data.map( item => {
+                item.gmtCreate = formatTime(item.gmtCreate)
+                return item
+            })
             if (isFirst) {
                 delayHideToast()
                 _this.setData({
-                    dataList: result.data
+                    dataList: list
                 })
             } else {
                 _this.setData({
-                    dataList: _this.data.dataList.concat(result.data),
+                    dataList: _this.data.dataList.concat(list),
                     isBottomLoading: 0
                 })
             }
-        } 
+        }
         if (result.message) {
             _this.setData({
                 isBottomLoading: 0,
