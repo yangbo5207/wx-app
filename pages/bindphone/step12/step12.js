@@ -69,7 +69,7 @@ Page({
                 const authorization = `Bearer ${result.data.access_token}`
                 state.set({
                     'authorization': authorization,
-                    'isBindPhone': result.data.new_status.sns_status.wxapp_binding,
+                    'isBindPhone': true,
                     // wxappid 是后端返回的openid, 所有需要openid的值都需要传入此参数
                     'wxappid': result.data.wxappid
                 })
