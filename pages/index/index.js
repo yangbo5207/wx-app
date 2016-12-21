@@ -13,27 +13,22 @@ Page({
     onLoad () {
         app.login().then(() => {
             this.getRecommendList(true);
-        })
-        .then( () => {
+        }).then(() => {
             return http(wx.request)({
                 url: `${config.communityDomainDev}/v5/user/actions/key`,
                 header: { 'Authorization': state.get('authorization') }
             })
-        })
-        .then(result => {
+        }).then(result => {
             state.set({ 'actions': result.data })
-        })
-        .then(() => {
+        }).then(() => {
             return http(wx.request)({
                 url: `${config.communityDomainDev}/v5/user`,
                 header: { 'Authorization': state.get('authorization') }
             })
-        })
-        .then(request => {
+        }).then(request => {
             state.set({ 'author': request.data })
             console.log('app 初始化完成', state.getStates())
-        })
-        .catch( () => {
+        }).catch( () => {
             http(wx.showModal)({
                 title: "提示",
                 content: "好像出了点小问题，你可以尝试重新加载",

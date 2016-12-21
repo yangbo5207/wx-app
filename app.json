@@ -1,6 +1,7 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/bindphone/step12/step12",
         "pages/bindphone/step03/step03",
         "pages/bindphone/step02/step02",
         "pages/bindphone/step01/step01",

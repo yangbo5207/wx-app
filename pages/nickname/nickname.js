@@ -11,7 +11,7 @@ Page({
         let author = state.get('author')
         this.setData({
             nickname: author.name
-        }) 
+        })
     },
     input (event) {
         this.setData({
@@ -32,9 +32,9 @@ Page({
 
         promise(wx.request)({
             url: `${config.communityDomainDev}/v5/user`,
-            header: { 
+            header: {
                 Authorization: authorization,
-                'content-type': 'application/x-www-form-urlencoded;charset=UTF-8' 
+                'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
             },
             method: 'PUT',
             data: {
@@ -42,7 +42,7 @@ Page({
             }
         })
         .then( result => {
-            const _name = result.data.data.name
+            const _name = result.data.name
             this.setData({
                 nickname: _name
             })
@@ -61,12 +61,12 @@ Page({
                     delta: 1
                 })
             }, 1000)
-            
+
         })
         .catch( result => {
             wx.showModal({
                 title: '提示',
-                content: result.data.message
+                content: result.message
             })
         })
     }

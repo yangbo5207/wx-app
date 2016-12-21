@@ -17,8 +17,7 @@ App({
         return http(wx.login)()
         .then(result => {
             return result.code
-        })
-        .then(code => {
+        }).then(code => {
             return http(wx.request)({
                 url: `${config.loginDomain}/api/v4/auth/sns/signin/wxapp`,
                 method: 'POST',
@@ -28,13 +27,26 @@ App({
                     platform: 'wxapp'
                 }
             })
-        })
-        .then( result => {
+        }).then( result => {
             const authorization = `Bearer ${result.data.access_token}`
             state.set({
                 'authorization': authorization,
-                'isBindPhone': result.data.new_status.sns_status.wxapp_binding
+                'isBindPhone': result.data.new_status.sns_status.wxapp_binding,
+                // wxappid 是后端返回的openid, 所有需要openid的值都需要传入此参数
+                'wxappid': result.data.wxappid
             })
+
+            // 解除绑定
+            // http(wx.request)({
+            //     url: `${config.loginDomain}/api/v4/auth/sns/unbind`,
+            //     method: 'PUT',
+            //     data: {
+            //         oauth_os: 'wxapp'
+            //     },
+            //     header: { 'Authorization': state.get('authorization') }
+            // }).then(result => {
+            //     console.log(result)
+            // })
         })
     }
 })
