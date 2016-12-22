@@ -21,7 +21,7 @@ Page({
         .then(result => {
             this.setData({
                 windowWidth: result.windowWidth,
-                windowHeight: result.windowHeight -110
+                windowHeight: result.windowHeight -165
             })
         })
 

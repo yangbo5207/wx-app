@@ -1,4 +1,5 @@
 <import src="../../wxParse/wxParse.wxml" />
+<import src="../../components/actionsBar/actionsBar.wxml" />
 
 <view class="header">
     <view class="rec-top">
@@ -37,17 +38,4 @@
     </block>
 </swiper>
 
-<view class="bottom-bar">
-    <view class="bottom-bar-item">
-        <image class="bottom-bar-icon likes" src="/image/003.png"></image>
-        <text>赞同(100)</text>
-    </view>
-    <view class="bottom-bar-item">
-        <image class="bottom-bar-icon comments" src="/image/004.png"></image>
-        <text>评论(23k)</text>
-    </view>
-    <view class="bottom-bar-item collect">
-        <image class="bottom-bar-icon collect" src="/image/005.png"></image>
-        <text>收藏</text>
-    </view>
-</view>
+<template is="actionsBar" data="{{type, like, likeSize, commentSize, favorite}}"></template>

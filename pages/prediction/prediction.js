@@ -2,6 +2,7 @@ import config from '../../utils/config'
 import state from '../../utils/state'
 import WxParse from '../../wxParse/wxParse'
 import { http, formatTime } from '../../utils/utils'
+import actionsBar from '../../components/actionsBar/actionsBar'
 
 Page({
     data: {
@@ -16,6 +17,10 @@ Page({
         const type = 6
         const authorization = state.get('authorization')
 
+        Object.assign(this, actionsBar.optionFn)
+        this.initialAction()
+        state.bind('changeCommentCount', this.changeCommentCount, this)
+
         http(wx.getSystemInfo)()
         .then(result => {
             this.setData({
@@ -23,7 +28,6 @@ Page({
                 scrollViewHeight: result.windowHeight - 100
             })
         })
-
         http(wx.request)({
             url: `${config.communityDomainDev}/v5/forecast/${postid}`,
             header: { Authorization: authorization },
@@ -65,15 +69,14 @@ Page({
             // this.render(result.data.bodies[0].html)
             this.setData({
                 content: result.data,
-                tabItemWidth: 100/result.data.bodies.length
+                tabItemWidth: 100/result.data.bodies.length,
+                commentSize: result.data.commentSize,
+                likeSize: result.data.likeSize
             })
         })
     },
-    render (html) {
-        http(wx.getSystemInfo)()
-        .then(systemInfo => {
-            WxParse.wxParse('article', 'html', html, this, 0.04 * systemInfo.windowWidth)
-        })
+    changeCommentCount (newCount) {
+        this.setData({ commentSize: newCount })
     },
     bindChange: function (e) {
         this.setData({
