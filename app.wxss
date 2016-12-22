@@ -226,8 +226,9 @@ page {
     font-size: 26rpx;
 }
 .comment-input {
+    height: 30px;
     background-color: #fff;
-    border-radius: 6px;
+    border-radius: 4px;
 }
 .comment-send {
     flex: 1;

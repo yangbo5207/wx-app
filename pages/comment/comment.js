@@ -1,6 +1,6 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
-import { http } from '../../utils/utils'
+import { http, formatTime } from '../../utils/utils'
 import { getData } from '../../components/pullDownRefresh/pullDownRefresh'
 
 Page({
@@ -11,14 +11,19 @@ Page({
         inputValue: '',
         inputFocus: false,
         tips: 'none',
-        tipsContent: ''
+        tipsContent: '',
+        commentType: 1,  // 回复对象的type
+        commentID: 0,     // 回复对象的objectID
+        curCommentIndex: 0
     },
     onLoad: function () {
         http(wx.getSystemInfo)()
         .then(result => {
             this.setData({
                 windowWidth: result.windowWidth,
-                windowHeight: result.windowHeight - 50
+                windowHeight: result.windowHeight - 50,
+                commentType: state.get('type'),
+                commentID: state.get('postid')
             })
         })
         this.getComments(true)
@@ -98,8 +103,8 @@ Page({
     },
     commentSend () {
         const authorization = state.get('authorization')
-        const postid = state.get('postid')
-        const type = state.get('type')
+        const type = this.data.commentType
+        const postid = this.data.commentID
 
         if (!state.get('isBindPhone')) {
             return wx.navigateTo({
@@ -113,7 +118,7 @@ Page({
             data: {
                 objectId: postid,
                 type: type,
-                content: encodeURIComponent(this.data.inputValue)
+                content: this.data.inputValue
             },
             header: {
                 Authorization: authorization,
@@ -122,20 +127,25 @@ Page({
         })
         .then(result => {
             let comments = this.data.dataList
-            let commentSize = state.get('commentSize') + 1
-
             result.data.author = state.get('author')
-            comments.unshift(result.data)
+
+            if (type == 3) {
+                comments[this.data.curCommentIndex].subComments.push(result.data)
+            } else {
+                let commentSize = state.get('commentSize') + 1
+                result.data.gmtCreate = formatTime(result.data.gmtCreate)
+                comments.unshift(result.data)
+                state.set({
+                    commentSize: commentSize
+                })
+                state.dispatch('changeCommentCount', commentSize)
+            }
+
             this.setData({
                 dataList: comments,
                 inputValue: '',
-                isNone: 'none'
+                commentType: state.get('type')
             })
-
-            state.set({
-                commentSize: commentSize
-            })
-            state.dispatch('changeCommentCount', commentSize)
         })
         .catch ( result => {
             if (result.status) {
@@ -163,10 +173,28 @@ Page({
                 url: '../bindphone/step01/step01'
             })
         }
-
+        let dataset = event.currentTarget.dataset
         this.setData({
-            placeholder: `回复 ${event.target.dataset.name}`,
-            inputFocus: true
+            placeholder: `回复 ${dataset.name}`,
+            curCommentIndex: dataset.index,
+            commentType: 3,
+            inputFocus: true,
+            commentID: dataset.id
+        })
+    },
+    reCommentSub (event) {
+        if (!state.get('isBindPhone')) {
+            return wx.navigateTo({
+                url: '../bindphone/step01/step01'
+            })
+        }
+        let dataset = event.currentTarget.dataset
+        this.setData({
+            inputFocus: true,
+            inputValue: `@${dataset.name} `,
+            commentType: 3,
+            curCommentIndex: dataset.pindex,
+            commentID: dataset.id
         })
     },
     inputblur (event) {

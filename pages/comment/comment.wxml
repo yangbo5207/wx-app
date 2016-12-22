@@ -11,7 +11,7 @@
                             <view class="comment-author-name">{{item.author.name}}</view>
                             <view class="comment-lc">
                                 <view class="comment-likes" bindtap="likeComment" data-id="{{item.id}}"><image class="comment-likes-img" src="/image/{{item.like ? '003_HL' : '003'}}.png"></image>{{item.likeSize}}</view>
-                                <image class="comment-rec-img" src="/image/004.png" data-name="{{item.author.name}}" bindtap="recomment"></image>
+                                <image class="comment-rec-img" src="/image/004.png" data-name="{{item.author.name}}" data-index="{{index}}" data-id="{{item.id}}" bindtap="recomment"></image>
                             </view>
                         </view>
                         <view class="com-ai-down">{{item.gmtCreate}}</view>
@@ -21,8 +21,8 @@
                     <block wx:if="{{item.subComments.length}}">
                         <view class="sub-comments">
                             <view class="arrow-up"></view>
-                            <block wx:for="{{item.subComments}}" wx:key="">
-                                <view class="sub-comments-item">
+                            <block wx:for="{{item.subComments}}" wx:key="{{index}}"  wx:for-index="_index">
+                                <view class="sub-comments-item" bindtap="reCommentSub" data-index="{{_index}}" data-pindex="{{index}}" data-id="{{item.id}}" data-name="{{item.author.name}}">
                                     <label class="recomment-name">{{item.author.name}}: </label>
                                     <label class="recomment-content">{{item.text}}</label>
                                 </view>

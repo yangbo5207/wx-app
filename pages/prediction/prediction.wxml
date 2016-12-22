@@ -1,41 +1,41 @@
+<import src="../../wxParse/wxParse.wxml" />
+
 <view class="header">
     <view class="rec-top">
         <view class="rec-top-wrap">
             <view class="rec-type type-prediction">预测</view>
-            <text class="rec-source">来自一个逗逼的投资者</text>
+            <text class="rec-source">来自{{content.symbol}}</text>
         </view>
     </view>
     <view class="rec-middle">
         <view class="rec-middle-wrap">
-            <view class="rec-title">纳指三倍做空ETF，预测明天上涨到113.48 </view>
+            <view class="rec-title">{{content.title}}</view>
         </view>
     </view>
     <view class="rec-bottom">
-        <view class="rec-bottom-item">47分钟以前</view>
+        <view class="rec-bottom-item">{{content.gmtCreate}}</view>
     </view>
 </view>
 
 <view class="swiper-tab">
-    <view class="swiper-tab-list {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="switchNav">消息面</view>
-    <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="switchNav">数据面</view>
-    <view class="swiper-tab-list {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="switchNav">基本面</view>
-    <view class="swiper-tab-list {{currentTab==3 ? 'on' : ''}}" data-current="3" bindtap="switchNav">盘面情况</view>
+    <block wx:for="{{content.bodies}}" wx:key="index">
+        <view class="swiper-tab-list {{currentTab==index ? 'on' : ''}}" style="width: {{tabItemWidth}}%" data-current="{{index}}" bindtap="switchNav">{{item.typeName}}</view>    
+    </block>
 </view>
-<swiper current="{{currentTab}}" class="swiper-box" duration="300" bindchange="bindChange">
-    <swiper-item>
-        消息面
-    </swiper-item>
-    <swiper-item>
-        数据面
-    </swiper-item>
-    <swiper-item>
-        基本面
-    </swiper-item>
-    <swiper-item>
-        盘面情况
-    </swiper-item>
+<swiper current="{{currentTab}}" class="swiper-box" style="height: {{swiperHeight}}px" duration="300" bindchange="bindChange">
+    <block wx:for="{{content.bodies}}" wx:key="index">
+        <block wx:if="{{item.type != 4}}">
+            <swiper-item>
+                <scroll-view class="scroll" style="height: {{scrollViewHeight}}px" scroll-y="true"> 
+                    <view class="scroll-wrap">
+                        <view class="swiper-item-title">{{item.title}}</view>
+                        <template is="wxParse" data="{{wxParseData:replyTemArray[index]}}"/>
+                    </view>
+                </scroll-view>
+            </swiper-item>
+        </block>
+    </block>
 </swiper>
-
 
 <view class="bottom-bar">
     <view class="bottom-bar-item">

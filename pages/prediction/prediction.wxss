@@ -1,14 +1,14 @@
 .header {
     background-color: #fff;
-    padding-left: 30rpx; 
+    padding-left: 30rpx;
     padding-bottom: 30rpx;
 }
 
 .swiper-tab {
     border-bottom: 1rpx solid #E5E5E5;
-    height: 100rpx;
+    height: 50px;
     text-align: center;
-    line-height: 100rpx;
+    line-height: 50px;
     color: #999999;
     margin-top: 20rpx;
     background-color: #fff;
@@ -16,7 +16,7 @@
 .swiper-tab-list {
     display: inline-block;
     width: 25%;
-    height: 100rpx;
+    height: 50px;
 }
 
 .on {
@@ -26,5 +26,17 @@
 
 .swiper-box {
     background-color: #fff;
-    height: 1000rpx;
+}
+
+.scroll-wrap {
+    padding: 0 30rpx;
+}
+.swiper-item-title {
+    font-size: 34rpx;
+    color: #333333;
+    margin: 40rpx 0 30rpx;
+}
+
+.bottom-bar {
+    height: 50px;
 }
