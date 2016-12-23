@@ -88,7 +88,6 @@ Page({
         if(this.data.currentTab === current) {
             return false;
         } else {
-            this.render(this.data.content.bodies[current].html)
             this.setData({
                 currentTab: e.target.dataset.current
             })

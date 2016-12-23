@@ -1,7 +1,8 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
 import WxParse from '../../wxParse/wxParse'
-import { promise } from '../../utils/utils'
+import { http } from '../../utils/utils'
+import actionsBar from '../../components/actionsBar/actionsBar'
 
 Page({
     data: {
@@ -21,14 +22,17 @@ Page({
         const authorization = state.get('authorization')
         const postURL = `${config.communityDomainDev}/v5/tweet/${postid}`
 
-        promise(wx.request)({
+        Object.assign(this, actionsBar.optionFn)
+        this.initialAction()
+
+        http(wx.request)({
             url: postURL,
             header: { 'Authorization': authorization }
         })
         .then(res => {
             wx.hideToast();
             const article = res.data.content
-            promise(wx.getSystemInfo)()
+            http(wx.getSystemInfo)()
             .then(systemInfo => {
                 WxParse.wxParse('article', 'html', article, this, 0.04 * systemInfo.windowWidth);
             })
@@ -39,7 +43,7 @@ Page({
         })
         .catch(result => {
             if (result.status) {
-                promise(wx.showModal)({
+                http(wx.showModal)({
                     title: "提示",
                     content: "错误码:" + result.status,
                     confirmText: "重新加载"
@@ -57,135 +61,11 @@ Page({
             }
         })
 
-        let actions = state.get('actions')
-        const cur = `1:${postid}`
-
-        if(actions.like.indexOf(cur) > -1) {
-            this.setData({ like: 1 })
-        }
-        if(actions.favorite.indexOf(cur) > -1) {
-            this.setData({ favorite: 1 })
-        }
-
         state.bind('changeCommentCount', this.changeCommentCount, this)
     },
     changeCommentCount (newCount) {
         this.setData({
             commentSize: newCount
-        })
-    },
-    setLike () {
-        const postid = state.get('postid')
-        const authorization = state.get('authorization')
-
-        let like = this.data.like
-
-        if (!state.get('isBindPhone')) {
-            return wx.navigateTo({
-                url: '../bindphone/step01/step01'
-            })
-        }
-
-        if(!like) {
-            this.setData({
-                like: 1,
-                post: {
-                    likeSize: this.data.post.likeSize + 1
-                }
-            })
-
-            let likes = state.get('actions').like
-            likes.push(`1:${postid}`)
-
-            state.set({
-                actions: {
-                    like: likes
-                }
-            })
-            promise(wx.showToast)({
-                title: '已点赞',
-                icon: 'success'
-            })
-            .then( () => {
-                setTimeout( () => {
-                    wx.hideToast()
-                }, 500)
-            })
-
-            promise(wx.request)({
-                url: `${config.communityDomainDev}/v5/object/1/${postid}/like`,
-                method: 'POST',
-                header: { Authorization: authorization }
-            })
-        }
-    },
-    setFavorite () {
-        const postid = state.get('postid')
-        const authorization = state.get('authorization')
-        let favorite = this.data.favorite
-        let method;
-
-        if (!state.get('isBindPhone')) {
-            return wx.navigateTo({
-                url: '../bindphone/step01/step01'
-            })
-        }
-
-        if(!favorite) {
-            method = 'POST'
-            this.setData({
-                favorite: 1
-            })
-
-            let favorites = state.get('actions').favorite
-            favorites.push(`1:${postid}`)
-
-            state.set({
-                actions: {
-                    favorite: favorites
-                }
-            })
-
-            promise(wx.showToast)({
-                title: '已收藏',
-                icon: 'success'
-            })
-            .then( () => {
-                setTimeout( () => {
-                    wx.hideToast()
-                }, 500)
-            })
-
-        } else {
-            method ='DELETE'
-            this.setData({
-                favorite: 0
-            })
-
-            let favorites = state.get('actions').favorite
-            favorites.splice(favorites.indexOf(`1:${postid}`), 1)
-            state.set({
-                actions: {
-                    favorite: favorites
-                }
-            })
-
-            promise(wx.showToast)({
-                title: '已取消收藏',
-                icon: 'success'
-            })
-            .then( () => {
-                setTimeout( () => {
-                    wx.hideToast()
-                }, 500)
-            })
-        }
-
-
-        promise(wx.request)({
-            url: `${config.communityDomainDev}/v5/object/1/${postid}/favorite`,
-            method: method,
-            header: { Authorization: authorization }
         })
     },
     navToComment () {

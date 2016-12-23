@@ -6,8 +6,8 @@ const options = {
     initialAction () {
         let actions = state.get('actions')
         const postid = state.get('postid')
-        const cur = `1:${postid}`
         const type = state.get('type')
+        const cur = `${type}:${postid}`
 
         if(actions.like.indexOf(cur) > -1) {
             this.setData({ like: 1 })
@@ -19,6 +19,7 @@ const options = {
     },
     setLike () {
         const postid = state.get('postid')
+        const type = state.get('type')
         const authorization = state.get('authorization')
 
         let like = this.data.like
@@ -36,7 +37,7 @@ const options = {
             })
 
             let likes = state.get('actions').like
-            likes.push(`1:${postid}`)
+            likes.push(`${type}:${postid}`)
 
             state.set({
                 actions: {
@@ -54,7 +55,7 @@ const options = {
             })
 
             http(wx.request)({
-                url: `${config.communityDomainDev}/v5/object/1/${postid}/like`,
+                url: `${config.communityDomainDev}/v5/object/${type}/${postid}/like`,
                 method: 'POST',
                 header: { Authorization: authorization }
             })
@@ -62,6 +63,7 @@ const options = {
     },
     setFavorite () {
         const postid = state.get('postid')
+        const type = state.get('type')
         const authorization = state.get('authorization')
         let favorite = this.data.favorite
         let method;
@@ -79,7 +81,7 @@ const options = {
             })
 
             let favorites = state.get('actions').favorite
-            favorites.push(`1:${postid}`)
+            favorites.push(`${type}:${postid}`)
 
             state.set({
                 actions: {
@@ -104,7 +106,7 @@ const options = {
             })
 
             let favorites = state.get('actions').favorite
-            favorites.splice(favorites.indexOf(`1:${postid}`), 1)
+            favorites.splice(favorites.indexOf(`${type}:${postid}`), 1)
             state.set({
                 actions: {
                     favorite: favorites
@@ -124,7 +126,7 @@ const options = {
 
 
         http(wx.request)({
-            url: `${config.communityDomainDev}/v5/object/1/${postid}/favorite`,
+            url: `${config.communityDomainDev}/v5/object/${type}/${postid}/favorite`,
             method: method,
             header: { Authorization: authorization }
         })
