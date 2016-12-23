@@ -139,7 +139,7 @@ Page({
                 'authorization': authorization,
                 'isBindPhone': result.data.new_status.sns_status.wxapp_binding,
             })
-            wx.navigateBack()
+            setTimeout(() => { wx.navigateBack() }, 1500)
         }, () => {
             wx.hideToast();
             this.setData({

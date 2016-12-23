@@ -51,7 +51,7 @@ Page({
         http(wx.showModal)({
             title: '数据合并',
             content: '本次绑定之后，将只保留您的手机账户数据，如有疑问请联系客服'
-        }).then( () => {
+        }).then(() => {
             wx.showToast({ title: '加载中...', icon: 'loading', duration: 10000 })
             return http(wx.request)({
                 url: `${config.oauth}/api/v4/auth/sns/binduser/wxapp`,
@@ -65,20 +65,19 @@ Page({
             })
         }).then( result => {
             wx.hideToast()
-            if (result.is_succ) {
-                const authorization = `Bearer ${result.data.access_token}`
-                state.set({
-                    'authorization': authorization,
-                    'isBindPhone': true,
-                    // wxappid 是后端返回的openid, 所有需要openid的值都需要传入此参数
-                    'wxappid': result.data.wxappid
-                })
-            } else {
-                wx.showModal({
+            if (!result.is_succ) {
+                return wx.showModal({
                     title: '提示',
                     content: result.data.error_description
                 })
             }
+            const authorization = `Bearer ${result.data.access_token}`
+            state.set({
+                'authorization': authorization,
+                'isBindPhone': true,
+                'wxappid': result.data.wxappid
+            })
+            setTimeout(() => { wx.navigateBack() }, 1600)
         }, () => {
             wx.hideToast()
             wx.showModal({
@@ -101,8 +100,6 @@ Page({
         }).then(request => {
             state.set({ 'author': request.data })
             console.log('app 初始化完成', state.getStates())
-        }).then(() => {
-            wx.navigateBack()
         })
     }
 })
