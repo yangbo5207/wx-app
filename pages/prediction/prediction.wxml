@@ -1,4 +1,4 @@
-<import src="../../wxParse/wxParse.wxml" />
+<import src="../../components/wxParse/wxParse.wxml" />
 <import src="../../components/actionsBar/actionsBar.wxml" />
 
 <view class="header">

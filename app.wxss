@@ -1,4 +1,4 @@
-@import "/wxParse/wxParse.wxss";
+@import "components/wxParse/wxParse.wxss";
 @import "components/pullDownRefresh/pullDownRefresh.wxss";
 @import "components/feeds/feeds.wxss";
 @import "components/actionsBar/actionsBar.wxss";

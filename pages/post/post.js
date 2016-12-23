@@ -1,6 +1,6 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
-import WxParse from '../../wxParse/wxParse'
+import WxParse from '../../components/wxParse/wxParse'
 import { http } from '../../utils/utils'
 import actionsBar from '../../components/actionsBar/actionsBar'
 
