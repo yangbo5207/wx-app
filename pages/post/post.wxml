@@ -1,4 +1,5 @@
 <import src="../../components/wxParse/wxParse.wxml" />
+<import src="../../components/actionsBar/actionsBar.wxml" />
 
 <view class="post-header">
     <view class="post-main">
@@ -19,17 +20,4 @@
 
 <view class="post-bottom"></view>
 
-<view class="bottom-bar">
-    <view class="bottom-bar-item" bindtap="setLike">
-        <image class="bottom-bar-icon likes" src="/image/{{like == 1 ? '003_HL' : '003'}}.png"></image>
-        <text>{{like == 1 ? '已赞' : '赞同'}}({{post.likeSize}})</text>
-    </view>
-    <view class="bottom-bar-item" bindtap="navToComment">
-        <image class="bottom-bar-icon comments" src="/image/004.png"></image>
-        <text>评论({{commentSize}})</text>
-    </view>
-    <view class="bottom-bar-item collect" bindtap="setFavorite">
-        <image class="bottom-bar-icon collect" src="/image/{{favorite == 1 ? '005_HL' : '005'}}.png"></image>
-        <text>收藏</text>
-    </view>
-</view>
+<template is="actionsBar" data="{{type, like, likeSize, commentSize, favorite}}"></template>
