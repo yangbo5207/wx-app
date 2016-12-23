@@ -1,7 +1,7 @@
-<import src="../../components/pullDownRefresh/pullDownRefresh.wxml" />
+<import src="../../components/upLoadMore/upLoadMore.wxml" />
 <import src="../../components/feeds/feeds.wxml" />
 
 <scroll-view class="scroll-wrap" scroll-y="true" bindscrolltolower="upLoad" style="width: {{windowWidth}}px;height: {{windowHeight}}px">
     <template is="feeds" data="{{dataList}}"></template>
-    <template is="pullDownRefresh" data="{{isData, isBottomEnd, isBottomLoading}}"></template>
+    <template is="upLoadMore" data="{{isData, isBottomEnd, isBottomLoading}}"></template>
 </scroll-view>

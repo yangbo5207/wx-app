@@ -1,4 +1,4 @@
-<import src="../../components/pullDownRefresh/pullDownRefresh.wxml" />
+<import src="../../components/upLoadMore/upLoadMore.wxml" />
 
 <scroll-view class="comment-wrap" scroll-y="true" bindscrolltolower="upLoad" style="width: {{windowWidth}}px;height: {{windowHeight}}px">
     <block wx:for="{{dataList}}" wx:key="item">
@@ -34,7 +34,7 @@
         </view>
     </block>
 
-    <template is="pullDownRefresh" data="{{isData, isBottomEnd, isBottomLoading}}"></template>
+    <template is="upLoadMore" data="{{isData, isBottomEnd, isBottomLoading}}"></template>
     <view class="tips" style="display: {{tips}}">{{tipsContent}}</view>
 </scroll-view>
 

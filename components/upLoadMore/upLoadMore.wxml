@@ -1,4 +1,4 @@
-<template name="pullDownRefresh">
+<template name="upLoadMore">
     <block wx:if="{{isData == 0}}">
         <view class="bottom-end">
             <view class="bottom-end-line"></view>

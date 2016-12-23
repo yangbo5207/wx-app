@@ -7,7 +7,7 @@ import state from '../../utils/state'
  * isData 1|0 是否有数据
  * isBottomLoading 1|0 是否显示下拉刷新的loading提示
  * isBottomEnd 1|0 是否到底了
- * enablePullDownRefresh 1|0 是否还能下拉刷新
+ * enableUpLoadMore 1|0 是否还能加载更多
  * pageCount {number} 表示第几页
  */
 
@@ -32,11 +32,11 @@ function get (_this, options, isFirst) {
             isData: 1,
             isBottomLoading: 0,
             isBottomEnd: 0,
-            enablePullDownRefresh: 1,
+            enableUpLoadMore: 1,
             pageCount: 1
         })
     } else {
-        if (!_this.data.enablePullDownRefresh) { return }
+        if (!_this.data.enableUpLoadMore) { return }
         _this.setData({
             isBottomLoading: 1,
             pageCount: _this.data.pageCount + 1
@@ -63,10 +63,16 @@ function get (_this, options, isFirst) {
             }
         }
         if (result.message) {
+            delayHideToast()
+            if (isFirst) {
+                return _this.setData({
+                    isData: 0
+                })
+            }
             _this.setData({
                 isBottomLoading: 0,
                 isBottomEnd: 1,
-                enablePullDownRefresh: 0
+                enableUpLoadMore: 0
             })
         }
         return result

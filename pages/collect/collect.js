@@ -1,7 +1,7 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
 import { http } from '../../utils/utils'
-import { getData, navigate } from '../../components/pullDownRefresh/pullDownRefresh'
+import { getData, navigate } from '../../components/upLoadMore/upLoadMore'
 
 Page({
     data: {
@@ -23,7 +23,7 @@ Page({
         this.getFeeds(true)
     },
     upLoad() {
-        this.data.enablePullDownRefresh && this.getFeeds()
+        this.data.enableUpLoadMore && this.getFeeds()
     },
     getFeeds (boolean) {
         const authorization = state.get('authorization')

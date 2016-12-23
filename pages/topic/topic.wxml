@@ -1,4 +1,4 @@
-<import src="../../components/pullDownRefresh/pullDownRefresh.wxml" />
+<import src="../../components/upLoadMore/upLoadMore.wxml" />
 
 <view class="banner">
     <image class="banner-image" src="{{topicInfo.thumbnail}}" />
@@ -41,5 +41,5 @@
         </view>
     </block>
 
-    <template is="pullDownRefresh" data="{{isData, isBottomEnd, isBottomLoading}}"></template>
+    <template is="upLoadMore" data="{{isData, isBottomEnd, isBottomLoading}}"></template>
 </scroll-view>

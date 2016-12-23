@@ -1,7 +1,7 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
 import { http } from '../../utils/utils'
-import { getData } from '../../components/pullDownRefresh/pullDownRefresh'
+import { getData } from '../../components/upLoadMore/upLoadMore'
 
 const app = getApp()
 
@@ -75,6 +75,6 @@ Page({
         })
     },
     upLoad () {
-        this.data.enablePullDownRefresh && this.getTopics()
+        this.data.enableUpLoadMore && this.getTopics()
     }
 })

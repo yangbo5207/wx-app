@@ -1,7 +1,7 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
 import { http, formatTime } from '../../utils/utils'
-import { getData } from '../../components/pullDownRefresh/pullDownRefresh'
+import { getData } from '../../components/upLoadMore/upLoadMore'
 
 Page({
     data: {
@@ -94,7 +94,7 @@ Page({
         this.getComments(true)
     },
     upLoad () {
-        this.data.enablePullDownRefresh && this.getComments()
+        this.data.enableUpLoadMore && this.getComments()
     },
     input (event) {
         this.setData({

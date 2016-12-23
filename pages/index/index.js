@@ -1,7 +1,7 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
 import { http } from '../../utils/utils'
-import { getData, navigate } from '../../components/pullDownRefresh/pullDownRefresh'
+import { getData, navigate } from '../../components/upLoadMore/upLoadMore'
 
 const app = getApp()
 
@@ -82,6 +82,6 @@ Page({
     },
     // 下拉加载更多
     upLoad () {
-        this.data.enablePullDownRefresh && this.getRecommendList()
+        this.data.enableUpLoadMore && this.getRecommendList()
     }
 })
