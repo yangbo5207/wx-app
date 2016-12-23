@@ -12,7 +12,7 @@
 
 <scroll-view class="scroll-wrap" scroll-y="true" bindscrolltolower="upLoad" style="width: {{windowWidth}}px;height: {{windowHeight}}px">
     <block wx:for="{{dataList}}" wx:key="">
-        <view class="section" data-objectid="{{item.id}}" bindtap="navToPost">
+        <view class="section" data-objectid="{{item.id}}" data-type="1" bindtap="navToPost">
             <view class="top">
                 <block wx:if="{{item.thumbnail}}">
                     <view class="image-wrap">

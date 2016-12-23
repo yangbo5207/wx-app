@@ -4,6 +4,8 @@ import WxParse from '../../components/wxParse/wxParse'
 import { http } from '../../utils/utils'
 import actionsBar from '../../components/actionsBar/actionsBar'
 
+const app = getApp()
+
 Page({
     data: {
         post: {},
@@ -11,18 +13,39 @@ Page({
         favorite: 0,
         commentSize: 0
     },
-    onLoad () {
+    onLoad (option) {
         wx.showToast({
             title: '加载中...',
             icon: 'loading',
             duration: 10000
         })
-        const postid = state.get('postid')
         const authorization = state.get('authorization')
+        const postid = option.id
+        const type = option.type
         const postURL = `${config.news}/highlight`
-
+        state.set({
+            postid: postid,
+            type: type
+        })
         Object.assign(this, actionsBar.optionFn)
-        this.initialAction()
+
+        app.login().then(result => {
+            this.initialAction()
+            http(wx.request)({
+                url: `${config.community}/v5/object/4/${postid}/comments`,
+                header: {
+                    Authorization: result
+                },
+                data: {
+                    pageSize: 1
+                }
+            }).then( result => {
+                wx.hideToast()
+                this.setData({
+                    commentSize: result.totalSize
+                })
+            })
+        })
 
         http(wx.request)({
             url: postURL,
@@ -30,8 +53,7 @@ Page({
                 id: postid,
                 wx: 1
             }
-        })
-        .then( result => {
+        }).then( result => {
             wx.hideToast();
             const article = result.content
             http(wx.getSystemInfo)()
@@ -41,26 +63,10 @@ Page({
             this.setData({
                 post: result
             })
-        })
-        .catch(result => {
+        }).catch(result => {
             wx.showModal({
                 title: '提示',
                 content: '好像网络出了点状况'
-            })
-        })
-
-        http(wx.request)({
-            url: `${config.community}/v5/object/4/${postid}/comments`,
-            header: {
-                Authorization: authorization
-            },
-            data: {
-                pageSize: 1
-            }
-        })
-        .then( result => {
-            this.setData({
-                commentSize: result.totalSize
             })
         })
 
@@ -78,5 +84,16 @@ Page({
         wx.navigateTo({
             url: '../comment/comment'
         })
+    },
+    onShareAppMessage (option) {
+        const postTitle = this.data.post.title
+        const id = state.get('postid')
+        const type = state.get('type')
+        const path = `/${this.__route__}?id=${id}&type=${type}`
+
+        return {
+            title: postTitle,
+            path: path
+        }
     }
 })

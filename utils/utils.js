@@ -31,7 +31,7 @@ function fixZero(n) {
     n = n.toString()
     return n[1] ? n : '0' + n
 }
-
+let cache = {}
 function wxPromise (cb) {
     return function (result = {}) {
         return new Promise ((resolve, reject) => {
@@ -59,10 +59,26 @@ function wxPromiseAll (promises) {
     return Promise.all(promises)
 }
 
+function getParam (curURL, key) {
+	var a = curURL.slice(curURL.indexOf('?') + 1).split('&');
+	if(!curURL) { return '' }
+	if(curURL.indexOf(key) == -1) { return '' }
+
+	return function () {
+		for(var i in a) {
+			var _a = a[i].split('=');
+			if (_a[0] == key) {
+				return _a[1]
+			}
+		}
+		return ''
+	}()
+}
+
 module.exports = {
     formatTime: formatTime,
-    promise: wxPromise,
     http: wxPromise,
     promiseAll: wxPromiseAll,
-    type: type
+    type: type,
+    getParam: getParam
 }

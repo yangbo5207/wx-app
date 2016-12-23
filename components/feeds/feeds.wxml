@@ -75,7 +75,7 @@
                     </view>
                     <view class="rec-middle">
                         <view class="rec-middle-wrap">
-                            <view class="rec-prediction-res">{{item.title ? item.title : '接口还没有title字段'}}</view>
+                            <view class="rec-prediction-res">{{item.entity.title}}</view>
                         </view>
                     </view>
                     <view class="rec-bottom">

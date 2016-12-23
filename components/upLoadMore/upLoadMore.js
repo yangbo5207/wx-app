@@ -101,40 +101,27 @@ function get (_this, options, isFirst) {
 
 const navigate = {
     navToPost (event) {
-        state.set({
-            postid: event.currentTarget.dataset.objectid,
-            type: event.currentTarget.dataset.type
-        })
+        const dataset = event.currentTarget.dataset
         wx.navigateTo({
-            url: '../post/post'
+            url: `../post/post?id=${dataset.objectid}&type=${dataset.type}`
         })
     },
     navToNews (event) {
         const dataset = event.currentTarget.dataset
-        state.set({
-            postid: dataset.objectid,
-            type: dataset.type
-        })
         wx.navigateTo({
-            url: '../hightlight/hightlight'
+            url: `../hightlight/hightlight?id=${dataset.objectid}&type=${dataset.type}`
         })
     },
     navToPrediction (event) {
-        state.set({
-            postid: event.currentTarget.dataset.objectid,
-            type: event.currentTarget.dataset.type
-        })
+        const dataset = event.currentTarget.dataset
         wx.navigateTo({
-            url: '../prediction/prediction'
+            url: `../prediction/prediction?id=${dataset.objectid}&type=${dataset.type}`
         })
     },
     navToTopic (event) {
-        state.set({
-            postid: event.currentTarget.dataset.objectid,
-            type: event.currentTarget.dataset.type
-        })
+        const dataset = event.currentTarget.dataset
         wx.navigateTo({
-            url: '../topic/topic'
+            url: `../topic/topic?id=${dataset.objectid}&type=${dataset.type}`
         })
     }
 }

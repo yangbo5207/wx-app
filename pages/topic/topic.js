@@ -8,15 +8,23 @@ const app = getApp()
 Page({
     data: {
         topicInfo: {},
-        topicList: [],
         windowWidth: 0,
         windowHeight: 0
     },
-    onLoad () {
-        // const postid = state.get('postid')
-        const postid = 42
+    onLoad (option) {
+        wx.showToast({
+            title: '加载中...',
+            icon: 'loading',
+            duration: 10000
+        })
         const authorization = state.get('authorization')
-
+        // const postid = option.id
+        const postid = 42
+        const type = option.type
+        state.set({
+            postid: postid,
+            type: type
+        })
         http(wx.getSystemInfo)()
         .then(result => {
             this.setData({
@@ -25,19 +33,17 @@ Page({
             })
         })
 
-        http(wx.request)({
-            url: `${config.community}/v5/topic/${postid}`,
-            header: {
-                'Authorization': authorization
-            }
-        })
-        .then( result => {
-            this.setData({
-                topicInfo: result.data
+        app.login().then(result => {
+            http(wx.request)({
+                url: `${config.community}/v5/topic/${postid}`,
+                header: { 'Authorization': result }
+            }).then(res => {
+                this.setData({
+                    topicInfo: res.data
+                })
             })
+            this.getTopics(true)
         })
-
-        this.getTopics(true)
     },
     getTopics (boolean) {
         const authorization = state.get('authorization')
@@ -65,16 +71,24 @@ Page({
             header: { 'Authorization': authorization }
         })
     },
-    navToPost(event) {
-        state.set({
-            postid: event.currentTarget.dataset.objectid,
-            type: 1
-        })
+    navToPost (event) {
+        const dataset = event.currentTarget.dataset
         wx.navigateTo({
-            url: '../post/post'
+            url: `../post/post?id=${dataset.objectid}&type=${dataset.type}`
         })
     },
     upLoad () {
         this.data.enableUpLoadMore && this.getTopics()
+    },
+    onShareAppMessage (option) {
+        const postTitle = this.data.topicInfo.name
+        const id = state.get('postid')
+        const type = state.get('type')
+        const path = `/${this.__route__}?id=${id}&type=${type}`
+
+        return {
+            title: postTitle,
+            path: path
+        }
     }
 })
