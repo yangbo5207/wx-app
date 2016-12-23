@@ -71,13 +71,17 @@ Page({
                     content: result.data.error_description
                 })
             }
+            wx.showToast({
+                title: '绑定成功！',
+                icon: 'success'
+            })
             const authorization = `Bearer ${result.data.access_token}`
             state.set({
                 'authorization': authorization,
                 'isBindPhone': true,
                 'wxappid': result.data.wxappid
             })
-            setTimeout(() => { wx.navigateBack() }, 1600)
+            setTimeout(() => { wx.navigateBack() }, 1500)
         }, () => {
             wx.hideToast()
             wx.showModal({
