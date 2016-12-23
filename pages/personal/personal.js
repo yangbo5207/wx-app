@@ -25,5 +25,10 @@ Page({
         wx.navigateTo({
             url: '../bindphone/step01/step01'
         })
+    },
+    navToCollect () {
+        wx.navigateTo({
+            url: '../collect/collect'
+        })
     }
 })

@@ -93,6 +93,46 @@ function get (_this, options, isFirst) {
     })
 }
 
+const navigate = {
+    navToPost (event) {
+        state.set({
+            postid: event.currentTarget.dataset.objectid,
+            type: event.currentTarget.dataset.type
+        })
+        wx.navigateTo({
+            url: '../post/post'
+        })
+    },
+    navToNews (event) {
+        const dataset = event.currentTarget.dataset
+        state.set({
+            postid: dataset.objectid,
+            type: dataset.type
+        })
+        wx.navigateTo({
+            url: '../hightlight/hightlight'
+        })
+    },
+    navToPrediction (event) {
+        state.set({
+            postid: event.currentTarget.dataset.objectid,
+            type: event.currentTarget.dataset.type
+        })
+        wx.navigateTo({
+            url: '../prediction/prediction'
+        })
+    },
+    navToTopic (event) {
+        state.set({
+            postid: event.currentTarget.dataset.objectid,
+            type: event.currentTarget.dataset.type
+        })
+        wx.navigateTo({
+            url: '../topic/topic'
+        })
+    }
+}
+
 function delayHideToast () {
     let timer = setTimeout ( () => {
         wx.hideToast()
@@ -101,5 +141,6 @@ function delayHideToast () {
 }
 
 module.exports = {
-    getData: get
+    getData: get,
+    navigate: navigate
 }

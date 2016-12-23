@@ -1,0 +1,108 @@
+<template name="feeds">
+    <block wx:for="{{dataList}}" wx:key="item">
+        <block wx:if="{{item.type == 1}}">
+            <view class="rec-section" data-type="{{item.type}}" data-objectid="{{item.objectId}}" bindtap="navToPost">
+                <view class="rec-main">
+                    <view class="rec-top">
+                        <view class="rec-top-wrap">
+                            <view class="rec-type type-hot">热帖</view>
+                            <text class="rec-source">来自{{item.entity.symbols[0]}}</text>
+                        </view>
+                    </view>
+                    <view class="rec-middle">
+                        <view class="rec-middle-wrap">
+                            <block wx:if="{{item.entity.thumbnail}}">
+                                <view class="rec-image-wrap">
+                                    <image class="rec-image" src="{{item.entity.thumbnail}}"></image>
+                                </view>
+                            </block>
+                            <view class="rec-info">
+                                <view class="rec-title">{{item.entity.title}}</view>
+                                <view class="rec-desc">{{item.entity.text}}</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="rec-bottom">
+                        <view class="rec-bottom-item">{{item.entity.author.name}}</view>
+                        <view class="rec-bottom-item">{{item.gmtCreate}}</view>
+                        <view class="rec-bottom-item like">{{item.entity.likeSize}}赞同</view>
+                        <view class="rec-bottom-item">{{item.entity.commentSize}}评论</view>
+                    </view>
+                </view>
+            </view>
+        </block>
+
+        <block wx:if="{{item.type == 4}}">
+            <view class="rec-section" data-type="{{item.type}}" data-objectid="{{item.objectId}}" bindtap="navToNews">
+                <view class="rec-main">
+                    <view class="rec-top">
+                        <view class="rec-top-wrap">
+                            <view class="rec-type type-highlight">要闻</view>
+                            <text class="rec-source">来自{{item.entity.symbol}}</text>
+                        </view>
+                    </view>
+                    <view class="rec-middle">
+                        <view class="rec-middle-wrap">
+                            <block wx:if="{{item.entity.thumbnail}}">
+                                <view class="rec-image-wrap">
+                                    <image class="rec-image" src="{{item.entity.thumbnail}}"></image>
+                                </view>
+                            </block>
+                            <view class="rec-info">
+                                <view class="rec-title">{{item.entity.title}}</view>
+                                <view class="rec-desc">{{item.entity.summary}}</view>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="rec-bottom">
+                        <view class="rec-bottom-item">{{item.entity.media}}</view>
+                        <view class="rec-bottom-item">{{item.gmtCreate}}</view>
+                        <!--<view class="rec-bottom-item like">{{item.entity.likeSize}}赞同</view>
+                        <view class="rec-bottom-item">{{item.entity.commentSize}}评论</view>-->
+                    </view>
+                </view>
+            </view>
+        </block>
+
+        <block wx:if="{{item.type == 6}}">
+            <view class="rec-section" data-type="{{item.type}}" data-objectid="{{item.objectId}}" bindtap="navToPrediction">
+                <view class="rec-main">
+                    <view class="rec-top">
+                        <view class="rec-top-wrap">
+                            <view class="rec-type type-prediction">预测</view>
+                            <text class="rec-source">来自{{item.entity.symbol}}</text>
+                        </view>
+                    </view>
+                    <view class="rec-middle">
+                        <view class="rec-middle-wrap">
+                            <view class="rec-prediction-res">{{item.title ? item.title : '接口还没有title字段'}}</view>
+                        </view>
+                    </view>
+                    <view class="rec-bottom">
+                        <view class="rec-bottom-item">{{item.entity.author.name}}</view>
+                        <view class="rec-bottom-item">{{item.gmtCreate}}</view>
+                        <view class="rec-bottom-item like">{{item.entity.likeSize}}赞同</view>
+                        <view class="rec-bottom-item">{{item.entity.commentSize}}评论</view>
+                    </view>
+                </view>
+            </view>
+        </block>
+
+        <block wx:if="{{item.type == 7}}">
+            <view class="rec-section rec-section-topic" data-type="{{item.type}}" data-objectId="{{item.objectId}}" bindtap="navToTopic">
+                <view class="rec-main">
+                    <view class="rec-top rec-topic-top">
+                        <view class="rec-top-wrap">
+                            <view class="rec-topic-wrap">
+                                <view class="rec-type type-topic">话题</view>
+                                <view class="rec-topic"># {{item.entity.name}} #</view>
+                            </view>
+                            <text class="rec-source">帖子 {{item.entity.tweetSize}}</text>
+                        </view>
+                    </view>
+                </view>
+                <image class="rec-topic-image" src="{{item.entity.thumbnail}}"></image>
+            </view>
+        </block>
+    </block>
+</template>

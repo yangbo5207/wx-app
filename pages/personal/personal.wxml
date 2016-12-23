@@ -24,7 +24,7 @@
     </block>
 </view>
 <view class="section section-2">
-    <view class="item" bindtap="">
+    <view class="item" bindtap="navToCollect">
         <view class="item-l">
             <view class="img-wrap"><image class="icon icon-collect" src="/image/008.png" /></view>
             <text class="title">我的收藏</text>

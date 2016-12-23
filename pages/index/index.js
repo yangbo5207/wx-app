@@ -1,18 +1,19 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
 import { http } from '../../utils/utils'
-import { getData } from '../../components/pullDownRefresh/pullDownRefresh'
+import { getData, navigate } from '../../components/pullDownRefresh/pullDownRefresh'
 
 const app = getApp()
 
 Page({
     data: {
         windowWidth: 0,
-        windowHeight: 0,
+        windowHeight: 0
     },
     onLoad () {
         app.login().then(() => {
-            this.getRecommendList(true);
+            this.getRecommendList(true)
+            Object.assign(this, navigate)
         }).then(() => {
             return http(wx.request)({
                 url: `${config.communityDomainDev}/v5/user/actions/key`,
@@ -51,43 +52,6 @@ Page({
     },
     onPullDownRefresh () {
         this.getRecommendList(true)
-    },
-    navToPost (event) {
-        state.set({
-            postid: event.currentTarget.dataset.objectid,
-            type: event.currentTarget.dataset.type
-        })
-        wx.navigateTo({
-            url: '../post/post'
-        })
-    },
-    navToNews (event) {
-        const dataset = event.currentTarget.dataset
-        state.set({
-            postid: dataset.objectid,
-            type: dataset.type
-        })
-        wx.navigateTo({
-            url: '../hightlight/hightlight'
-        })
-    },
-    navToPrediction (event) {
-        state.set({
-            postid: event.currentTarget.dataset.objectid,
-            type: event.currentTarget.dataset.type
-        })
-        wx.navigateTo({
-            url: '../prediction/prediction'
-        })
-    },
-    navToTopic (event) {
-        state.set({
-            postid: event.currentTarget.dataset.objectid,
-            type: event.currentTarget.dataset.type
-        })
-        wx.navigateTo({
-            url: '../topic/topic'
-        })
     },
     getRecommendList (boolean) {
         const authorization = state.get('authorization')

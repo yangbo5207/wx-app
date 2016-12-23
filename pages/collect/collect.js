@@ -1,52 +1,53 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
-import { promise } from '../../utils/utils'
+import { http } from '../../utils/utils'
+import { getData, navigate } from '../../components/pullDownRefresh/pullDownRefresh'
 
 Page({
     data: {
-        currentTab: 0,
-        recommendList: []
+        windowWidth: 0,
+        windowHeight: 0
     },
-    onLoad: function () {
+    onLoad () {
+        this.getFeeds(true)
+        Object.assign(this, navigate)
+        http(wx.getSystemInfo)()
+        .then(result => {
+            this.setData({
+                windowWidth: result.windowWidth,
+                windowHeight: result.windowHeight
+            })
+        })
+    },
+    onPullDownRefresh() {
+        this.getFeeds(true)
+    },
+    upLoad() {
+        this.data.enablePullDownRefresh && this.getFeeds()
+    },
+    getFeeds (boolean) {
         const authorization = state.get('authorization')
-        promise(wx.request)({
-            url: `${config.communityDomainDev}/v5/user/favorites`,
-            header: { Authorization: authorization },
-            data: {
-                type: -1,
-                pageCount: 1,
-                pageSize: 20
-            }
-        })
-        .then( result => {
-            console.log(result)
-            this.setData({
-                recommendList: result.data.data
-            })
-        })
-
-        promise(wx.getSystemInfo)()
-        .then( res => {
-            this.setData({
-                windowWidth: res.windowWidth,
-                windowHeight: res.windowHeight
-            })
-        })
-    },
-    bindChange: function (e) {
-        this.setData({
-            currentTab: e.detail.current
-        })
-    },
-    switchNav: function (e) {
-        let self = this
-
-        if(this.data.currentTab === e.target.dataset.current) {
-            return false;
-        } else {
-            self.setData({
-                currentTab: e.target.dataset.current
-            })
+        const _favorites = `${config.communityDomainDev}/v5/user/favorites`
+        const pageSize = 10
+        if (boolean) {
+            return getData(this, {
+                url: _favorites,
+                data: {
+                    pageSize: pageSize,
+                    pageCount: 1,
+                    type: -1
+                },
+                header: { 'Authorization': authorization }
+            }, true)
         }
+        return getData(this, {
+            url: _favorites,
+            data: {
+                pageSize: pageSize,
+                pageCount: this.data.pageCount + 1,
+                type: -1
+            },
+            header: { 'Authorization': authorization }
+        })
     }
-}) 
+})

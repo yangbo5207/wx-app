@@ -1,0 +1,33 @@
+.bottom-bar {
+    position: fixed;
+    width: 100%;
+    height: 100rpx;
+    background-color: #F6F6F6;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid #DDDDDD;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 30rpx;
+    color: #333333
+}
+
+.bottom-bar-item {
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+}
+.bottom-bar-icon {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 6rpx;
+  position: relative;
+}
+.likes {
+  width: 32rpx;
+}
+.comments {
+  height: 28rpx;
+  top: 2rpx;
+}
