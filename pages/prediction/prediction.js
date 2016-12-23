@@ -29,7 +29,7 @@ Page({
             })
         })
         http(wx.request)({
-            url: `${config.communityDomainDev}/v5/forecast/${postid}`,
+            url: `${config.community}/v5/forecast/${postid}`,
             header: { Authorization: authorization },
             data: {
                 wx: 1,

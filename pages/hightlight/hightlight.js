@@ -50,7 +50,7 @@ Page({
         })
 
         http(wx.request)({
-            url: `${config.communityDomainDev}/v5/object/4/${postid}/comments`,
+            url: `${config.community}/v5/object/4/${postid}/comments`,
             header: {
                 Authorization: authorization
             },

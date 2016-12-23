@@ -28,7 +28,7 @@ Page({
             return
         }
         http(wx.request)({
-            url: `${config.loginDomain}/api/v4/auth/sns/snsbind/status`,
+            url: `${config.oauth}/api/v4/auth/sns/snsbind/status`,
             data: { username: this.data.inputValue }
         })
         .then(result => {

@@ -33,7 +33,7 @@ Page({
         const authorization = state.get('authorization')
         const postid = state.get('postid')
         const type = state.get('type')
-        const _comments = `${config.communityDomainDev}/v5/object/${type}/${postid}/comments`
+        const _comments = `${config.community}/v5/object/${type}/${postid}/comments`
         const pageSize = 10
 
         if (boolean) {
@@ -113,7 +113,7 @@ Page({
         }
 
         return http(wx.request)({
-            url: `${config.communityDomainDev}/v5/comment`,
+            url: `${config.community}/v5/comment`,
             method: 'POST',
             data: {
                 objectId: postid,
@@ -254,7 +254,7 @@ Page({
         })
 
         return http(wx.request)({
-            url: `${config.communityDomainDev}/v5/object/3/${commentid}/like`,
+            url: `${config.community}/v5/object/3/${commentid}/like`,
             method: 'POST',
             header: {
                 Authorization: authorization

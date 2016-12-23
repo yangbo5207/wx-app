@@ -31,7 +31,7 @@ Page({
         }
 
         promise(wx.request)({
-            url: `${config.communityDomainDev}/v5/user`,
+            url: `${config.community}/v5/user`,
             header: {
                 Authorization: authorization,
                 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'

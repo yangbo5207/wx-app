@@ -16,14 +16,14 @@ Page({
             Object.assign(this, navigate)
         }).then(() => {
             return http(wx.request)({
-                url: `${config.communityDomainDev}/v5/user/actions/key`,
+                url: `${config.community}/v5/user/actions/key`,
                 header: { 'Authorization': state.get('authorization') }
             })
         }).then(result => {
             state.set({ 'actions': result.data })
         }).then(() => {
             return http(wx.request)({
-                url: `${config.communityDomainDev}/v5/user`,
+                url: `${config.community}/v5/user`,
                 header: { 'Authorization': state.get('authorization') }
             })
         }).then(request => {
@@ -55,7 +55,7 @@ Page({
     },
     getRecommendList (boolean) {
         const authorization = state.get('authorization')
-        const _streamings = `${config.communityDomainDev}/v5/streamings`
+        const _streamings = `${config.community}/v5/streamings`
         const pageSize = 10
         if (boolean) {
             return getData(this, {

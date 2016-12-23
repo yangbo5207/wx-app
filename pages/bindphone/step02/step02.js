@@ -48,7 +48,7 @@ Page({
             })
         } else {
             http(wx.request)({
-                url: `${config.loginDomain}/api/v4/auth/sms`,
+                url: `${config.oauth}/api/v4/auth/sms`,
                 data: {
                     tel_code: 86,
                     phone: inputNumberValue,

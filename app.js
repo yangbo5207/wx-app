@@ -19,7 +19,7 @@ App({
             return result.code
         }).then(code => {
             return http(wx.request)({
-                url: `${config.loginDomain}/api/v4/auth/sns/signin/wxapp`,
+                url: `${config.oauth}/api/v4/auth/sns/signin/wxapp`,
                 method: 'POST',
                 data: {
                     access_token: code,
@@ -38,7 +38,7 @@ App({
 
             // 解除绑定
             // http(wx.request)({
-            //     url: `${config.loginDomain}/api/v4/auth/sns/unbind`,
+            //     url: `${config.oauth}/api/v4/auth/sns/unbind`,
             //     method: 'PUT',
             //     data: {
             //         oauth_os: 'wxapp'

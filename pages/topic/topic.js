@@ -26,7 +26,7 @@ Page({
         })
 
         http(wx.request)({
-            url: `${config.communityDomainDev}/v5/topic/${postid}`,
+            url: `${config.community}/v5/topic/${postid}`,
             header: {
                 'Authorization': authorization
             }
@@ -43,7 +43,7 @@ Page({
         const authorization = state.get('authorization')
         // const postid = state.get('postid')
         const postid = 42
-        const _topic = `${config.communityDomainDev}/v5/topic/${postid}/tweets`
+        const _topic = `${config.community}/v5/topic/${postid}/tweets`
         const pageSize = 10
 
         if (boolean) {

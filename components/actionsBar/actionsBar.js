@@ -55,7 +55,7 @@ const options = {
             })
 
             http(wx.request)({
-                url: `${config.communityDomainDev}/v5/object/${type}/${postid}/like`,
+                url: `${config.community}/v5/object/${type}/${postid}/like`,
                 method: 'POST',
                 header: { Authorization: authorization }
             })
@@ -126,7 +126,7 @@ const options = {
 
 
         http(wx.request)({
-            url: `${config.communityDomainDev}/v5/object/${type}/${postid}/favorite`,
+            url: `${config.community}/v5/object/${type}/${postid}/favorite`,
             method: method,
             header: { Authorization: authorization }
         })

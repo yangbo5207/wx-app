@@ -54,7 +54,7 @@ Page({
         }).then( () => {
             wx.showToast({ title: '加载中...', icon: 'loading', duration: 10000 })
             return http(wx.request)({
-                url: `${config.loginDomain}/api/v4/auth/sns/binduser/wxapp`,
+                url: `${config.oauth}/api/v4/auth/sns/binduser/wxapp`,
                 method: 'PUT',
                 data: {
                     username: inputNumberValue,
@@ -88,14 +88,14 @@ Page({
         // 更新缓存数据
         }).then(() => {
             return http(wx.request)({
-                url: `${config.communityDomainDev}/v5/user/actions/key`,
+                url: `${config.community}/v5/user/actions/key`,
                 header: { 'Authorization': state.get('authorization') }
             })
         }).then(result => {
             state.set({ 'actions': result.data })
         }).then(() => {
             return http(wx.request)({
-                url: `${config.communityDomainDev}/v5/user`,
+                url: `${config.community}/v5/user`,
                 header: { 'Authorization': state.get('authorization') }
             })
         }).then(request => {

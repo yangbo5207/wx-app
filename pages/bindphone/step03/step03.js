@@ -55,7 +55,7 @@ Page({
         this.countDown()
 
         http(wx.request)({
-            url: `${config.loginDomain}/api/v4/auth/sms`,
+            url: `${config.oauth}/api/v4/auth/sms`,
             data: {
                 tel_code: 86,
                 phone: state.get('bindPhoneNumber'),
@@ -97,7 +97,7 @@ Page({
             })
         }
         http(wx.request)({
-            url: `${config.loginDomain}/api/v4/auth/sms`,
+            url: `${config.oauth}/api/v4/auth/sms`,
             data: {
                 tel_code: 86,
                 phone: state.get('bindPhoneNumber'),
@@ -106,7 +106,7 @@ Page({
             }
         }).then(result => {
             return http(wx.request)({
-                url: `${config.loginDomain}/api/v4/auth/sns/signup/wxapp`,
+                url: `${config.oauth}/api/v4/auth/sns/signup/wxapp`,
                 method: 'PUT',
                 data: {
                     phone: phone,

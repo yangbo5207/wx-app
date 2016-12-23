@@ -20,7 +20,7 @@ Page({
 
         const postid = state.get('postid')
         const authorization = state.get('authorization')
-        const postURL = `${config.communityDomainDev}/v5/tweet/${postid}`
+        const postURL = `${config.community}/v5/tweet/${postid}`
 
         Object.assign(this, actionsBar.optionFn)
         this.initialAction()

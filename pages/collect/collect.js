@@ -27,7 +27,7 @@ Page({
     },
     getFeeds (boolean) {
         const authorization = state.get('authorization')
-        const _favorites = `${config.communityDomainDev}/v5/user/favorites`
+        const _favorites = `${config.community}/v5/user/favorites`
         const pageSize = 10
         if (boolean) {
             return getData(this, {
