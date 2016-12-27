@@ -128,5 +128,6 @@ module.exports = {
     promiseAll: wxPromiseAll,
     type: type,
     getParam: getParam,
-    decimal: decimal
+    decimal: decimal,
+    symbolType: symbolType
 }

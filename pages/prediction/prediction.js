@@ -1,7 +1,7 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
 import WxParse from '../../components/wxParse/wxParse'
-import { http, formatTime, decimal } from '../../utils/utils'
+import { http, formatTime, decimal, symbolType } from '../../utils/utils'
 import actionsBar from '../../components/actionsBar/actionsBar'
 
 const app = getApp()
@@ -45,6 +45,9 @@ Page({
                 return this.render(result)
             }).then( result => {
                 const symbol = result.data.symbol
+                this.setData({
+                    symbolType: symbolType(symbol)
+                })
                 this.setDetail(symbol)
                 this.setKLine(symbol)
             }).catch(result => {
@@ -116,8 +119,14 @@ Page({
     },
     setDetail(symbol) {
         const authorization = state.get('authorization')
+        let _url = ''
+        if (this.data.symbolType == 'US') {
+            _url = `${config.quotation}/stock_info/detail`
+        } else if (this.data.symbolType == 'HK') {
+            _url = `${config.quotation}/hkstock/stock_info/detail`
+        }
         http(wx.request)({
-            url: `${config.quotation}/stock_info/detail`,
+            url: _url,
             method: 'POST',
             data: {
                 items: [{'symbol': symbol}]
@@ -140,8 +149,14 @@ Page({
     },
     setKLine (symbol) {
         const authorization = state.get('authorization')
+        let _url = ''
+        if (this.data.symbolType == 'US') {
+            _url = `${config.quotation}/stock_info/time_trend/day/${symbol}`
+        } else if(this.data.symbolType == 'HK') {
+            _url = `${config.quotation}/hkstock/stock_info/time_trend/day/${symbol}`
+        }
         http(wx.request)({
-            url: `${config.quotation}/stock_info/time_trend/day/${symbol}`,
+            url: _url,
             header: { 'Authorization': authorization }
         }).then(result => {
             this.renderKLine(result)
