@@ -1,7 +1,7 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
 import WxParse from '../../components/wxParse/wxParse'
-import { http, formatTime } from '../../utils/utils'
+import { http, formatTime, decimal } from '../../utils/utils'
 import actionsBar from '../../components/actionsBar/actionsBar'
 
 const app = getApp()
@@ -20,9 +20,12 @@ Page({
             icon: 'loading',
             duration: 10000
         })
-        const authorization = state.get('authorization')
-        const postid = option.id
-        const type = option.type
+
+        let authorization = state.get('authorization')
+        // const postid = option.id
+        // const type = option.type
+        const postid = 1
+        const type = 6
         state.set({
             postid: postid,
             type: type
@@ -30,51 +33,20 @@ Page({
         Object.assign(this, actionsBar.optionFn)
 
         app.login().then(result => {
+            authorization = result
+            state.set({ authorization: authorization })
             this.initialAction()
             return http(wx.request)({
                 url: `${config.community}/v5/forecast/${postid}`,
-                header: { Authorization: result },
-                data: {
-                    wx: 1,
-                    __fieldtype: 'show'
-                }
+                header: { Authorization: authorization },
+                data: { wx: 1, __fieldtype: 'show' }
             }).then(result => {
                 wx.hideToast();
-                let replyArr = []
-                result.data.gmtCreate = formatTime(result.data.gmtCreate)
-                result.data.bodies = result.data.bodies.map(item => {
-                    replyArr.push(item.html)
-                    item.isParse = 0
-                    switch (item.type) {
-                        case 1:
-                            item.typeName = '消息面'
-                            break;
-                        case 2:
-                            item.typeName = '基本面'
-                            break;
-                        case 3:
-                            item.typeName = '数据面'
-                            break;
-                        case 4:
-                            item.typeName = '盘面情况'
-                            break;
-                    }
-                    return item
-                })
-                replyArr[0] = '<div class="textMain"><p>$(aapl)$传苹果公司裁掉几十名无人驾驶汽车计划的员工，并打算将这个计划从头开始。</p><p style="text-align: center;"><img alt="" src="http://tigerbrokers.cdn.bj.xs3cnc.com/fc1d34e0-8f77-11e6-8ff4-001c7cfa2232?dp_cmd=/imageView2/mode/2/q/30"/></p><p>据智通财经了解，苹果告诉员工，这些裁员是“重启”这个无人驾车计划的一部分，苹果发言人拒绝就此发表评论。</p><p>裁员显示苹果在无人驾车发展上又碰上了新的困难，过去两年来苹果一直将资源汇集到这个名为“巨人”(Titan)的无人驾车计划中，但是一直无法有显著进展。</p><p>今年七月，苹果指派资深员工Bob Mansfield来主持这个计划。Mansfield领导苹果团队已经调整了无人驾车计划的重心，从设计和生产一台汽车改成发展基础自动驾驶汽车的科技。</p><p style="text-align: center;"><img alt="" src="http://tigerbrokers.cdn.bj.xs3cnc.com/fc8478e4-8f77-11e6-8ff4-001c7cfa2232?dp_cmd=/imageView2/mode/2/q/30"/></p><p>苹果虽然不是唯一在发展无人驾车的公司，但却是最保密至上的。</p><p>苹果从未正面承认它正在发展无人驾驶汽车，虽然在今年的年度股东大会上，首席执行官库克曾说过，汽车工业正在进行一个剧烈的改变，他也似乎承认了汽车计划。</p><p>但苹果自从增加研发自驾车的人力和时间两年后，开始碰上许多问题，例如苹果团队能不能做出比其他公司的自驾车更好的产品。原本主持苹果自驾车计划的Steven Zadesky今年因为个人理由离开公司，原本已经退休的Mansfield后来回到苹果接手这个计划。</p><p>随着苹果旗舰产品iPhone销量的减少，无人驾驶汽车或将成为苹果的一个新市场。</p><p> </p></div>'
-                replyArr.map((item, i) => {
-                    WxParse.wxParse('reply' + i, 'html', item, this)
-                    if (i == replyArr.length - 1) {
-                        WxParse.wxParseTemArray("replyTemArray",'reply', replyArr.length, this)
-                    }
-                })
-
-                this.setData({
-                    content: result.data,
-                    tabItemWidth: 100/result.data.bodies.length,
-                    commentSize: result.data.commentSize,
-                    likeSize: result.data.likeSize
-                })
+                return this.render(result)
+            }).then( result => {
+                const symbol = result.data.symbol
+                this.setDetail(symbol)
+                this.setKLine(symbol)
             }).catch(result => {
                 wx.hideToast()
                 if (result.status) {
@@ -105,6 +77,193 @@ Page({
         })
 
     },
+    render(result) {
+        let replyArr = []
+        result.data.gmtCreate = formatTime(result.data.gmtCreate)
+        result.data.bodies.push({type: 4})
+        result.data.bodies = result.data.bodies.map(item => {
+            replyArr.push(item.html)
+            item.isParse = 0
+            switch (item.type) {
+                case 1:
+                    item.typeName = '消息面'
+                    break;
+                case 2:
+                    item.typeName = '基本面'
+                    break;
+                case 3:
+                    item.typeName = '数据面'
+                    break;
+                case 4:
+                    item.typeName = '盘面情况'
+                    break;
+            }
+            return item
+        })
+        replyArr.map((item, i) => {
+            WxParse.wxParse('reply' + i, 'html', item, this)
+            if (i == replyArr.length - 1) {
+                WxParse.wxParseTemArray("replyTemArray", 'reply', replyArr.length, this)
+            }
+        })
+        this.setData({
+            content: result.data,
+            tabItemWidth: 100/result.data.bodies.length,
+            commentSize: result.data.commentSize,
+            likeSize: result.data.likeSize
+        })
+        return result
+    },
+    setDetail(symbol) {
+        const authorization = state.get('authorization')
+        http(wx.request)({
+            url: `${config.quotation}/stock_info/detail`,
+            method: 'POST',
+            data: {
+                items: [{'symbol': symbol}]
+            },
+            header: { 'Authorization': authorization }
+        }).then(result => {
+            let detail = result.items[0]
+            let changeRate = decimal((detail.latestPrice - detail.preClose) / detail.preClose, 4) * 100
+            detail.changeRate = (changeRate >= 0) ? `+${changeRate}%` : `${changeRate}%`
+            detail._changeRate = changeRate
+            detail.change = changeRate >= 0 ? `+${detail.change}` : detail.change // 根据该值的正负来判断颜色的显示
+            detail.changeHandRate = `${decimal(detail.volume / detail.floatShares * 100, 2)}%`
+            detail.totleValue = `${decimal(detail.latestPrice * detail.shares / 100000000, 0)}亿`
+            detail.gain = decimal(detail.latestPrice / detail.eps, 2)
+            detail.turnover =  `${decimal(detail.volume / 10000, 0)}万`
+            this.setData({
+                detail: detail
+            })
+        })
+    },
+    setKLine (symbol) {
+        const authorization = state.get('authorization')
+        http(wx.request)({
+            url: `${config.quotation}/stock_info/time_trend/day/${symbol}`,
+            header: { 'Authorization': authorization }
+        }).then(result => {
+            this.renderKLine(result)
+        })
+    },
+    renderKLine (result) {
+        let windowWidth = 0
+        http(wx.getSystemInfo)()
+        .then(res => {
+            windowWidth = res.windowWidth
+            let average = windowWidth / 390
+            let items = []
+            result.items.map(item => {
+                items.push(item)
+            })
+            let maxVolume = 0
+            let minVolume = 0
+            let fullVolume = 0
+            let maxAvgPrice = 0
+            let minAvgPrice = 0
+            let fullAvgPrice = 0
+            let maxPrice = 0
+            let minPrice = 0
+            let fullPrice = 0
+            items.map((item, i) => {
+                if (i == 0) {
+                    maxVolume = item.volume
+                    minVolume = item.volume
+                    maxAvgPrice = item.avgPrice
+                    minAvgPrice = item.avgPrice
+                    maxPrice = item.price
+                    minPrice = item.price
+                }
+                item.volume > maxVolume && (maxVolume = item.volume)
+                item.volume < minVolume && (minVolume = item.volume)
+                item.avgPrice > maxAvgPrice && (maxAvgPrice = item.avgPrice)
+                item.avgPrice < minAvgPrice && (minAvgPrice = item.avgPrice)
+                item.price > maxPrice && (maxPrice = item.price)
+                item.price < minPrice && (minPrice = item.price)
+            })
+            let max = Math.max(maxAvgPrice, maxPrice, result.preClose)
+            let min = Math.min(minAvgPrice, minPrice, result.preClose)
+            let full = (max - min) / 0.8
+
+            fullVolume = (maxVolume - minVolume) / 0.8
+
+            const ctx = wx.createCanvasContext('stage')
+
+            // 上下分割线，中间显示起始时间
+            ctx.beginPath()
+            ctx.moveTo(0, 140)
+            ctx.lineTo(windowWidth, 140)
+            ctx.moveTo(0, 120)
+            ctx.lineTo(windowWidth, 120)
+            ctx.setStrokeStyle('#E5E5E5')
+            ctx.stroke()
+
+            // 昨日收盘价，虚线表示
+            ctx.beginPath()
+            let preY = 120 - (result.preClose - min) / full * 120
+            let preAvg = windowWidth / 100
+            for (let i = 0; i < 50; i++) {
+                ctx.moveTo(2 * i * preAvg, preY)
+                ctx.lineTo((2 * i + 1) * preAvg, preY)
+            }
+            ctx.setStrokeStyle('#999999')
+            ctx.stroke()
+
+            // 需要显示的文字
+            ctx.setFontSize(12)
+            ctx.setFillStyle('#999999')
+            ctx.fillText('9:30', 5, 135)
+            ctx.fillText('16:00', windowWidth - 35, 135)
+            ctx.fillText(`${decimal(maxVolume/10000, 2)}万股`, 5, 155)
+
+            // 均价线
+            ctx.beginPath()
+            ctx.setLineCap('round')
+            items.map((item, i) => {
+                let avgX = average * ((1 - 0.04) / 2 + i)
+                let avgY = 120 - ((item.avgPrice - min) / full) * 120
+                if (i == 0) {
+                    ctx.moveTo(avgX, avgY)
+                }
+                ctx.lineTo(avgX, avgY)
+            })
+            ctx.setStrokeStyle('#218DF2')
+            ctx.setLineWidth(1)
+            ctx.stroke()
+
+            // 当前价线条
+            ctx.beginPath()
+            ctx.setLineCap('round')
+            items.map((item, i) => {
+                let pX = average * ((1 - 0.04) / 2 + i)
+                let pY = 120 - ((item.price - min) / full) * 120
+                if (i == 0) {
+                    ctx.moveTo(pX, pY)
+                }
+                ctx.lineTo(pX, pY)
+            })
+            ctx.setStrokeStyle('#EB6422')
+            ctx.setLineWidth(1)
+            ctx.stroke()
+
+            // 下方的成交量，用矩形表示
+            items.map((item, i) => {
+                let w = (average * (1 - 0.04))
+                let vX = average * i
+                let h = (item.volume - minVolume) / fullVolume * 60
+                let vY = 200 - h
+                let color = '#F20642'
+                if (i > 0 && (item.price - items[i-1].price < 0)) {
+                    color = '#3BD595'
+                }
+                ctx.setFillStyle(color)
+                ctx.fillRect(vX, vY, w, h)
+            })
+
+            ctx.draw()
+        })
+    },
     changeCommentCount (newCount) {
         this.setData({ commentSize: newCount })
     },
@@ -112,6 +271,9 @@ Page({
         this.setData({
             currentTab: e.detail.current
         })
+    },
+    touchmove () {
+        console.log('aaaa');
     },
     switchNav (e) {
         const current = e.currentTarget.dataset.current

@@ -40,3 +40,38 @@
 .bottom-bar {
     height: 50px;
 }
+
+/* detail page */
+.latest-price-wrap {
+    text-align: center;
+    color: #F20642;
+    margin-bottom: 30rpx;
+
+}
+.latest-price {
+    font-size: 60rpx;
+    margin-top: 30rpx;
+    margin-bottom: 20rpx;
+}
+
+.detail {
+    margin: 20rpx;
+    display: flex;
+    justify-content: space-between;
+    color: #333333;
+    font-size: 26rpx;
+}
+.detail-item {
+    display: flex;
+    margin: 20px auto;
+    justify-content: space-between;
+}
+.il {
+    color: #999999;
+    margin-right: 20rpx;
+}
+
+.stage {
+    width: 100%;
+    height: 200px;
+}

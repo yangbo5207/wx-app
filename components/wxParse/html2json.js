@@ -74,21 +74,21 @@ function html2json(html, bindName) {
                     var name = attr.name;
                     var value = attr.value;
                     if (name == 'class') {
-                        console.dir(value);
+                        // console.dir(value);
                         //  value = value.join("")
                         node.classStr = value;
                     }
                     // has multi attibutes
                     // make it array of attribute
                     if (name == 'style') {
-                        console.dir(value);
+                        // console.dir(value);
                         //  value = value.join("")
                         node.styleStr = value;
                     }
                     if (value.match(/ /)) {
                         value = value.split(' ');
                     }
-                    
+
 
                     // if attr already exists
                     // merge it
@@ -156,7 +156,7 @@ function html2json(html, bindName) {
                 text: text,
                 textArray:transEmojiStr(text)
             };
-            
+
             if (bufArray.length === 0) {
                 results.nodes.push(node);
             } else {
@@ -186,7 +186,7 @@ function html2json(html, bindName) {
 function transEmojiStr(str){
   // var eReg = new RegExp("["+__reg+' '+"]");
 //   str = str.replace(/\[([^\[\]]+)\]/g,':$1:')
-  
+
   var emojiObjs = [];
   //如果正则表达式为空
   if(__emojisReg.length == 0 || !__emojis){
@@ -214,7 +214,7 @@ function transEmojiStr(str){
     }
     emojiObjs.push(emojiObj);
   }
-  
+
   return emojiObjs;
 }
 
@@ -228,4 +228,3 @@ module.exports = {
     html2json: html2json,
     emojisInit:emojisInit
 };
-

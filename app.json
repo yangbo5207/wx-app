@@ -1,5 +1,6 @@
 {
     "pages": [
+        "pages/prediction/prediction",
         "pages/index/index",
         "pages/bindphone/step12/step12",
         "pages/bindphone/step03/step03",
@@ -7,7 +8,6 @@
         "pages/bindphone/step01/step01",
         "pages/collect/collect",
         "pages/nickname/nickname",
-        "pages/prediction/prediction",
         "pages/hightlight/hightlight",
         "pages/comment/comment",
         "pages/topic/topic",

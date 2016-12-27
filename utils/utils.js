@@ -75,10 +75,58 @@ function getParam (curURL, key) {
 	}()
 }
 
+/**
+ * @param num {number} 将要被处理的数
+ * @param count  {number} 省略到小数后第number-1位，根据number位进行四舍五入处理
+ * @return {string}
+ */
+function decimal (num, count) {
+    var floatNum = parseFloat(num);
+	if (isNaN(floatNum)) {
+		return;
+	}
+
+    if (count == 0) {
+        return Math.round(floatNum)
+    }
+
+    var re = Math.round(floatNum * Math.pow(10, count))
+    var rs = re.toString().split('')
+    if (re == 0) {
+        for(let i = 0; i < count - 1; i++) {
+            rs.push('0')
+        }
+    }
+    rs.splice(rs.length - count, 0, '.')
+    if (num < 1) {
+        rs.unshift('0')
+    }
+    return rs.join('')
+}
+
+function symbolType(symbol) {
+    if (/^[013]\d{5}$/.test(symbol)) {
+        return 'SZ'
+    }
+    if (/(^[56]\d{5}$|\.SH$)/.test(symbol)) {
+        return 'SH'
+    }
+    if (/(HSI|HSCEI|HSCCI)/.test(symbol)) {
+        return 'HK'
+    }
+    if (/^\d{5}$/.test(symbol)) {
+        return 'HK'
+    }
+    if (/^[.A-Za-z]+$/.test(symbol)) {
+        return 'US'
+    }
+}
+
 module.exports = {
     formatTime: formatTime,
     http: wxPromise,
     promiseAll: wxPromiseAll,
     type: type,
-    getParam: getParam
+    getParam: getParam,
+    decimal: decimal
 }

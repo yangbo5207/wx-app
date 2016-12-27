@@ -36,16 +36,15 @@ function wxParseImgTap(e) {
 }
 
 /**
- * 图片视觉宽高计算函数区 
+ * 图片视觉宽高计算函数区
  **/
 function wxParseImgLoad(e) {
-  console.log('wximgload')
   var that = this;
   var tagFrom = e.target.dataset.from;
   var idx = e.target.dataset.idx;
   if (typeof (tagFrom) != 'undefined' && tagFrom.length > 0) {
     calMoreImageInfo(e, idx, that, tagFrom)
-  } 
+  }
 }
 // 假循环获取计算图片视觉最佳宽高
 function calMoreImageInfo(e, idx, that, bindName) {
@@ -55,9 +54,9 @@ function calMoreImageInfo(e, idx, that, bindName) {
   }
   var temImages = temData.images;
   //因为无法获取view宽度 需要自定义padding进行计算，稍后处理
-  var recal = wxAutoImageCal(e.detail.width, e.detail.height,that,bindName); 
+  var recal = wxAutoImageCal(e.detail.width, e.detail.height,that,bindName);
   temImages[idx].width = recal.imageWidth;
-  temImages[idx].height = recal.imageheight; 
+  temImages[idx].height = recal.imageheight;
   temData.images = temImages;
   var bindData = {};
   bindData[bindName] = temData;
@@ -107,7 +106,7 @@ function wxParseTemArray(temArrayName,bindNameReg,total,that){
 
 /**
  * 配置emojis
- * 
+ *
  */
 
 function emojisInit(reg='',baseSrc="/wxParse/emojis/",emojis){
@@ -119,5 +118,3 @@ module.exports = {
   wxParseTemArray:wxParseTemArray,
   emojisInit:emojisInit
 }
-
-

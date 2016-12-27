@@ -20,19 +20,47 @@
 
 <view class="swiper-tab">
     <block wx:for="{{content.bodies}}" wx:key="index">
-        <view class="swiper-tab-list {{currentTab==index ? 'on' : ''}}" style="width: {{tabItemWidth}}%" data-current="{{index}}" bindtap="switchNav">{{item.typeName}}</view>    
+        <view class="swiper-tab-list {{currentTab==index ? 'on' : ''}}" style="width: {{tabItemWidth}}%" data-current="{{index}}" bindtap="switchNav">{{item.typeName}}</view>
     </block>
 </view>
 <swiper current="{{currentTab}}" class="swiper-box" style="height: {{swiperHeight}}px" duration="300" bindchange="bindChange">
     <block wx:for="{{content.bodies}}" wx:key="index">
         <block wx:if="{{item.type != 4}}">
             <swiper-item>
-                <scroll-view class="scroll" style="height: {{scrollViewHeight}}px" scroll-y="true"> 
+                <scroll-view class="scroll" style="height: {{scrollViewHeight}}px" scroll-y="true">
                     <view class="scroll-wrap">
                         <view class="swiper-item-title">{{item.title}}</view>
                         <template is="wxParse" data="{{wxParseData:replyTemArray[index]}}"/>
                     </view>
                 </scroll-view>
+            </swiper-item>
+        </block>
+        <block wx:if="{{item.type == 4}}">
+            <swiper-item>
+                <view class="scroll" style="height: {{scrollViewHeight}}px">
+                    <view class="latest-price-wrap">
+                        <view class="latest-price">{{detail.latestPrice}}</view>
+                        <view class="latest-preclose">{{detail.change}}  {{detail.changeRate}}</view>
+                    </view>
+                    <canvas canvas-id="stage" class="stage" bingtouchmove="touchmove"></canvas>
+                    <view class="detail">
+                        <view class="cum-0">
+                            <view class="detail-item"><view class="il">最高</view><view class="ir">{{detail.high}}</view></view>
+                            <view class="detail-item"><view class="il">最低</view><view class="ir">{{detail.low}}</view></view>
+                            <view class="detail-item"><view class="il">成交量</view><view class="ir">{{detail.turnover}}</view></view>
+                        </view>
+                        <view class="cum-1">
+                            <view class="detail-item"><view class="il">今开</view><view class="ir">{{detail.open}}</view></view>
+                            <view class="detail-item"><view class="il">昨收</view><view class="ir">{{detail.preClose}}</view></view>
+                            <view class="detail-item"><view class="il">换手率</view><view class="ir">{{detail.changeHandRate}}</view></view>
+                        </view>
+                        <view class="cum-1">
+                            <view class="detail-item"><view class="il">市盈率</view><view class="ir">{{detail.gain}}</view></view>
+                            <view class="detail-item"><view class="il">总市值</view><view class="ir">{{detail.totleValue}}</view></view>
+                            <view class="detail-item"><view class="il">每股收益</view><view class="ir">{{detail.eps}}</view></view>
+                        </view>
+                    </view>
+                </view>
             </swiper-item>
         </block>
     </block>
