@@ -22,10 +22,8 @@ Page({
         })
 
         let authorization = state.get('authorization')
-        // const postid = option.id
-        // const type = option.type
-        const postid = 1
-        const type = 6
+        const postid = option.id
+        const type = option.type
         state.set({
             postid: postid,
             type: type

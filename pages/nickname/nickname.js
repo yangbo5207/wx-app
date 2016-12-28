@@ -1,6 +1,6 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
-import { promise } from '../../utils/utils'
+import { http } from '../../utils/utils'
 
 Page({
     data: {
@@ -30,7 +30,7 @@ Page({
             return;
         }
 
-        promise(wx.request)({
+        http(wx.request)({
             url: `${config.community}/v5/user`,
             header: {
                 Authorization: authorization,

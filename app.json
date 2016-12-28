@@ -1,7 +1,7 @@
 {
     "pages": [
-        "pages/prediction/prediction",
         "pages/index/index",
+        "pages/prediction/prediction",
         "pages/bindphone/step12/step12",
         "pages/bindphone/step03/step03",
         "pages/bindphone/step02/step02",
