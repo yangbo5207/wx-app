@@ -67,5 +67,14 @@ Page({
     // 下拉加载更多
     upLoad () {
         this.data.enableUpLoadMore && this.getRecommendList()
+    },
+    onShareAppMessage (option) {
+        const postTitle = '今日看点'
+        const path = this.__route__
+
+        return {
+            title: postTitle,
+            path: path
+        }
     }
 })

@@ -81,7 +81,7 @@ function getParam (curURL, key) {
  * @return {string}
  */
 function decimal (num, count) {
-    var floatNum = parseFloat(num);
+    var floatNum = parseFloat(Math.abs(num));
 	if (isNaN(floatNum)) {
 		return;
 	}
@@ -100,6 +100,9 @@ function decimal (num, count) {
     rs.splice(rs.length - count, 0, '.')
     if (num < 1) {
         rs.unshift('0')
+    }
+    if (num < 0) {
+        rs.unshift('-')
     }
     return rs.join('')
 }
@@ -129,5 +132,6 @@ module.exports = {
     type: type,
     getParam: getParam,
     decimal: decimal,
-    symbolType: symbolType
+    symbolType: symbolType,
+    fixZero: fixZero
 }
