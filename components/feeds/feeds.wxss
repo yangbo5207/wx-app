@@ -97,10 +97,13 @@
     height: 36rpx;
     display: flex;
     font-size: 24rpx;
+    align-items: center;
     color: #999999;
 }
 .rec-bottom-item {
     margin-right: 16rpx;
+    height: 12px;
+    line-height: 12px;
 }
 .rec-topic-wrap {
     display: flex;

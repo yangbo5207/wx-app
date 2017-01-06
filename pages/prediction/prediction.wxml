@@ -23,7 +23,7 @@
         <view class="swiper-tab-list {{currentTab==index ? 'on' : ''}}" style="width: {{tabItemWidth}}%" data-current="{{index}}" bindtap="switchNav">{{item.typeName}}</view>
     </block>
 </view>
-<swiper current="{{currentTab}}" class="swiper-box" style="height: {{swiperHeight}}px" duration="300" bindchange="bindChange">
+<swiper current="{{currentTab}}" class="swiper-box" style="height: {{swiperHeight}}px;" duration="400" bindchange="bindChange">
     <block wx:for="{{content.bodies}}" wx:key="index">
         <block wx:if="{{item.type != 4}}">
             <swiper-item>
@@ -36,7 +36,7 @@
             </swiper-item>
         </block>
         <block wx:if="{{item.type == 4}}">
-            <swiper-item>
+            <swiper-item style="overflow: hidden;">
                 <view class="scroll" style="height: {{scrollViewHeight}}px">
                     <view class="latest-price-wrap">
                         <view class="latest-price">{{detail.latestPrice}}</view>

@@ -23,7 +23,7 @@
 .bottom-end-line {
     position: absolute;
     width: 100%;
-    border-top: 1px solid #E5E5E5;
+    /* border-top: 1px solid #E5E5E5; */
     top: 50rpx;
     z-index: -1;
 }

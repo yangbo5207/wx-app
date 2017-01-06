@@ -24,7 +24,7 @@
         "color": "#999999",
         "selectedColor": "#333333",
         "borderStyle": "white",
-        "backgroundColor": "#F6F6F6",
+        "backgroundColor": "#EFEFEF",
         "list": [{
                 "pagePath": "pages/index/index",
                 "iconPath": "image/001.png",

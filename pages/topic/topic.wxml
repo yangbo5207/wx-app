@@ -32,10 +32,10 @@
                 </view>
                 <view class="right-wrap">
                     <view class="bottom-item like">
-                        <image class="like-icon" src="/image/003.png"></image>
+                        <image class="like-icon" src="/image/003_LC.png"></image>
                         <view class="like-size">{{item.likeSize}}</view>
                     </view>
-                    <image class="comment-icon" src="/image/004.png"></image>
+                    <image class="comment-icon" src="/image/004_LC.png"></image>
                 </view>
             </view>
         </view>

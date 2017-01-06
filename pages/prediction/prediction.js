@@ -230,7 +230,7 @@ Page({
                 }
                 ctx.lineTo(avgX, avgY)
             })
-            ctx.setStrokeStyle('#218DF2')
+            ctx.setStrokeStyle('#EB6422')
             ctx.setLineWidth(1)
             ctx.stroke()
 
@@ -245,8 +245,14 @@ Page({
                 }
                 ctx.lineTo(pX, pY)
             })
-            ctx.setStrokeStyle('#EB6422')
+            ctx.setStrokeStyle('#218DF2')
             ctx.setLineWidth(1)
+
+            // cosnt grd = ctx.createLinearGradient(0, 0, 0, 120)
+            // grd.addColorStop(0, grba(33, 141, 242, 0.3))
+            // grd.addColorStop(1, grba(255, 255, 255, 0.3))
+            // ctx.setFillStyle(grd)
+            // ctx.fill()
             ctx.stroke()
 
             // 下方的成交量，用矩形表示

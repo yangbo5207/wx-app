@@ -35,7 +35,7 @@ Page({
         })
     },
     onPullDownRefresh () {
-        this.getRecommendList(true)
+        this.onLoad()
     },
     getRecommendList (boolean) {
         const authorization = state.get('authorization')

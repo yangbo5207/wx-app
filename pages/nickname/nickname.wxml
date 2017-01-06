@@ -1,10 +1,10 @@
 <view class="set-name-wrap">
     <view class="title">设置昵称</view>
-    <input class="set-name" 
-           type="text" 
-           maxlength="14" 
-           auto-focus 
-           placeholder="快点设置一个响亮的名字吧" 
+    <input class="set-name"
+           type="text"
+           maxlength="14"
+           auto-focus
+           placeholder="快点设置一个响亮的名字吧"
            value="{{nickname}}"
            bindinput="input" />
 </view>

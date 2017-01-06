@@ -18,8 +18,8 @@ Page({
             duration: 10000
         })
         const authorization = state.get('authorization')
-        const postid = option.id
-        // const postid = 42
+        // const postid = option.id
+        const postid = 42
         const type = option.type
         state.set({
             postid: postid,
@@ -47,8 +47,8 @@ Page({
     },
     getTopics (boolean) {
         const authorization = state.get('authorization')
-        const postid = state.get('postid')
-        // const postid = 42
+        // const postid = state.get('postid')
+        const postid = 42
         const _topic = `${config.community}/v5/topic/${postid}/tweets`
         const pageSize = 10
 

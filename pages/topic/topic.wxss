@@ -92,11 +92,13 @@
 .right-wrap {
     display: flex;
     align-items: center;
+    color: #999999;
 }
 .like {
     display: flex;
     align-items: center;
     margin-right: 35rpx;
+    border-left: none;
 }
 .like-icon {
     width: 28rpx;

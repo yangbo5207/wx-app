@@ -7,11 +7,13 @@
     font-size: 34rpx;
     padding: 0 30rpx;
 }
+.title {
+    width: 180rpx;
+}
 input.set-name {
     height: 100%;
     flex: 1;
-    margin-left: 10rpx;
-    text-align: center
+    text-align: left;
 }
 button.primary {
     margin-top: 60rpx;
