@@ -1,6 +1,6 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
-import { http } from '../../utils/utils'
+import { http, assign } from '../../utils/utils'
 import { getData, navigate } from '../../components/upLoadMore/upLoadMore'
 
 const app = getApp()
@@ -13,7 +13,7 @@ Page({
     onLoad () {
         app.login().then(result => {
             this.getRecommendList(true)
-            Object.assign(this, navigate)
+            assign(this, navigate)
         }).catch(() => {
             http(wx.showModal)({
                 title: "提示",

@@ -1,6 +1,6 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
-import { http } from '../../utils/utils'
+import { http, assign } from '../../utils/utils'
 import { getData, navigate } from '../../components/upLoadMore/upLoadMore'
 
 Page({
@@ -10,7 +10,7 @@ Page({
     },
     onLoad () {
         this.getFeeds(true)
-        Object.assign(this, navigate)
+        assign(this, navigate)
         http(wx.getSystemInfo)()
         .then(result => {
             this.setData({

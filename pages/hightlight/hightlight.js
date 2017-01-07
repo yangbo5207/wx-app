@@ -1,7 +1,7 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
 import WxParse from '../../components/wxParse/wxParse'
-import { http } from '../../utils/utils'
+import { http, assign } from '../../utils/utils'
 import actionsBar from '../../components/actionsBar/actionsBar'
 
 const app = getApp()
@@ -27,7 +27,7 @@ Page({
             postid: postid,
             type: type
         })
-        Object.assign(this, actionsBar.optionFn)
+        assign(this, actionsBar.optionFn)
 
         app.login().then(result => {
             this.initialAction()

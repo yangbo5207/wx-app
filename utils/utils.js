@@ -125,6 +125,20 @@ function symbolType(symbol) {
     }
 }
 
+function assign (source, target) {
+    if (typeof source != 'object') {
+        console.error('source不是json对象')
+        return
+    }
+    if (typeof target != 'object') {
+        console.error('target不是json对象')
+    }
+    for(let key in target) {
+        source[key] = target[key]
+    }
+    return source
+}
+
 module.exports = {
     formatTime: formatTime,
     http: wxPromise,
@@ -133,5 +147,6 @@ module.exports = {
     getParam: getParam,
     decimal: decimal,
     symbolType: symbolType,
-    fixZero: fixZero
+    fixZero: fixZero,
+    assign: assign
 }
