@@ -1,8 +1,8 @@
 <view class="bind-phone-wrap">
     <view class="bind-phone-item">
         <view class="bind-item-left">+ 86</view>
-        <input type="number" class="bind-item-middle" placeholder="请填写手机号" maxlength="11" bindinput="input" />
-        <view class="bind-item-right">
+        <input type="number" class="bind-item-middle" placeholder="请填写手机号" maxlength="11" bindinput="input" value="{{inputValue}}" />
+        <view class="bind-item-right" bindtap="clearContent">
             <image class="bind-item-right-img" src="/image/009.png" />
         </view>
     </view>

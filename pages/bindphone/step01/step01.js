@@ -14,6 +14,11 @@ Page({
             inputValue: event.detail.value
         })
     },
+    clearContent () {
+        this.setData({
+            inputValue: ''
+        })
+    },
     nextStep () {
         wx.showToast({
             title: '加载中...',

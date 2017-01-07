@@ -38,7 +38,7 @@
                     <view class="rec-top">
                         <view class="rec-top-wrap">
                             <view class="rec-type type-highlight">要闻</view>
-                            <text class="rec-source">来自{{item.entity.symbol}}</text>
+                            <text class="rec-source">来自{{item.entity.media}}</text>
                         </view>
                     </view>
                     <view class="rec-middle">

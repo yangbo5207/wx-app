@@ -23,6 +23,11 @@ Page({
             inputPasswordValue: event.detail.value
         })
     },
+    clearNumberValue () {
+        this.setData({
+            inputNumberValue: ''
+        })
+    },
     switchEncryption () {
         this.setData({
             isEncryption: !this.data.isEncryption
