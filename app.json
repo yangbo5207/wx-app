@@ -1,6 +1,7 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/disclaimer/disclaimer",
         "pages/prediction/prediction",
         "pages/bindphone/step12/step12",
         "pages/bindphone/step03/step03",

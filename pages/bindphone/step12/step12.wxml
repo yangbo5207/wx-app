@@ -15,5 +15,5 @@
         </view>
     </view>
 </view>
-<view class="disclaimer-message">点击“登录”，即表示您同意<label class="disclaimer-label">《免责及隐私声明》</label></view>
+<view class="disclaimer-message">点击“登录”，即表示您同意<label class="disclaimer-label" bindtap="navToDisclaimer">《产品使用许可协议》</label></view>
 <button class="primary distance" bindtap="login">登录</button>

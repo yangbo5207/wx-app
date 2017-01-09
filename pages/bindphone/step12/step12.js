@@ -28,6 +28,11 @@ Page({
             inputNumberValue: ''
         })
     },
+    navToDisclaimer () {
+        wx.navigateTo({
+            url: `../../disclaimer/disclaimer`
+        })
+    },
     switchEncryption () {
         this.setData({
             isEncryption: !this.data.isEncryption

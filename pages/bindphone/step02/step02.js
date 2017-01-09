@@ -33,6 +33,11 @@ Page({
             isEncryption: !this.data.isEncryption
         })
     },
+    navToDisclaimer () {
+        wx.navigateTo({
+            url: `../../disclaimer/disclaimer`
+        })
+    },
     sureRegister () {
         let inputNumberValue = this.data.inputNumberValue
         let inputPasswordValue = this.data.inputPasswordValue
