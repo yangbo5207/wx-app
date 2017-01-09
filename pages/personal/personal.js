@@ -17,6 +17,11 @@ Page({
         this.onLoad()
     },
     navToNickname () {
+        if (!state.get('isBindPhone')) {
+            return wx.navigateTo({
+                url: '../bindphone/step01/step01'
+            })
+        }
         wx.navigateTo({
             url: '../nickname/nickname'
         })
