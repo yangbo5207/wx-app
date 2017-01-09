@@ -36,7 +36,6 @@ Page({
                 url: postURL,
                 header: { 'Authorization': result }
             }).then(res => {
-                console.log(res);
                 wx.hideToast();
                 const article = res.data.content
                 http(wx.getSystemInfo)()

@@ -8,7 +8,6 @@ Page({
         isBindPhone: 0
     },
     onLoad () {
-        console.log(state.getStates());
         this.setData({
             nickname: state.get('author').name,
             isBindPhone: state.get('isBindPhone')

@@ -28,7 +28,6 @@ App({
                     platform: 'wxapp'
                 }
             }).then( result => {
-                console.log(result);
                 const authorization = `Bearer ${result.data.access_token}`
                 state.set({
                     'authorization': authorization,

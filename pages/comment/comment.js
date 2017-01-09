@@ -141,7 +141,7 @@ Page({
         .then(result => {
             let comments = this.data.dataList
             result.data.author = state.get('author')
-
+            result.data.html = result.data.html.replace(/<[^<>]*>/g, '')
             if (type == 3) {
                 comments[this.data.curCommentIndex].subComments.push(result.data)
             } else {
