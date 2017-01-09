@@ -3,7 +3,7 @@ import state from './utils/state'
 import { http } from './utils/utils'
 import Promise from './utils/promise'
 
-
+// 线上
 // appid: 'wx87ef8d5ebed00eed'
 // secret: '5746108f85fe52594b1639bbd9d5abe9'
 

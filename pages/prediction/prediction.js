@@ -432,7 +432,6 @@ Page({
         })
     },
     touchmove () {
-        console.log('aaaa');
     },
     switchNav (e) {
         const current = e.currentTarget.dataset.current
