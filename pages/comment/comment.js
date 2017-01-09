@@ -56,6 +56,13 @@ Page({
                     } else {
                         item.like = 0
                     }
+                    item.content = item.content.replace(/<[^<>]*>/g, '')
+                    if (item.subComments.length > 0) {
+                        item.subComments.map (cot => {
+                            cot.content = cot.content.replace(/<[^<>]*>/g, '')
+                            return cot
+                        })
+                    }
                     return item
                 })
                 this.setData({
@@ -80,6 +87,13 @@ Page({
                     item.like = 1
                 } else {
                     item.like = 0
+                }
+                item.content = item.content.replace(/<[^<>]*>/g, '')
+                if (item.subComments.length > 0) {
+                    item.subComments.map (cot => {
+                        cot.content = cot.content.replace(/<[^<>]*>/g, '')
+                        return cot
+                    })
                 }
                 return item
             })

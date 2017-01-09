@@ -18,7 +18,7 @@
                         </view>
                         <view class="com-ai-down">{{item.gmtCreate}}</view>
                     </view>
-                    <view class="comment-content">{{item.text}}</view>
+                    <view class="comment-content">{{item.content}}</view>
 
                     <block wx:if="{{item.subComments.length}}">
                         <view class="sub-comments">
@@ -26,7 +26,7 @@
                             <block wx:for="{{item.subComments}}" wx:key="{{index}}"  wx:for-index="_index">
                                 <view class="sub-comments-item" bindtap="reCommentSub" data-index="{{_index}}" data-pindex="{{index}}" data-id="{{item.id}}" data-name="{{item.author.name}}">
                                     <label class="recomment-name">{{item.author.name}}: </label>
-                                    <label class="recomment-content">{{item.text}}</label>
+                                    <label class="recomment-content">{{item.content}}</label>
                                 </view>
                             </block>
                         </view>
