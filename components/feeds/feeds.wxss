@@ -91,6 +91,14 @@
     color: #666666;
     margin-top: 16rpx;
     line-height: 1.6;
+    display: -webkit-box;
+    -webkit-box-orient
+    text-overflow: ellipsis;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 .rec-bottom {
     padding-top: 16rpx;

@@ -56,10 +56,10 @@ Page({
                     } else {
                         item.like = 0
                     }
-                    item.content = item.content.replace(/<[^<>]*>/g, '')
+                    item.html = item.html.replace(/<[^<>]*>/g, '')
                     if (item.subComments.length > 0) {
                         item.subComments.map (cot => {
-                            cot.content = cot.content.replace(/<[^<>]*>/g, '')
+                            cot.html = cot.html.replace(/<[^<>]*>/g, '')
                             return cot
                         })
                     }
@@ -88,10 +88,10 @@ Page({
                 } else {
                     item.like = 0
                 }
-                item.content = item.content.replace(/<[^<>]*>/g, '')
+                item.html = item.html.replace(/<[^<>]*>/g, '')
                 if (item.subComments.length > 0) {
                     item.subComments.map (cot => {
-                        cot.content = cot.content.replace(/<[^<>]*>/g, '')
+                        cot.html = cot.html.replace(/<[^<>]*>/g, '')
                         return cot
                     })
                 }
@@ -132,8 +132,7 @@ Page({
             data: {
                 objectId: postid,
                 type: type,
-                content: this.data.inputValue
-            },
+                content: this.data.inputValue            },
             header: {
                 Authorization: authorization,
                 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
