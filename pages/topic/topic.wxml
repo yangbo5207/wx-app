@@ -1,7 +1,7 @@
 <import src="../../components/upLoadMore/upLoadMore.wxml" />
 
 <view class="banner">
-    <image class="banner-image" src="{{topicInfo.thumbnail}}" />
+    <image class="banner-image" mode="aspectFill" src="{{topicInfo.thumbnail}}" />
     <view class="banner-bar">
         <view class="topic-title"># {{topicInfo.name}} #</view>
         <view class="count">帖子 {{topicInfo.tweetSize}}</view>

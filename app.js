@@ -28,6 +28,7 @@ App({
                     platform: 'wxapp'
                 }
             }).then( result => {
+                console.log(result);
                 const authorization = `Bearer ${result.data.access_token}`
                 state.set({
                     'authorization': authorization,
@@ -66,16 +67,3 @@ App({
         })
     }
 })
-
-
-// 解除绑定
-// http(wx.request)({
-//     url: `${config.oauth}/api/v4/auth/sns/unbind`,
-//     method: 'PUT',
-//     data: {
-//         oauth_os: 'wxapp'
-//     },
-//     header: { 'Authorization': state.get('authorization') }
-// }).then(result => {
-//     console.log(result)
-// })

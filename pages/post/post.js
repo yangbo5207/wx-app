@@ -1,7 +1,7 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
 import WxParse from '../../components/wxParse/wxParse'
-import { http, assign } from '../../utils/utils'
+import { http, assign, formatTime } from '../../utils/utils'
 import actionsBar from '../../components/actionsBar/actionsBar'
 
 const app = getApp()
@@ -36,12 +36,14 @@ Page({
                 url: postURL,
                 header: { 'Authorization': result }
             }).then(res => {
+                console.log(res);
                 wx.hideToast();
                 const article = res.data.content
                 http(wx.getSystemInfo)()
                 .then(systemInfo => {
                     WxParse.wxParse('article', 'html', article, this, 0.04 * systemInfo.windowWidth);
                 })
+                res.data.gmtCreate = formatTime(res.data.gmtCreate)
                 this.setData({
                     post: res.data,
                     commentSize: res.data.commentSize,

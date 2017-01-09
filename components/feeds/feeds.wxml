@@ -101,7 +101,7 @@
                         </view>
                     </view>
                 </view>
-                <image class="rec-topic-image" src="{{item.entity.thumbnail}}"></image>
+                <image class="rec-topic-image" mode="aspectFill" src="{{item.entity.thumbnail}}"></image>
             </view>
         </block>
     </block>
