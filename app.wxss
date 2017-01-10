@@ -13,44 +13,6 @@ page {
   background-color: #F6F6F6;
 }
 
-/* 回复框样式 */
-.comment-input-wrap {
-    height: 50px;
-    background-color: #fdfdfd;
-    border:1px solid #e5e5e5;
-    border-left: 0;
-    border-right: 0;
-    display: flex;
-    align-items: center;
-    padding: 0 30rpx;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
-.comment-input-box {
-    box-sizing: border-box;
-    background-color: #fff;
-    width: 605rpx;
-    border: 1px solid #e5e5e5;
-    border-radius: 4px;
-    padding-left: 20rpx;
-    font-size: 26rpx;
-}
-.comment-input {
-    height: 30px;
-    background-color: #fff;
-    border-radius: 4px;
-}
-.comment-send {
-    flex: 1;
-    margin-left: 20rpx;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #2A4B87;
-}
-
 button.primary {
     background-color: #F8CC00;
     height: 92rpx;

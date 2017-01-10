@@ -42,14 +42,12 @@
 
 
 <view class="comment-input-wrap">
-    <view class="comment-input-box">
-        <input type="text"
-               class="comment-input"
-               placeholder="{{placeholder}}"
-               focus="{{inputFocus}}"
-               bindinput="input"
-               bindblur="inputblur"
-               value="{{inputValue}}" />
-    </view>
+    <input type="text"
+           class="comment-input"
+           placeholder="{{placeholder}}"
+           focus="{{inputFocus}}"
+           bindinput="input"
+           bindblur="inputblur"
+           value="{{inputValue}}" />
     <view class="comment-send" bindtap="commentSend">发送</view>
 </view>
