@@ -16,7 +16,10 @@ App({
         })
     },
     login () {
-        return state.get('authorization') ? Promise.resolve(state.get('authorization')) : http(wx.login)()
+        return state.get('authorization') ? Promise.resolve(state.get('authorization')) : this.reLogin()
+    },
+    reLogin () {
+        return http(wx.login)()
         .then(result => {
             wx.getUserInfo({
                 success: function (res) {
@@ -69,7 +72,7 @@ App({
                 confirmText: "重新登录"
             }).then(res => {
                 if(res.confirm) {
-                    this.login()
+                    this.reLogin()
                 }
             })
         })

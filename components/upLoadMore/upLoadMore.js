@@ -1,6 +1,8 @@
 import { http, formatTime } from '../../utils/utils'
 import state from '../../utils/state'
 
+const app = getApp()
+
 /**
  * 需要保存在当前页面对象data中的变量如下
  * dataList [] 列表的数据，该组件只负责将数据保存在data中，渲染样式需要在page中重新定义
@@ -20,7 +22,7 @@ import state from '../../utils/state'
  */
 function get (_this, options, isFirst) {
     const authorization = state.get('authorization')
-
+    options.header.Authorization = authorization
     if (isFirst) {
         wx.showToast({
             title: '加载中...',
@@ -80,16 +82,12 @@ function get (_this, options, isFirst) {
     .catch (result => {
         delayHideToast()
         if (result.status) {
-            http(wx.showModal)({
-                title: '提示',
-                content: `错误码：${result.status}`,
-                confirmText: '重新加载'
-            })
-            .then(result => {
-                if (result.confirm) {
-                    get (_this, options, isFirst)
-                }
-            })
+            if (result.status == 401) {
+                app.reLogin().then(() => {
+                    get(_this, options, isFirst)
+                })
+            }
+            return result
         } else {
             wx.showModal({
                 title: '提示',

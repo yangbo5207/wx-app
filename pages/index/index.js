@@ -21,7 +21,7 @@ Page({
                 confirmText: "重新加载"
             }).then(res => {
                 if(res.confirm) {
-                    this.onLoad()
+                    app.reLogin()
                 }
             })
         })
@@ -38,7 +38,6 @@ Page({
         this.onLoad()
     },
     getRecommendList (boolean) {
-        const authorization = state.get('authorization')
         const _streamings = `${config.community}/v5/streamings`
         const pageSize = 10
         if (boolean) {
@@ -49,7 +48,7 @@ Page({
                     pageSize: pageSize
                 },
                 header: {
-                    'Authorization': authorization
+                    'Authorization': state.get('authorization')
                 }
             }, true)
         }
@@ -60,7 +59,7 @@ Page({
                 pageSize: pageSize
             },
             header: {
-                'Authorization': authorization
+                'Authorization': state.get('authorization')
             }
         })
     },
