@@ -1,14 +1,16 @@
 <view class="section section-1">
-    <view class="item" bindtap="navToNickname">
-        <view class="item-l">
-            <view class="img-wrap"><image class="icon icon-nickname" src="/image/006.png" /></view>
-            <text class="title">我的昵称</text>
+    <block wx:if="{{nicknameStatus == 2}}">
+        <view class="item" bindtap="navToNickname">
+            <view class="item-l">
+                <view class="img-wrap"><image class="icon icon-nickname" src="/image/006.png" /></view>
+                <text class="title">我的昵称</text>
+            </view>
+            <view class="item-r">
+                <text class="nickname">{{nickname}}</text>
+                <image class="icon icon-arrow" src="/image/arrow.png"></image>
+            </view>
         </view>
-        <view class="item-r">
-            <text class="nickname">{{nickname}}</text>
-            <image class="icon icon-arrow" src="/image/arrow.png"></image>
-        </view>
-    </view>
+    </block>
 
     <block wx:if="{{isBindPhone == 0}}">
         <view class="item" bindtap="navToBindPhone">

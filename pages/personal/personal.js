@@ -8,8 +8,11 @@ Page({
         isBindPhone: 0
     },
     onLoad () {
+        const author = state.get('author')
+        const nickname = author.status == 1 ? state.get('wxUserInfo').nickName : author.name
         this.setData({
-            nickname: state.get('author').name,
+            nicknameStatus: author.status,
+            nickname: nickname,
             isBindPhone: state.get('isBindPhone')
         })
     },

@@ -112,7 +112,36 @@ Page({
                         header: { 'Authorization': state.get('authorization') }
                     })
                 }).then(request => {
-                    state.set({ 'author': request.data })
+                    if (request.data.status == 1) {
+                        // 注册成功时设置用户的默认昵称为微信昵称
+                        changeNickName(state.get('wxUserInfo').nickName)
+                    } else {
+                        state.set({ 'author': request.data })
+                    }
+
+                    let changeCount = 0;
+                    function changeNickName (nickname) {
+                        changeCount ++;
+                        if (changeCount > 2) {
+                            return
+                        }
+                        http(wx.request)({
+                            url: `${config.community}/v5/user`,
+                            header: {
+                                Authorization: authorization,
+                                'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                            },
+                            method: 'PUT',
+                            data: {
+                                name: nickname
+                            }
+                        }).then(result => {
+                            const _name = result.data.name
+                            state.set({ author: result.data })
+                        }).catch(result => {
+                            changeNickName(state.get('author').name)
+                        })
+                    }
                 })
             }
         })

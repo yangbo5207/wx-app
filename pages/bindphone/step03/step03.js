@@ -96,6 +96,7 @@ Page({
                 errorMessage: '验证码不足6位，请重新输入'
             })
         }
+        // ?
         http(wx.request)({
             url: `${config.oauth}/api/v4/auth/sms`,
             data: {
@@ -105,6 +106,7 @@ Page({
                 verify_code: verifyCode
             }
         }).then(result => {
+            // 三方手机注册
             return http(wx.request)({
                 url: `${config.oauth}/api/v4/auth/sns/signup/wxapp`,
                 method: 'PUT',
@@ -133,12 +135,44 @@ Page({
                 title: '注册成功',
                 icon: 'success'
             })
+
             // 从返回值中保存access_token，并跳转到来时的页面
             const authorization = `Bearer ${result.data.access_token}`
             state.set({
                 'authorization': authorization,
                 'isBindPhone': result.data.new_status.sns_status.wxapp_binding,
             })
+
+            // 注册成功时设置用户的默认昵称为微信昵称
+            changeNickName(state.get('wxUserInfo').nickName)
+
+            let changeCount = 0;
+            function changeNickName (nickname) {
+                changeCount ++;
+                if (changeCount > 2) {
+                    return
+                }
+                http(wx.request)({
+                    url: `${config.community}/v5/user`,
+                    header: {
+                        Authorization: authorization,
+                        'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                    },
+                    method: 'PUT',
+                    data: {
+                        name: nickname
+                    }
+                }).then(result => {
+                    const _name = result.data.name
+                    console.log(result.data);
+                    state.set({
+                        author: result.data
+                    })
+                }).catch(result => {
+                    changeNickName(state.get('author').name)
+                })
+            }
+
             setTimeout(() => { wx.navigateBack() }, 1500)
         }, () => {
             wx.hideToast();

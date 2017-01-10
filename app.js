@@ -17,7 +17,16 @@ App({
     },
     login () {
         return state.get('authorization') ? Promise.resolve(state.get('authorization')) : http(wx.login)()
-        .then(result => result.code)
+        .then(result => {
+            wx.getUserInfo({
+                success: function (res) {
+                    state.set({
+                        wxUserInfo: res.userInfo
+                    })
+                }
+            })
+            return result.code
+        })
         .then(code => {
             return http(wx.request)({
                 url: `${config.oauth}/api/v4/auth/sns/signin/wxapp`,
