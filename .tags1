@@ -1,0 +1,13 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+onLoad	/Users/yangbo/develop/wx-app/pages/bindphone/step03/step03.js	/^    onLoad () {$/;"	function	line:14
+countDown	/Users/yangbo/develop/wx-app/pages/bindphone/step03/step03.js	/^    countDown () {$/;"	function	line:22
+inputCode	/Users/yangbo/develop/wx-app/pages/bindphone/step03/step03.js	/^    inputCode (event) {$/;"	function	line:38
+sendVerificationCode	/Users/yangbo/develop/wx-app/pages/bindphone/step03/step03.js	/^    sendVerificationCode () {$/;"	function	line:43
+success	/Users/yangbo/develop/wx-app/pages/bindphone/step03/step03.js	/^                success () {$/;"	function	line:74
+finishRegister	/Users/yangbo/develop/wx-app/pages/bindphone/step03/step03.js	/^    finishRegister () {$/;"	function	line:80
+changeNickName	/Users/yangbo/develop/wx-app/pages/bindphone/step03/step03.js	/^            function changeNickName (nickname) {$/;"	function	line:150

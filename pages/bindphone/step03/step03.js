@@ -164,7 +164,6 @@ Page({
                     }
                 }).then(result => {
                     const _name = result.data.name
-                    console.log(result.data);
                     state.set({
                         author: result.data
                     })

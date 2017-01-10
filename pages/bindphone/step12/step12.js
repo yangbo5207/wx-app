@@ -91,33 +91,9 @@ Page({
                         'isBindPhone': true,
                         'wxappid': result.data.wxappid
                     })
-                    setTimeout(() => { wx.navigateBack() }, 1500)
-                }, () => {
-                    wx.hideToast()
-                    wx.showModal({
-                        title: '提示',
-                        content: '接口请求失败，请重试'
-                    })
-                // 更新缓存数据
-                }).then(() => {
-                    return http(wx.request)({
-                        url: `${config.community}/v5/user/actions/key`,
-                        header: { 'Authorization': state.get('authorization') }
-                    })
-                }).then(result => {
-                    state.set({ 'actions': result.data })
-                }).then(() => {
-                    return http(wx.request)({
-                        url: `${config.community}/v5/user`,
-                        header: { 'Authorization': state.get('authorization') }
-                    })
-                }).then(request => {
-                    if (request.data.status == 1) {
-                        // 注册成功时设置用户的默认昵称为微信昵称
-                        changeNickName(state.get('wxUserInfo').nickName)
-                    } else {
-                        state.set({ 'author': request.data })
-                    }
+
+                    // 注册成功时设置用户的默认昵称为微信昵称
+                    changeNickName(state.get('wxUserInfo').nickName)
 
                     let changeCount = 0;
                     function changeNickName (nickname) {
@@ -137,11 +113,29 @@ Page({
                             }
                         }).then(result => {
                             const _name = result.data.name
-                            state.set({ author: result.data })
+                            state.set({
+                                author: result.data
+                            })
                         }).catch(result => {
                             changeNickName(state.get('author').name)
                         })
                     }
+
+                    setTimeout(() => { wx.navigateBack() }, 1500)
+                }, () => {
+                    wx.hideToast()
+                    wx.showModal({
+                        title: '提示',
+                        content: '接口请求失败，请重试'
+                    })
+                // 更新缓存数据
+                }).then(() => {
+                    return http(wx.request)({
+                        url: `${config.community}/v5/user/actions/key`,
+                        header: { 'Authorization': state.get('authorization') }
+                    })
+                }).then(result => {
+                    state.set({ 'actions': result.data })
                 })
             }
         })

@@ -1,6 +1,6 @@
 import config from '../../utils/config'
 import state from '../../utils/state'
-import { promise } from '../../utils/utils'
+import { http } from '../../utils/utils'
 
 Page({
     data: {
@@ -37,6 +37,18 @@ Page({
     navToCollect () {
         wx.navigateTo({
             url: '../collect/collect'
+        })
+    },
+    unBinding () {
+        http(wx.request)({
+            url: `${config.oauth}/api/v4/auth/sns/unbind`,
+            header: {
+                Authorization: state.get('authorization'),
+            },
+            method: 'PUT',
+            data: {
+                oauth_os: 'wxapp'
+            }
         })
     }
 })

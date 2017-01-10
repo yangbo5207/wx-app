@@ -36,3 +36,15 @@
         </view>
     </view>
 </view>
+
+<view class="section section-3">
+    <view class="item" bindtap="unBinding">
+        <view class="item-l">
+            <view class="img-wrap"><image class="icon icon-collect" src="/image/008.png" /></view>
+            <text class="title">解除绑定</text>
+        </view>
+        <view class="item-r">
+            <image class="icon icon-arrow" src="/image/arrow.png"></image>
+        </view>
+    </view>
+</view>
