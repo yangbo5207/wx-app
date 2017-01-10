@@ -25,6 +25,6 @@ page {
     line-height: 36rpx;
 }
 .post-bottom {
-    height: 36rpx;
+    height: 100rpx;
     line-height: 36rpx;
 }

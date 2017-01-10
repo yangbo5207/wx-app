@@ -13,7 +13,7 @@
                         <view class="rec-middle-wrap">
                             <block wx:if="{{item.entity.thumbnail}}">
                                 <view class="rec-image-wrap">
-                                    <image class="rec-image" src="{{item.entity.thumbnail}}"></image>
+                                    <image class="rec-image" mode="aspectFill" src="{{item.entity.thumbnail}}"></image>
                                 </view>
                             </block>
                             <view class="rec-info">
@@ -45,7 +45,7 @@
                         <view class="rec-middle-wrap">
                             <block wx:if="{{item.entity.thumbnail}}">
                                 <view class="rec-image-wrap">
-                                    <image class="rec-image" src="{{item.entity.thumbnail}}"></image>
+                                    <image class="rec-image" mode="aspectFill" src="{{item.entity.thumbnail}}"></image>
                                 </view>
                             </block>
                             <view class="rec-info">
