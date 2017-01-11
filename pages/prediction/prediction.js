@@ -137,7 +137,7 @@ Page({
             detail.changeRate = (changeRate >= 0) ? `+${changeRate}%` : `${changeRate}%`
             detail._changeRate = changeRate
             detail.change = changeRate >= 0 ? `+${detail.change}` : detail.change // 根据该值的正负来判断颜色的显示
-            detail.changeHandRate = `${decimal(detail.volume / detail.floatShares * 100, 2)}%`
+            detail.changeHandRate = detail.floatShares > 0 ? `${decimal(detail.volume / detail.floatShares * 100, 2)}%` : '0%'
             detail.totleValue = `${decimal(detail.latestPrice * detail.shares / 100000000, 0)}亿`
             detail.gain = decimal(detail.latestPrice / detail.eps, 2)
             detail.turnover =  `${decimal(detail.volume / 10000, 0)}万`
