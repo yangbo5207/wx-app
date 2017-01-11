@@ -30,10 +30,10 @@ function get (_this, options, isFirst) {
             duration: 10000
         })
         _this.setData({
-            dataList: [],
+            isBottomEnd: 0,
+            // dataList: [],
             isData: 1,
             isBottomLoading: 0,
-            isBottomEnd: 0,
             enableUpLoadMore: 1,
             pageCount: 1
         })

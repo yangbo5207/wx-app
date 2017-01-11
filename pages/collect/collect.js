@@ -9,7 +9,9 @@ Page({
         windowHeight: 0
     },
     onLoad () {
-        this.getFeeds(true)
+        this.getFeeds(true).then(() => {
+            wx.stopPullDownRefresh()
+        })
         assign(this, navigate)
         http(wx.getSystemInfo)()
         .then(result => {
@@ -20,9 +22,9 @@ Page({
         })
     },
     onPullDownRefresh() {
-        this.getFeeds(true)
+        this.onLoad()
     },
-    upLoad() {
+    onReachBottom() {
         this.data.enableUpLoadMore && this.getFeeds()
     },
     getFeeds (boolean) {

@@ -13,6 +13,9 @@ Page({
     onLoad () {
         app.login().then(result => {
             this.getRecommendList(true)
+            .then(() => {
+                wx.stopPullDownRefresh()
+            })
             assign(this, navigate)
         }).catch(() => {
             http(wx.showModal)({
@@ -33,9 +36,6 @@ Page({
                 windowHeight: res.windowHeight
             })
         })
-    },
-    onPullDownRefresh () {
-        this.onLoad()
     },
     getRecommendList (boolean) {
         const _streamings = `${config.community}/v5/streamings`
@@ -63,8 +63,11 @@ Page({
             }
         })
     },
-    // 下拉加载更多
-    upLoad () {
+    onPullDownRefresh () {
+        this.onLoad()
+    },
+    // 加载更多
+    onReachBottom () {
         this.data.enableUpLoadMore && this.getRecommendList()
     },
     onShareAppMessage (option) {

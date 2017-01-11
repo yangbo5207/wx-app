@@ -63,7 +63,6 @@ App({
                 header: { 'Authorization': state.get('authorization') }
             }).then(res => {
                 state.set({ 'author': res.data })
-                console.log('xxxxxx', state.getStates())
                 return result
             })
         }).catch(() => {

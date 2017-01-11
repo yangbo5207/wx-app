@@ -37,7 +37,7 @@
     </view>
 </view>
 
-<view class="section section-3">
+<!-- <view class="section section-3">
     <view class="item" bindtap="unBinding">
         <view class="item-l">
             <view class="img-wrap"><image class="icon icon-collect" src="/image/008.png" /></view>
@@ -47,4 +47,4 @@
             <image class="icon icon-arrow" src="/image/arrow.png"></image>
         </view>
     </view>
-</view>
+</view> -->

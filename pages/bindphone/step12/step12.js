@@ -52,12 +52,6 @@ Page({
                 content: '请输入正确的手机号'
             })
         }
-        // if (!/^[0-9a-zA-Z]{6,12}$/.test(inputPasswordValue)) {
-        //     return wx.showModal({
-        //         title: '提示',
-        //         content: '您输入的密码格式错误，密码应由6-12位英文和数字组成，请修正！'
-        //     })
-        // }
         http(wx.showModal)({
             title: '数据合并',
             content: '本次绑定之后，将只保留您的手机账户数据，如有疑问请联系客服'
@@ -117,7 +111,7 @@ Page({
                                 author: result.data
                             })
                         }).catch(result => {
-                            changeNickName(state.get('author').name)
+                            changeNickName(`${state.get('author')}0`.name)
                         })
                     }
 
