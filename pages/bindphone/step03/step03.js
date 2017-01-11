@@ -168,7 +168,7 @@ Page({
                         author: result.data
                     })
                 }).catch(result => {
-                    changeNickName(`${state.get('author')}0`.name)
+                    changeNickName(`${state.get('author').name}0`)
                 })
             }
 
