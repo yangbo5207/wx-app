@@ -62,7 +62,11 @@ App({
                 url: `${config.community}/v5/user`,
                 header: { 'Authorization': state.get('authorization') }
             }).then(res => {
-                state.set({ 'author': res.data })
+                state.set({ 
+                    'author': res.data,
+                    'sourceNickname': res.data.name 
+                })
+                console.log('source state:', state.getStates())
                 return result
             })
         }).catch(() => {

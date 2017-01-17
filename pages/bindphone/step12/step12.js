@@ -85,36 +85,6 @@ Page({
                         'isBindPhone': true,
                         'wxappid': result.data.wxappid
                     })
-
-                    // 注册成功时设置用户的默认昵称为微信昵称
-                    changeNickName(state.get('wxUserInfo').nickName)
-
-                    let changeCount = 0;
-                    function changeNickName (nickname) {
-                        changeCount ++;
-                        if (changeCount > 2) {
-                            return
-                        }
-                        http(wx.request)({
-                            url: `${config.community}/v5/user`,
-                            header: {
-                                Authorization: authorization,
-                                'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
-                            },
-                            method: 'PUT',
-                            data: {
-                                name: nickname
-                            }
-                        }).then(result => {
-                            const _name = result.data.name
-                            state.set({
-                                author: result.data
-                            })
-                        }).catch(result => {
-                            changeNickName(`${state.get('author').name}0`)
-                        })
-                    }
-
                     setTimeout(() => { wx.navigateBack() }, 1500)
                 }, () => {
                     wx.hideToast()
@@ -127,9 +97,51 @@ Page({
                     return http(wx.request)({
                         url: `${config.community}/v5/user/actions/key`,
                         header: { 'Authorization': state.get('authorization') }
+                    }).then(result => {
+                        state.set({ 'actions': result.data })    
                     })
                 }).then(result => {
-                    state.set({ 'actions': result.data })
+                    return http(wx.request)({
+                        url: `${config.community}/v5/user`,
+                        header: { 'Authorization': state.get('authorization') }
+                    }).then(res => {
+                        console.log('new userinfo', res)
+                        state.set({ 'author': res.data })
+
+                        // 注册成功时设置用户的默认昵称为微信昵称
+                        changeNickName(state.get('wxUserInfo').nickName)
+
+                        let changeCount = 0;
+                        function changeNickName (nickname) {
+                            changeCount ++;
+                            if (changeCount > 2) {
+                                return
+                            }
+                            http(wx.request)({
+                                url: `${config.community}/v5/user`,
+                                header: {
+                                    Authorization: state.get('authorization'),
+                                    'content-type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                                },
+                                method: 'PUT',
+                                data: {
+                                    name: nickname
+                                }
+                            }).then(result => {
+                                console.log('result binding', result)
+                                const _name = result.data.name
+                                state.set({
+                                    author: result.data
+                                })
+                            }).catch(result => {
+                                const nickname = state.get('author').status == 1 ? 
+                                                 `${state.get('sourceNickname')}0` : 
+                                                 state.get('author').name
+                                changeNickName(nickname)
+                            })
+                        }
+                        return result
+                    })
                 })
             }
         })
