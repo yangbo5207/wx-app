@@ -8,7 +8,7 @@
     </view>
 </view>
 
-<view class="quote-title">抓住实时行情，把握交易机会</view>
+<view class="quote-title">{{topicInfo.introduction}}</view>
 
 <scroll-view class="scroll-wrap" scroll-y="true" bindscrolltolower="upLoad" style="width: {{windowWidth}}px;height: {{windowHeight}}px">
     <block wx:for="{{dataList}}" wx:key="">

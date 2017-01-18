@@ -29,10 +29,9 @@
     font-size: 26rpx;
 }
 .quote-title {
-    height: 80rpx;
     background-color: #fff;
-    line-height: 80rpx;
-    padding: 0 30rpx;
+    line-height: 50rpx;
+    padding: 30rpx;
     font-size: 28rpx;
     color: #333;
     border-bottom: 1px solid #E5E5E5;
