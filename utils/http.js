@@ -4,38 +4,46 @@ const defaultOptions = {
     }
 }
 
-export const get = (path, options = defaultOptions) => new Promise((resolve, reject) => {
+export const run = cb => (result = {}) => new Promise((resolve, reject) => {
+    result.success = _res => {
+        if (_res.statusCode) {
+            /(2|3)\d+/.test(_res.statusCode) ? resolve(_res.data) : reject(_res.data)
+        } else {
+            resolve(_res);
+        }
+    }
+
+    result.fail = (...args) => reject(...args)
+
+    cb(result)
+})
+
+export const get = (path, options = defaultOptions) => {
     if (!options.header) {
         options.header = defaultOptions.header
     }
-
-    return wx.request({
+    return run(wx.request)({
         url: path,
         data: options.data,
         header: options.header,
         method: 'GET',
         dataType: options.dataType || 'json',
         responseType: options.responseType || 'text',
-        success: resp => resolve(resp),
-        fail: err => reject(err),
         complete: () => {}
     })
-})
+}
 
-export const post = (path, options = defaultOptions) => new Promise((resolve, reject) => {
+export const post = (path, options = defaultOptions) => {
     if (!options.header) {
         options.header = defaultOptions.header
     }
-    
-    return wx.request({
+    return run(wx.request)({
         url: path,
         data: options.data,
         header: options.header,
         method: 'POST',
         dataType: options.dataType || 'json',
         responseType: options.responseType || 'text',
-        success: resp => resolve(resp),
-        fail: err => reject(err),
         complete: () => {}
     })
-})
+}

@@ -1,9 +1,8 @@
 import regeneratorRuntime from '../../libs/regenerator-runtime'; // support use async/await
-import config from '../../utils/config'
-import state from '../../utils/state'
-import { http, assign, formatTime } from '../../utils/utils'
-import { getData, navigate } from '../../components/upLoadMore/upLoadMore'
+import { assign, formatTime } from '../../utils/utils'
+import { navigate } from '../../components/upLoadMore/upLoadMore'
 import { favorite } from '../../utils/request';
+import { run } from '../../utils/http';
 
 Page({
     data: {
@@ -15,16 +14,14 @@ Page({
         enableUpLoadMore: 1,
         pageCount: 1
     },
-    onLoad () {
+    async onLoad () {
+        const res = await run(wx.getSystemInfo)();
+        this.setData({
+            windowWidth: res.windowWidth,
+            windowHeight: res.windowHeight
+        })
         this.getFeeds(true)
         assign(this, navigate)
-        http(wx.getSystemInfo)()
-        .then(result => {
-            this.setData({
-                windowWidth: result.windowWidth,
-                windowHeight: result.windowHeight
-            })
-        })
     },
 
     onPullDownRefresh() {
@@ -50,7 +47,7 @@ Page({
 
         const resp = await favorite(curPageCount);
 
-        let list = resp.data.data.map(item => {
+        let list = resp.data.map(item => {
             item.gmtCreate = formatTime(item.gmtCreate)
             return item
         })

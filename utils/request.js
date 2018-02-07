@@ -5,22 +5,6 @@ const community = 'https://frontend-community.laohu8.com'
 const news = 'https://stock-news.tigerbrokers.com'
 const quotation = 'https://hq.tigerbrokers.com'
 
-export const wxLogin = () => new Promise((resolve, reject) => {
-    wx.login({
-        success: resp => resolve(resp),
-        fail: err => reject(err)
-    })
-})
-
-export const wxGetUserInfo = (options = {}) => new Promise((resolve, reject) => {
-    wx.getUserInfo({
-        withCredentials: options.withCredentials || true,
-        lang: options.lang || 'en',
-        success: resp => resolve(resp),
-        fail: err => reject(err)
-    })
-})
-
 const _user = `${community}/v5/user`
 export const getUser = () => http.get(_user)
 
@@ -52,5 +36,13 @@ export const favorite = (pageCount = 1, pageSize = 10) => http.get(_favorite, {
         pageSize,
         pageCount,
         type: -1
+    }
+})
+
+const _forecast = id => `${community}/v5/forecast/${id}`
+export const forecast = id => http.get(_forecast(id), {
+    data: {
+        wx: 1,
+        __fieldtype: 'show'
     }
 })

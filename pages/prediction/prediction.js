@@ -1,10 +1,13 @@
+import regeneratorRuntime from '../../libs/regenerator-runtime';
 import config from '../../utils/config'
 import state from '../../utils/state'
 import WxParse from '../../components/wxParse/wxParse'
 import { http, formatTime, decimal, symbolType, fixZero, assign } from '../../utils/utils'
 import actionsBar from '../../components/actionsBar/actionsBar'
+import { forecast } from '../../utils/request';
 
 const app = getApp()
+const titles = ['消息面', '基本面', '数据面', '盘面情况']
 
 Page({
     data: {
@@ -14,14 +17,13 @@ Page({
         swiperHeight: 0,
         scrollViewHeight: 0
     },
-    onLoad: function (option) {
+    onLoad: async function(option) {
         wx.showToast({
             title: '加载中...',
             icon: 'loading',
             duration: 10000
         })
 
-        let authorization = state.get('authorization')
         const postid = option.id
         const type = option.type
         state.set({
@@ -30,54 +32,35 @@ Page({
         })
         assign(this, actionsBar.optionFn)
 
-        app.login().then(result => {
-            authorization = result
-            state.set({ authorization: authorization })
-            this.initialAction()
-            return http(wx.request)({
-                url: `${config.community}/v5/forecast/${postid}`,
-                header: { Authorization: authorization },
-                data: { wx: 1, __fieldtype: 'show' }
-            }).then(result => {
-                wx.hideToast();
-                return this.render(result)
-            }).then( result => {
-                const symbol = result.data.symbol
-                this.setData({
-                    symbolType: symbolType(symbol)
-                })
-                this.setDetail(symbol)
-                // this.setKLine(symbol)
-                this.setFiveTrendLine(symbol)
-            }).catch(result => {
-                wx.hideToast()
-                if (result.status) {
-                    http(wx.showModal)({
-                        title: "提示",
-                        content: "错误码:" + result.status,
-                        confirmText: "重新加载"
-                    }).then(res => {
-                        if(res.confirm) { this.onLoad() }
-                    })
-                } else {
-                    wx.showModal({
-                        title: '提示',
-                        content: '网络好像出了点问题'
-                    })
-                }
-            })
-        })
+        try {
+            await app.login()
+            const resp = await forecast(postid)
+            wx.hideToast();
+            this.render(resp)
 
-        state.bind('changeCommentCount', this.changeCommentCount, this)
-
-        http(wx.getSystemInfo)()
-        .then(result => {
+            const symbol = resp.data.symbol;
             this.setData({
-                swiperHeight: result.windowHeight - 50,
-                scrollViewHeight: result.windowHeight - 100
+                symbolType: symbolType(symbol)
             })
-        })
+            this.setDetail(symbol);
+            this.setFiveTrendLine(symbol);
 
+            state.bind('changeCommentCount', this.changeCommentCount, this)
+
+            const sysInfo = wx.getSystemInfoSync()
+            this.setData({
+                swiperHeight: sysInfo.windowHeight - 50,
+                scrollViewHeight: sysInfo.windowHeight - 100
+            })
+        } catch(err) {
+            wx.hideToast();
+            wx.showModal({
+                title: 'Error Message',
+                content: err.message,
+                confirmText: 'reload',
+                success: () => this.onLoad()
+            })
+        }
     },
     render(result) {
         let replyArr = []
@@ -86,20 +69,7 @@ Page({
         result.data.bodies = result.data.bodies.map(item => {
             replyArr.push(item.html)
             item.isParse = 0
-            switch (item.type) {
-                case 1:
-                    item.typeName = '消息面'
-                    break;
-                case 2:
-                    item.typeName = '基本面'
-                    break;
-                case 3:
-                    item.typeName = '数据面'
-                    break;
-                case 4:
-                    item.typeName = '盘面情况'
-                    break;
-            }
+            item.typeName = titles[item.type + 1]
             return item
         })
         replyArr.map((item, i) => {

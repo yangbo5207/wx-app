@@ -1,9 +1,9 @@
 import config from './utils/config'
 import state from './utils/state'
-import { http } from './utils/utils'
 import Promise from './utils/promise'
 import { wxLogin, wxGetUserInfo, getUser, signin, actions, streamings } from './utils/request';
 import regeneratorRuntime from './libs/regenerator-runtime'; // support use async/await
+import { run } from './utils/http';
 
 // 线上
 // appid: 'wx87ef8d5ebed00eed'
@@ -24,10 +24,10 @@ App({
 
     async reLogin() {
         try {
-            const loginInfo = await wxLogin()
+            const loginInfo = await run(wx.login)()
 
             // wx login information
-            const wxUserInfo = await wxGetUserInfo()
+            const wxUserInfo = await run(wx.getUserInfo)()
             state.set({
                 wxUserInfo: loginInfo.userInfo
             })
