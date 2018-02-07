@@ -2,6 +2,8 @@ import config from './utils/config'
 import state from './utils/state'
 import { http } from './utils/utils'
 import Promise from './utils/promise'
+import { wxLogin, wxGetUserInfo, getUser, signin, actions, streamings } from './utils/request';
+import regeneratorRuntime from './libs/regenerator-runtime'; // support use async/await
 
 // 线上
 // appid: 'wx87ef8d5ebed00eed'
@@ -15,70 +17,37 @@ App({
             duration: 10000
         })
     },
+
     login () {
         return state.get('authorization') ? Promise.resolve(state.get('authorization')) : this.reLogin()
     },
-    reLogin () {
-        return http(wx.login)()
-        .then(result => {
-            wx.getUserInfo({
-                success: function (res) {
-                    state.set({
-                        wxUserInfo: res.userInfo
-                    })
-                }
+
+    async reLogin() {
+        try {
+            const loginInfo = await wxLogin()
+
+            // wx login information
+            const wxUserInfo = await wxGetUserInfo()
+            state.set({
+                wxUserInfo: loginInfo.userInfo
             })
-            return result.code
-        })
-        .then(code => {
-            return http(wx.request)({
-                url: `${config.oauth}/api/v4/auth/sns/signin/wxapp`,
-                method: 'POST',
-                data: {
-                    access_token: code,
-                    appVer: '1.0.0',
-                    platform: 'wxapp'
-                }
-            }).then( result => {
-                const authorization = `Bearer ${result.data.access_token}`
-                state.set({
-                    'authorization': authorization,
-                    'isBindPhone': result.data.new_status.sns_status.wxapp_binding,
-                    // wxappid 是后端返回的openid, 所有需要openid的值都需要传入此参数
-                    'wxappid': result.data.wxappid
-                })
-                return authorization;
+
+            // const login = await signin(tigerUserInfo.data.code) // 授权失败
+            state.set({
+                authorization: `Bearer zLpDnG0204FAlVmUY3FMxRpPJxUVIS`
             })
-        }).then(result => {
-            return http(wx.request)({
-                url: `${config.community}/v5/user/actions/key`,
-                header: { 'Authorization': result }
-            }).then(res => {
-                state.set({ 'actions': res.data })
-                return result
+
+            // actions origin
+            const _actions = await actions();
+            state.set({ 'actions': _actions.data })
+
+            const tigerUserInfo = await getUser()
+            state.set({
+                'author': tigerUserInfo.data,
+                'sourceNickname': tigerUserInfo.data.name
             })
-        }).then(result => {
-            return http(wx.request)({
-                url: `${config.community}/v5/user`,
-                header: { 'Authorization': state.get('authorization') }
-            }).then(res => {
-                state.set({ 
-                    'author': res.data,
-                    'sourceNickname': res.data.name 
-                })
-                console.log('source state:', state.getStates())
-                return result
-            })
-        }).catch(() => {
-            http(wx.showModal)({
-                title: "提示",
-                content: "登录时出了点小问题，你可以尝试重新登录",
-                confirmText: "重新登录"
-            }).then(res => {
-                if(res.confirm) {
-                    this.reLogin()
-                }
-            })
-        })
+
+            return tigerUserInfo.data;
+        } catch (err) { return err }
     }
 })

@@ -1,3 +1,4 @@
+import regeneratorRuntime from '../../libs/regenerator-runtime'; // support use async/await
 import config from '../../utils/config'
 import state from '../../utils/state'
 import { http, assign } from '../../utils/utils'
@@ -10,32 +11,26 @@ Page({
         windowWidth: 0,
         windowHeight: 0
     },
-    onLoad () {
-        app.login().then(result => {
-            this.getRecommendList(true)
-            .then(() => {
-                wx.stopPullDownRefresh()
-            })
-            assign(this, navigate)
-        }).catch(() => {
-            http(wx.showModal)({
-                title: "提示",
-                content: "好像出了点小问题，你可以尝试重新加载",
-                confirmText: "重新加载"
-            }).then(res => {
-                if(res.confirm) {
-                    app.reLogin()
-                }
-            })
-        })
+    async onLoad () {
+        try {
+            await app.login()
+            const res = this.getRecommendList(true);
+            wx.stopPullDownRefresh()
+            assign(this, navigate);
 
-        http(wx.getSystemInfo)()
-        .then( res => {
+            const info = wx.getSystemInfoSync;
             this.setData({
-                windowWidth: res.windowWidth,
-                windowHeight: res.windowHeight
+                windowWidth: info.windowWidth,
+                windowHeight: info.windowHeight
             })
-        })
+        } catch(err) {
+            wx.showModal({
+                title: 'Error Message',
+                content: err.message,
+                confirmText: 'reload',
+                success: () => this.onLoad()
+            })
+        }
     },
     getRecommendList (boolean) {
         const _streamings = `${config.community}/v5/streamings`
@@ -46,9 +41,6 @@ Page({
                 data: {
                     pageCount: 1,
                     pageSize: pageSize
-                },
-                header: {
-                    'Authorization': state.get('authorization')
                 }
             }, true)
         }
@@ -57,15 +49,14 @@ Page({
             data: {
                 pageCount: this.data.pageCount + 1,
                 pageSize: pageSize
-            },
-            header: {
-                'Authorization': state.get('authorization')
             }
         })
     },
+
     onPullDownRefresh () {
         this.onLoad()
     },
+    
     // 加载更多
     onReachBottom () {
         this.data.enableUpLoadMore && this.getRecommendList()

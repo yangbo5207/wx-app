@@ -1,5 +1,6 @@
 import { http, formatTime } from '../../utils/utils'
 import state from '../../utils/state'
+import { get } from '../../utils/http'
 
 const app = getApp()
 
@@ -20,9 +21,7 @@ const app = getApp()
  * @param {boolean} isFirst 是否是第一次请求数据
  * @return 返回promise对象
  */
-function get (_this, options, isFirst) {
-    const authorization = state.get('authorization')
-    options.header.Authorization = authorization
+function getData(_this, options, isFirst) {
     if (isFirst) {
         wx.showToast({
             title: '加载中...',
@@ -44,9 +43,11 @@ function get (_this, options, isFirst) {
             pageCount: _this.data.pageCount + 1
         })
     }
-
-    return http(wx.request)(options)
+    get(options.url, {
+        data: options.data
+    })
     .then( result => {
+        console.log(result);
         if (result.data) {
             let list = result.data.map( item => {
                 item.gmtCreate = formatTime(item.gmtCreate)
@@ -91,7 +92,7 @@ function get (_this, options, isFirst) {
         } else {
             wx.showModal({
                 title: '提示',
-                content: '网络好像出了点问题'
+                content: result.message
             })
         }
     })
@@ -132,6 +133,6 @@ function delayHideToast () {
 }
 
 module.exports = {
-    getData: get,
+    getData: getData,
     navigate: navigate
 }
